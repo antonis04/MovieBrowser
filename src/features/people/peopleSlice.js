@@ -1,4 +1,3 @@
-// src/features/people/peopleSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const peopleSlice = createSlice({

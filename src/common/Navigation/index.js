@@ -1,16 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { StyledNavLink, List, Item } from "./styled";
+import { List, Item, StyledNav } from "./styled";
 
 const Navigation = () => {
   return (
-    <Navigation>
+    <StyledNav>
       <List>
         <Item>
-          <NavLink></NavLink>
+          <NavLink to="/">Home</NavLink>
+        </Item>
+        <Item>
+          <NavLink to="/movie">Movies</NavLink>
+        </Item>
+        <Item>
+          <NavLink to="/people">People</NavLink>
         </Item>
       </List>
-    </Navigation>
+    </StyledNav>
   );
 };
 
