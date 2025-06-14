@@ -10,5 +10,4 @@ const PosterSVG = () => {
     />
   );
 };
-
 export default PosterSVG;
