@@ -1,43 +1,35 @@
 import React from "react";
-import { GlobalStyled } from "./GlobalStyled.js";
-import { Container } from "./common/Container";
-import {
-  Content,
-  Description,
-  Tag,
-  Tags,
-  Title,
-  Wrapper,
-  Year,
-} from "./common/Wrapper";
-import PosterSVG from "./components/Poster.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store.js";
+import Navigation from "./common/Navigation/index.js";
+import PeoplePage from "./features/people/PeoplePage.js";
+import MovieList from "./features/movies/MovieList.js";
+import MoviePage from "./features/movies/MoviePage.js";
+import PeopleList from "./features/people/PeopleList.js";
 
 function App() {
-  return (
-    <>
-      <GlobalStyled />
-      <Container>
-        <Wrapper>
-          <PosterSVG />
-          <Content>
-            <Title>Mulan</Title>
-            <Year>2020</Year>
-            <Tags>
-              <Tag>Action</Tag>
-              <Tag>Adventure</Tag>
-              <Tag>Drama</Tag>
-            </Tags>
-            <Description>
-              A young Chinese maiden disguises herself as a male warrior in
-              order to save her father. Disguises herself as a male warrior in
-              order to save her father. A young Chinese maiden disguises herself
-              as a male warrior in order to save her father.
-            </Description>
-          </Content>
-        </Wrapper>
-      </Container>
-    </>
-  );
+  <Provider store={store}>
+    <Navigation />
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="">
+          <MoviePage />
+        </Route>
+        <Route path="">
+          <PeoplePage />
+        </Route>
+        <Route path="/">
+          <MovieList />
+        </Route>
+        <Route path="/">
+          <PeopleList />
+        </Route>
+      </Routes>
+    </Router>
+    ;
+  </Provider>;
 }
 
 export default App;
