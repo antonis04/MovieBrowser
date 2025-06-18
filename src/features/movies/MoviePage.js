@@ -1,5 +1,5 @@
 import React from "react";
-import { GlobalStyled } from "../../GlobalStyled.js";
+import { GlobalStyle } from "../../GlobalStyle.js";
 import { Container } from "../../common/Container/index.js";
 import {
   Content,
@@ -12,10 +12,10 @@ import {
 } from "../../common/Wrapper/index.js";
 import PosterSVG from "../../components/Poster.jsx/index.js";
 
-function MoviePage() {
+export default () => {
   return (
     <>
-      <GlobalStyled />
+      <GlobalStyle />
       <Container>
         <Wrapper>
           <PosterSVG />
@@ -38,6 +38,4 @@ function MoviePage() {
       </Container>
     </>
   );
-}
-
-export default MoviePage;
+};
