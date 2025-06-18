@@ -1,23 +1,36 @@
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store.js";
+import Navigation from "./common/Navigation/index.js";
+import PeoplePage from "./features/people/PeoplePage.js";
+import MovieList from "./features/movies/MovieList.js";
+import MoviePage from "./features/movies/MoviePage.js";
+import PeopleList from "./features/people/PeopleList.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <Provider store={store}>
+    <Navigation />
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="">
+          <MoviePage />
+        </Route>
+        <Route path="">
+          <PeoplePage />
+        </Route>
+        <Route path="/">
+          <MovieList />
+        </Route>
+        <Route path="/">
+          <PeopleList />
+        </Route>
+      </Routes>
+    </Router>
+    ;
+  </Provider>;
+>>>>>>> 2a46e30 (Feature: Reintroduce React Router and Redux store to App)
 }
 
 export default App;
