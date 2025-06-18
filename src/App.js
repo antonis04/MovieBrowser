@@ -9,28 +9,19 @@ import MoviePage from "./features/movies/MoviePage.js";
 import PeopleList from "./features/people/PeopleList.js";
 
 function App() {
-  <Provider store={store}>
-    <Navigation />
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path="">
-          <MoviePage />
-        </Route>
-        <Route path="">
-          <PeoplePage />
-        </Route>
-        <Route path="/">
-          <MovieList />
-        </Route>
-        <Route path="/">
-          <PeopleList />
-        </Route>
-      </Routes>
-    </Router>
-    ;
-  </Provider>;
->>>>>>> 2a46e30 (Feature: Reintroduce React Router and Redux store to App)
+  return (
+    <Provider store={store}>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<MoviePage />} />
+          <Route path="/peoplelist" element={<PeopleList />} />
+          <Route path="/movielist" element={<MovieList />} />
+          <Route path="/peoplepage" element={<PeoplePage />} />
+        </Routes>
+      </Router>
+    </Provider>
+  );
 }
 
 export default App;
