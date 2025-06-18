@@ -13,8 +13,7 @@ export const theme = {
     tabletMax: 991,
     laptopMax: 1400,
     DesktopMax: 1723,
-  },
-  color: {
+  },  color: {
     white: "#FFFFFF",
     lightblue: "#D6E4FF",
     yellow: "#FCD420",
