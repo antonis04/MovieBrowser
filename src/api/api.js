@@ -13,5 +13,5 @@ export const fetchPopularMovies = async () => {
   }
 
   const data = await response.json();
-  return data.results; // zwracasz tylko listę filmów
+  return data.results;
 };
