@@ -1,24 +1,23 @@
 import styled from "styled-components";
 
-<<<<<<< HEAD
 export const StyledNav = styled.nav`
   background: ${({ theme }) => theme.color.lightgrey};
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.black};
   width: 1920px;
   height: 94px;
-=======
-export const StyledNavLink = styled.nav`
-  background: ${({ theme }) => theme.color.Woodsmoke};
-  color: ${({ theme }) => theme.color.White};
-  width: 1920;
-  height: 94;
->>>>>>> 1061bca (Feature: Create styled for Navigation component)
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
 `;
 
 export const List = styled.ul`
-  background: red;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
 `;
 
 export const Item = styled.li`
-  background: green;
+  font-weight: 600;
 `;
