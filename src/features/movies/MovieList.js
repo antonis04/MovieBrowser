@@ -1,19 +1,46 @@
+import React, { useState, useEffect } from "react";
 import { fetchPopularMovies } from "../../api/api";
 
-export default () => {
+export default function MovieList() {
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      try {
+        const moviesData = await fetchPopularMovies();
+        setMovies(moviesData);
+      } catch (error) {
+        setError("Error fetching movies!");
+      }
+    };
+    loadMovies();
+  }, []);
+
   const handleClick = async () => {
     try {
-      const movies = await fetchPopularMovies();
-      console.log(movies);
+      const moviesData = await fetchPopularMovies();
+      setMovies(moviesData);
+      setError(null);
     } catch (error) {
-      console.error("Błąd pobierania filmów:", error);
+      setError("Error fetching movies!");
     }
   };
 
   return (
-    <>
-      <h1>Movie Page</h1>
+    <div>
+      <h1>Movie List</h1>
       <button onClick={handleClick}>Pobierz filmy</button>
-    </>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <ul>
+        {movies.map((movie) => (
+          <li key={movie.id}>
+            <strong>{movie.title}</strong> ({movie.release_date})
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-};
+}
