@@ -1,16 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
 import { GlobalStyle } from "../../GlobalStyle.js";
-import {
-  Container,
-  Details,
-  DetailStar,
-  Note,
-  Paragraph,
-  Section,
-  Strong,
-  Summary,
-  Votes,
-} from "../../common/Container/styled.js";
+import { fetchMovieCredits } from "../../api/api.js";
+import { Container } from "../../common/Container/styled.js";
 import {
   Content,
   Description,
@@ -19,11 +11,44 @@ import {
   Title,
   Wrapper,
   Year,
+  Details,
+  DetailStar,
+  Note,
+  Paragraph,
+  Section,
+  Strong,
+  Summary,
+  Votes,
 } from "../../common/Wrapper/styled.js";
 import PosterSVG from "../../components/PosterSVG/index.js";
 import StarSVG from "../../components/StarSVG/StarSVG.js";
+import {
+  Actor,
+  Cast,
+  CastRow,
+  Name,
+  PersonTitle,
+  Picture,
+} from "../../common/Cast/styled.js";
 
 const MoviePage = () => {
+  const [cast, setCast] = useState([]);
+  const [crew, setCrew] = useState([]);
+
+  useEffect(() => {
+    const loadCredits = async () => {
+      try {
+        const data = await fetchMovieCredits(337401);
+        setCast(data.cast);
+        setCrew(data.crew);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadCredits();
+  }, []);
+
   return (
     <>
       <GlobalStyle />
@@ -35,7 +60,7 @@ const MoviePage = () => {
             <Year>2020</Year>
             <Section>
               <Paragraph>
-                <Strong>Production:</Strong> China, Unided Sates of America
+                <Strong>Production:</Strong> China, United Sates of America
               </Paragraph>
               <Paragraph>
                 <Strong>Release date:</Strong> 24.10.2020
@@ -63,6 +88,50 @@ const MoviePage = () => {
             </Description>
           </Content>
         </Wrapper>
+
+        <Cast>
+          <Title>Cast</Title>
+          <CastRow>
+            {cast.map((person) => (
+              <PersonTitle key={person.id}>
+                {person.profile_path ? (
+                  <Picture
+                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
+                    alt={person.name}
+                  />
+                ) : (
+                  <EmptyPicture width={177} height={264} />
+                )}
+                <Name>
+                  <Actor>{person.name}</Actor>
+                  <Strong>{person.character}</Strong>
+                </Name>
+              </PersonTitle>
+            ))}
+          </CastRow>
+        </Cast>
+
+        <Cast>
+          <Title>Crew</Title>
+          <CastRow>
+            {crew.map((person) => (
+              <PersonTitle key={person.id}>
+                {person.profile_path ? (
+                  <Picture
+                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
+                    alt={person.name}
+                  />
+                ) : (
+                  <EmptyPicture width={177} height={264} />
+                )}
+                <Name>
+                  <Actor>{person.name}</Actor>
+                  <Strong>{person.job}</Strong>
+                </Name>
+              </PersonTitle>
+            ))}
+          </CastRow>
+        </Cast>
       </Container>
     </>
   );
