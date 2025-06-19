@@ -1,0 +1,21 @@
+{
+  "api": {
+    "tmdb": {
+      "baseUrl": "https://api.themoviedb.org/3",
+      "apiKey": "paste_your_tmdb_api_key_here",
+      "imageBaseUrl": "https://image.tmdb.org/t/p/",
+      "language": "en-US",
+      "enabled": true
+    },
+    "fallback": {
+      "useMockData": false,
+      "mockDataDelay": 1000
+    }
+  },
+  "app": {
+    "name": "MovieBrowser",
+    "version": "1.0.0",
+    "maxResults": 500,
+    "itemsPerPage": 20
+  }
+}

@@ -62,6 +62,12 @@ export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
 
+  form {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
   }
@@ -91,10 +97,16 @@ export const SearchIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   
   img {
     width: 16px;
     height: 16px;
     opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover img {
+    opacity: 1;
   }
 `;
