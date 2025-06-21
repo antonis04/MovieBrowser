@@ -10,6 +10,7 @@ import {
   SearchWrapper,
   SearchInput,
   LogoText,
+  SearchIcon,
 } from "./styled";
 
 const Navigation = () => {
@@ -38,6 +39,11 @@ const Navigation = () => {
           </Item>
         </List>
       </NavMenu>
+
+      <SearchWrapper>
+        <SearchIcon />
+        <SearchInput type="text" placeholder="Search for movies..." />
+      </SearchWrapper>
     </StyledNav>
   );
 };
