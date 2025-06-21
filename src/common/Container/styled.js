@@ -9,7 +9,6 @@ export const HeaderPage = styled.div`
   position: relative;
   width: 100%;
   height: 770px;
-  margin-top: 93px;
   overflow: hidden;
   background-color: ${({ theme }) => theme.color.black};
   overflow: hidden;
