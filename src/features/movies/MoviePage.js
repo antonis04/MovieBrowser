@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
+import { ReactComponent as PosterBig } from "../../images/PosterBig.svg";
 import { GlobalStyle } from "../../GlobalStyle.js";
 import { fetchMovieCredits } from "../../api/api.js";
-import { Container } from "../../common/Container/styled.js";
+import {
+  Container,
+  HeaderContent,
+  HeaderPage,
+  ImagePosterBig,
+  Overlay,
+  HeaderTitle,
+  HeaderDetails,
+  HeaderVotes,
+  HeaderNote,
+  HeaderSummary,
+  HeaderRow,
+} from "../../common/Container/styled.js";
 import {
   Content,
   Description,
@@ -52,6 +65,26 @@ const MoviePage = () => {
   return (
     <>
       <GlobalStyle />
+      <HeaderPage>
+        <ImagePosterBig>
+          <PosterBig />
+          <HeaderContent>
+            <HeaderTitle>Mulan long title</HeaderTitle>
+            <HeaderDetails>
+              <HeaderRow>
+                <HeaderSummary>
+                  <StarSVG />
+                  7,8
+                </HeaderSummary>
+                <HeaderNote>/10</HeaderNote>
+              </HeaderRow>
+
+              <HeaderVotes>335 votes</HeaderVotes>
+            </HeaderDetails>
+          </HeaderContent>
+        </ImagePosterBig>
+        <Overlay />
+      </HeaderPage>
       <Container>
         <Wrapper>
           <PosterSVG />
