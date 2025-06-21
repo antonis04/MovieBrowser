@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import SearchSVG from "../../components/SearchSVG/index.js";
 
 export const StyledNav = styled.nav`
   background: ${({ theme }) => theme.color.black};
@@ -63,5 +64,34 @@ export const Item = styled.li`
     &:hover {
       color: ${({ theme }) => theme.color.grey};
     }
+  }
+`;
+
+export const SearchWrapper = styled.div`
+  width: 300px;
+  position: relative;
+`;
+
+export const SearchIcon = styled(SearchSVG)`
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  padding: 8px 16px 8px 44px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  background-color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.black};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.color.lynch};
   }
 `;
