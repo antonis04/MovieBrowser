@@ -22,6 +22,7 @@ export const theme = {
     blue: "#0044CC",
     grey: "#E4E6F0",
     darkergrey: "#7E839A",
+    lynch: "#627489",
     postergrey: "#C4C4C4",
     stormgrey: "#74788B",
     black: "#000000",
