@@ -7,19 +7,23 @@ import PeoplePage from "./features/people/PeoplePage.js";
 import MovieList from "./features/movies/MovieList.js";
 import MoviePage from "./features/movies/MoviePage.js";
 import PeopleList from "./features/people/PeopleList.js";
+import HomePage from "./components/HomePage";
+import { SearchProvider } from "./contexts/SearchContext";
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<MoviePage />} />
-          <Route path="/peoplelist" element={<PeopleList />} />
-          <Route path="/movielist" element={<MovieList />} />
-          <Route path="/peoplepage" element={<PeoplePage />} />
-        </Routes>
-      </Router>
+      <SearchProvider>
+        <Router>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movielist" element={<MoviePage />} />
+            <Route path="/peoplelist" element={<PeopleList />} />
+            <Route path="/peoplepage" element={<PeoplePage />} />
+          </Routes>
+        </Router>
+      </SearchProvider>
     </Provider>
   );
 }
