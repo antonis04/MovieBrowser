@@ -13,8 +13,7 @@ export const theme = {
     tabletMax: 991,
     laptopMax: 1400,
     DesktopMax: 1723,
-  },
-  color: {
+  },  color: {
     white: "#FFFFFF",
     lightblue: "#D6E4FF",
     yellow: "#FCD420",
@@ -22,9 +21,7 @@ export const theme = {
     blue: "#0044CC",
     grey: "#E4E6F0",
     darkergrey: "#7E839A",
-    lynch: "#627489",
     postergrey: "#C4C4C4",
-    stormgrey: "#74788B",
     black: "#000000",
-  },
+  }
 };

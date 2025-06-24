@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Camera from "../../components/CameraSVG/index.js";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSearch } from "../../contexts/SearchContext";
 import {
   List,
   Item,
@@ -14,6 +15,41 @@ import {
 } from "./styled";
 
 const Navigation = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const { handleSearch, resetSearch, searchQuery, isSearching } = useSearch();
+  const navigate = useNavigate();
+
+  // Sync local search input with global search state
+  useEffect(() => {
+    if (!isSearching) {
+      setSearchInput("");
+    }
+  }, [isSearching]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      handleSearch(searchInput.trim());
+      // Navigate to home page to show search results
+      navigate("/");
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    const newValue = e.target.value;
+    setSearchInput(newValue);
+
+    // If the search input is cleared, reset to popular movies
+    if (newValue.trim() === "") {
+      resetSearch();
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit(e);
+    }
+  };
   return (
     <StyledNav>
       <Logo>
@@ -41,8 +77,16 @@ const Navigation = () => {
       </NavMenu>
 
       <SearchWrapper>
-        <SearchIcon />
-        <SearchInput type="text" placeholder="Search for movies..." />
+        <form onSubmit={handleSearchSubmit}>
+          <SearchInput
+            type="text"
+            placeholder="Search for movies..."
+            value={searchInput}
+            onChange={handleSearchChange}
+            onKeyPress={handleKeyPress}
+          />
+          <SearchIcon onClick={handleSearchSubmit} />
+        </form>
       </SearchWrapper>
     </StyledNav>
   );

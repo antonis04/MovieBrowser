@@ -74,17 +74,18 @@ export const SearchWrapper = styled.div`
 
 export const SearchIcon = styled(SearchSVG)`
   position: absolute;
-  left: 16px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  pointer-events: none;
+  cursor: pointer;
+  z-index: 1;
 `;
 
 export const SearchInput = styled.input`
   width: 100%;
-  padding: 8px 16px 8px 44px;
+  padding: 8px 44px 8px 16px;
   border-radius: 30px;
   border: none;
   font-size: 16px;
