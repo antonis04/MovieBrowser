@@ -18,7 +18,8 @@ function App() {
           <Navigation />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/movielist" element={<MoviePage />} />
+            <Route path="/movielist" element={<MovieList />} />
+            <Route path="/moviepage" element={<MoviePage />} />
             <Route path="/peoplelist" element={<PeopleList />} />
             <Route path="/peoplepage" element={<PeoplePage />} />
           </Routes>
