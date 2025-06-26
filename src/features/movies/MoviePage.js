@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
-import { ReactComponent as PosterBig } from "../../images/PosterBig.svg";
 import { GlobalStyle } from "../../GlobalStyle.js";
-import { fetchMovieCredits } from "../../api/api.js";
+import { fetchMovieCredits, fetchMovieDetails } from "../../api/api.js";
 import {
   Container,
   HeaderContent,
@@ -33,7 +32,6 @@ import {
   Summary,
   Votes,
 } from "../../common/Wrapper/styled.js";
-import PosterSVG from "../../components/PosterSVG/index.js";
 import StarSVG from "../../components/StarSVG/StarSVG.js";
 import {
   Actor,
@@ -43,89 +41,115 @@ import {
   PersonTitle,
   Picture,
 } from "../../common/Cast/styled.js";
+import { useParams } from "react-router-dom";
 
 const MoviePage = () => {
-  const [cast, setCast] = useState([]);
-  const [crew, setCrew] = useState([]);
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [credits, setCredits] = useState({ cast: [], crew: [] });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadCredits = async () => {
+    const loadMovieData = async () => {
       try {
-        const data = await fetchMovieCredits(337401);
-        setCast(data.cast);
-        setCrew(data.crew);
+        const movieData = await fetchMovieDetails(id);
+        const creditsData = await fetchMovieCredits(id);
+        setMovie(movieData);
+        setCredits(creditsData);
       } catch (error) {
-        console.error(error);
+        console.error("Error loading movie data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadCredits();
-  }, []);
+    loadMovieData();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!movie) return <div>Error loading movie data</div>;
 
   return (
     <>
       <GlobalStyle />
       <HeaderPage>
         <ImagePosterBig>
-          <PosterBig />
+          {movie.backdrop_path ? (
+            <img
+              src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+              alt={movie.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <EmptyPicture width="100%" height="400px" />
+          )}
           <HeaderContent>
-            <HeaderTitle>Mulan long title</HeaderTitle>
+            <HeaderTitle>{movie.title}</HeaderTitle>
             <HeaderDetails>
               <HeaderRow>
                 <HeaderSummary>
                   <StarSVG />
-                  7,8
+                  {movie.vote_average.toFixed(1)}
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
               </HeaderRow>
-
-              <HeaderVotes>335 votes</HeaderVotes>
+              <HeaderVotes>{movie.vote_count} votes</HeaderVotes>
             </HeaderDetails>
           </HeaderContent>
         </ImagePosterBig>
         <Overlay />
       </HeaderPage>
+
       <Container>
         <Wrapper>
-          <PosterSVG />
+          {movie.poster_path ? (
+            <Picture
+              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+              alt={movie.title}
+              style={{ borderRadius: "12px" }}
+            />
+          ) : (
+            <EmptyPicture width={200} height={300} />
+          )}
           <Content>
-            <Title>Mulan</Title>
-            <Year>2020</Year>
+            <Title>{movie.title}</Title>
+            <Year>{new Date(movie.release_date).getFullYear()}</Year>
             <Section>
               <Paragraph>
-                <Strong>Production:</Strong> China, United Sates of America
+                <Strong>Genres:</Strong>{" "}
+                {movie.genres.map((g) => g.name).join(", ")}
               </Paragraph>
               <Paragraph>
-                <Strong>Release date:</Strong> 24.10.2020
+                <Strong>Release date:</Strong> {movie.release_date}
+              </Paragraph>
+              <Paragraph>
+                <Strong>Runtime:</Strong> {movie.runtime} min
               </Paragraph>
             </Section>
+
             <Tags>
-              <Tag>Action</Tag>
-              <Tag>Adventure</Tag>
-              <Tag>Drama</Tag>
+              {movie.genres.map((genre) => (
+                <Tag key={genre.id}>{genre.name}</Tag>
+              ))}
             </Tags>
+
             <Details>
               <DetailStar>
                 <StarSVG />
-                <Summary>7,8</Summary>
+                <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>
-              <Votes>335 votes</Votes>
+              <Votes>{movie.vote_count} votes</Votes>
             </Details>
 
-            <Description>
-              A young Chinese maiden disguises herself as a male warrior in
-              order to save her father. Disguises herself as a male warrior in
-              order to save her father. A young Chinese maiden disguises herself
-              as a male warrior in order to save her father.
-            </Description>
+            <Description>{movie.overview}</Description>
           </Content>
         </Wrapper>
 
         <Cast>
           <Title>Cast</Title>
           <CastRow>
-            {cast.map((person) => (
+            {credits.cast.map((person) => (
               <PersonTitle key={person.id}>
                 {person.profile_path ? (
                   <Picture
@@ -147,7 +171,7 @@ const MoviePage = () => {
         <Cast>
           <Title>Crew</Title>
           <CastRow>
-            {crew.map((person) => (
+            {credits.crew.map((person) => (
               <PersonTitle key={person.id}>
                 {person.profile_path ? (
                   <Picture
