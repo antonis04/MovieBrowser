@@ -19,7 +19,6 @@ const Navigation = () => {
   const { handleSearch, resetSearch, searchQuery, isSearching } = useSearch();
   const navigate = useNavigate();
 
-  // Sync local search input with global search state
   useEffect(() => {
     if (!isSearching) {
       setSearchInput("");
@@ -30,7 +29,6 @@ const Navigation = () => {
     e.preventDefault();
     if (searchInput.trim()) {
       handleSearch(searchInput.trim());
-      // Navigate to home page to show search results
       navigate("/");
     }
   };
@@ -39,7 +37,6 @@ const Navigation = () => {
     const newValue = e.target.value;
     setSearchInput(newValue);
 
-    // If the search input is cleared, reset to popular movies
     if (newValue.trim() === "") {
       resetSearch();
     }
