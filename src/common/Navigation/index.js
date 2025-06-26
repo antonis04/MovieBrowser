@@ -16,7 +16,7 @@ import {
 
 const Navigation = () => {
   const [searchInput, setSearchInput] = useState("");
-  const { handleSearch, resetSearch, searchQuery, isSearching } = useSearch();
+  const { handleSearch, resetSearch, isSearching } = useSearch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,9 +66,6 @@ const Navigation = () => {
           </Item>
           <Item>
             <NavLink to="/peoplelist">People</NavLink>
-          </Item>
-          <Item>
-            <NavLink to="/peoplepage">Actors</NavLink>
           </Item>
         </List>
       </NavMenu>
