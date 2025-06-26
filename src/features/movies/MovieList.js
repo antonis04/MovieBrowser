@@ -30,17 +30,6 @@ const MovieList = () => {
     loadMovies();
   }, []);
 
-  const handleClick = async () => {
-    try {
-      const moviesData = await fetchPopularMovies();
-      setMovies(moviesData);
-      setError(null);
-    } catch (error) {
-      setError("Error fetching movies!");
-    }
-  };
-  console.log({ Cast, CastRow, Name, Picture, PersonTitle });
-
   return (
     <>
       <GlobalStyle />
