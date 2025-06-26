@@ -63,3 +63,19 @@ export const fetchPersonCredits = async (personId) => {
   const data = await response.json();
   return data.cast;
 };
+
+export const fetchPopularPeople = async () => {
+  const response = await fetch(`${API_URL}/person/popular`, {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch people");
+  }
+
+  const data = await response.json();
+  return data.results;
+};
