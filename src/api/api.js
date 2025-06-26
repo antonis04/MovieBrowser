@@ -31,3 +31,35 @@ export const fetchMovieCredits = async (movieId) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchPersonDetails = async (personId) => {
+  const response = await fetch(`${API_URL}/person/${personId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch person details");
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export const fetchPersonCredits = async (personId) => {
+  const response = await fetch(`${API_URL}/person/${personId}/movie_credits`, {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch person credits");
+  }
+
+  const data = await response.json();
+  return data.cast;
+};
