@@ -21,7 +21,7 @@ function App() {
             <Route path="/movielist" element={<MovieList />} />
             <Route path="/movie/:id" element={<MoviePage />} />
             <Route path="/peoplelist" element={<PeopleList />} />
-            <Route path="/people:id" element={<PeoplePage />} />
+            <Route path="/people/:id" element={<PeoplePage />} />
           </Routes>
         </Router>
       </SearchProvider>
