@@ -79,3 +79,19 @@ export const fetchPopularPeople = async () => {
   const data = await response.json();
   return data.results;
 };
+
+export const fetchMovieDetails = async (movieId) => {
+  const response = await fetch(`${API_URL}/movie/${movieId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch movie details");
+  }
+
+  const data = await response.json();
+  return data;
+};
