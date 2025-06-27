@@ -42,6 +42,15 @@ export const Tags = styled.ul`
   display: flex;
   flex-wrap: wrap;
   margin: 16px -8px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    margin: 12px -4px;
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 480px) {
+    margin: 8px -2px;
+  }
 `;
 
 export const Tag = styled.li`
@@ -50,6 +59,18 @@ export const Tag = styled.li`
   font-size: 14px;
   margin: 8px;
   border-radius: 5px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin: 4px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px 8px;
+    font-size: 12px;
+    margin: 2px;
+  }
 `;
 
 export const Description = styled.p`
@@ -106,6 +127,19 @@ export const Details = styled.div`
   gap: 12px;
   padding-left: 0%;
   margin: 16px -8px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: auto;
+    height: auto;
+    margin: 12px 0;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 6px;
+    margin: 8px 0;
+  }
 `;
 
 export const DetailStar = styled.div`
@@ -115,6 +149,13 @@ export const DetailStar = styled.div`
   gap: 8px;
   display: flex;
   align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: auto;
+    height: auto;
+    top: auto;
+    gap: 6px;
+  }
 `;
 
 export const Summary = styled.div`
@@ -125,6 +166,16 @@ export const Summary = styled.div`
   line-height: 130%;
   letter-spacing: 0px;
   vertical-align: middle;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: auto;
+    height: auto;
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 export const Note = styled.div`
@@ -137,6 +188,18 @@ export const Note = styled.div`
   line-height: 120%;
   letter-spacing: 0px;
   vertical-align: middle;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 export const Votes = styled.div`
@@ -149,4 +212,16 @@ export const Votes = styled.div`
   line-height: 120%;
   letter-spacing: 0px;
   vertical-align: middle;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: auto;
+    height: auto;
+    top: auto;
+    left: auto;
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
