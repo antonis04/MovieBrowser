@@ -29,7 +29,6 @@ const Navigation = () => {
     e.preventDefault();
     if (searchInput.trim()) {
       handleSearch(searchInput.trim());
-      navigate("/");
     }
   };
 
@@ -58,9 +57,6 @@ const Navigation = () => {
 
       <NavMenu>
         <List>
-          <Item>
-            <NavLink to="/">Home</NavLink>
-          </Item>
           <Item>
             <NavLink to="/movielist">Movies</NavLink>
           </Item>
