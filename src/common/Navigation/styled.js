@@ -60,9 +60,18 @@ export const Item = styled.li`
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.color.white};
+    padding: 8px 24px;
+    border-radius: 33px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    display: block;
 
     &:hover {
       color: ${({ theme }) => theme.color.grey};
+    }
+
+    &.active {
+      border: 1px solid ${({ theme }) => theme.color.white};
     }
   }
 `;
@@ -74,18 +83,19 @@ export const SearchWrapper = styled.div`
 
 export const SearchIcon = styled(SearchSVG)`
   position: absolute;
-  right: 16px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   z-index: 1;
+  color: #9CA3AF;
 `;
 
 export const SearchInput = styled.input`
   width: 100%;
-  padding: 8px 44px 8px 16px;
+  padding: 8px 16px 8px 44px;
   border-radius: 30px;
   border: none;
   font-size: 16px;
