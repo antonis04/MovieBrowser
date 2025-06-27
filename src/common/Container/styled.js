@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   max-width: 1368px;
   margin: auto;
+  box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
@@ -29,6 +30,12 @@ export const ImagePosterBig = styled.div`
   z-index: 1;
   overflow: hidden;
 
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   svg {
     position: absolute;
     top: 0;
@@ -36,6 +43,13 @@ export const ImagePosterBig = styled.div`
     transform: translateX(-50%);
     height: 100%;
     width: auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    img {
+      object-fit: cover;
+      object-position: center top;
+    }
   }
 `;
 
