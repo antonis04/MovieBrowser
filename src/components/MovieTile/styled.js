@@ -26,19 +26,23 @@ export const MovieCard = styled.div`
 
 export const MoviePoster = styled.img`
   width: 100%;
-  height: 325px;
-  object-fit: cover;
+  height: auto;
+  min-height: 325px;
+  max-height: 485px;
+  object-fit: contain;
   border-radius: 5px;
   margin-bottom: 16px;
   background-color: ${({ theme }) => theme.color.postergrey};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    height: 280px;
+    min-height: 280px;
+    max-height: 420px;
     margin-bottom: 12px;
   }
 
   @media (max-width: 480px) {
-    height: 240px;
+    min-height: 240px;
+    max-height: 360px;
     margin-bottom: 8px;
   }
 `;
