@@ -138,6 +138,57 @@ const mockGenres = [
   { id: 37, name: 'Western' }
 ];
 
+// Mock data fallback for people when API is not available
+const mockPopularPeople = {
+  page: 1,
+  results: [
+    {
+      id: 1,
+      name: 'Ryan Reynolds',
+      profile_path: '/2Zy8nUBQY8y61KgWZKHZnJlyy2N.jpg',
+      known_for_department: 'Acting',
+      popularity: 45.5
+    },
+    {
+      id: 2,
+      name: 'Scarlett Johansson',
+      profile_path: '/3JTEc2tGUact9c0WktvpeJ9pajn.jpg',
+      known_for_department: 'Acting',
+      popularity: 42.1
+    },
+    {
+      id: 3,
+      name: 'Chris Evans',
+      profile_path: '/3bOGNsHlrswhyW79uvIHH1V43JI.jpg',
+      known_for_department: 'Acting',
+      popularity: 40.8
+    },
+    {
+      id: 4,
+      name: 'Emma Stone',
+      profile_path: '/wqEypkGUUKVCjIb7ROQNKDRMDSQ.jpg',
+      known_for_department: 'Acting',
+      popularity: 39.2
+    },
+    {
+      id: 5,
+      name: 'Leonardo DiCaprio',
+      profile_path: '/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg',
+      known_for_department: 'Acting',
+      popularity: 38.5
+    },
+    {
+      id: 6,
+      name: 'Jennifer Lawrence',
+      profile_path: '/k6l8BWsInOOyUbfcFnlKlwY4Fjw.jpg',
+      known_for_department: 'Acting',
+      popularity: 37.9
+    }
+  ],
+  total_pages: 500,
+  total_results: 10000
+};
+
 // API service methods
 export const movieService = {  // Get popular movies
   getPopularMovies: async (page = 1) => {
@@ -243,6 +294,97 @@ export const movieService = {  // Get popular movies
       return response.data;
     } catch (error) {
       console.error('Error fetching movie details:', error);
+      throw error;
+    }
+  },
+};
+
+// People service methods
+export const peopleService = {
+  // Get popular people
+  getPopularPeople: async (page = 1) => {
+    // Check if API is enabled and properly configured
+    if (!API_ENABLED || fallback.useMockData) {
+      console.warn('🎭 Using mock people data - API not enabled or configured');
+      // Return mock data with pagination simulation
+      await new Promise(resolve => setTimeout(resolve, fallback.mockDataDelay));
+      return {
+        ...mockPopularPeople,
+        page: page
+      };
+    }
+
+    try {
+      console.log(`📡 Fetching popular people from TMDB API - Page ${page}`);
+      const response = await tmdbApi.get('/person/popular', {
+        params: { page }
+      });
+      console.log(`✅ Successfully fetched ${response.data.results.length} people`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Error fetching popular people:', error.response?.status, error.message);
+      // Fallback to mock data on error
+      console.log('🎭 Falling back to mock people data');
+      return {
+        ...mockPopularPeople,
+        page: page
+      };
+    }
+  },
+
+  // Search people
+  searchPeople: async (query, page = 1) => {
+    // Check if API is enabled and properly configured
+    if (!API_ENABLED || fallback.useMockData) {
+      console.warn('🎭 Using mock people search data - API not enabled or configured');
+      await new Promise(resolve => setTimeout(resolve, fallback.mockDataDelay));
+      
+      // Filter mock data based on search query
+      const filteredPeople = mockPopularPeople.results.filter(person =>
+        person.name.toLowerCase().includes(query.toLowerCase())
+      );
+      
+      return {
+        page: page,
+        results: filteredPeople,
+        total_pages: Math.ceil(filteredPeople.length / 20),
+        total_results: filteredPeople.length
+      };
+    }
+
+    try {
+      console.log(`📡 Searching people: "${query}" - Page ${page}`);
+      const response = await tmdbApi.get('/search/person', {
+        params: { 
+          query: query,
+          page: page
+        }
+      });
+      console.log(`✅ Found ${response.data.results.length} people for "${query}"`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Error searching people:', error.response?.status, error.message);
+      // Fallback to mock search on error
+      const filteredPeople = mockPopularPeople.results.filter(person =>
+        person.name.toLowerCase().includes(query.toLowerCase())
+      );
+      
+      return {
+        page: page,
+        results: filteredPeople,
+        total_pages: Math.ceil(filteredPeople.length / 20),
+        total_results: filteredPeople.length
+      };
+    }
+  },
+
+  // Get person details
+  getPersonDetails: async (personId) => {
+    try {
+      const response = await tmdbApi.get(`/person/${personId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching person details:', error);
       throw error;
     }
   },
