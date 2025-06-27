@@ -10,6 +10,19 @@ export const StyledNav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  box-sizing: border-box;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    padding: 0 16px;
+    height: 80px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 12px;
+    height: auto;
+    min-height: 80px;
+  }
 `;
 
 export const Logo = styled.div`
@@ -38,12 +51,32 @@ export const LogoText = styled.span`
   letter-spacing: -1.5px;
   text-transform: capitalize;
   margin-left: 12px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 20px;
+    line-height: 32px;
+    margin-left: 8px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
 `;
 
 export const NavMenu = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    flex-grow: 0;
+    margin: 0 16px;
+  }
+
+  @media (max-width: 480px) {
+    margin: 0 8px;
+  }
 `;
 
 export const List = styled.ul`
@@ -52,6 +85,14 @@ export const List = styled.ul`
   gap: 20px;
   margin: 0;
   padding: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 8px;
+  }
 `;
 
 export const Item = styled.li`
@@ -73,12 +114,30 @@ export const Item = styled.li`
     &.active {
       border: 1px solid ${({ theme }) => theme.color.white};
     }
+
+    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+      padding: 6px 16px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 4px 12px;
+      font-size: 13px;
+    }
   }
 `;
 
 export const SearchWrapper = styled.div`
   width: 300px;
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 200px;
+  }
+
+  @media (max-width: 480px) {
+    width: 150px;
+  }
 `;
 
 export const SearchIcon = styled(SearchSVG)`
@@ -101,8 +160,19 @@ export const SearchInput = styled.input`
   font-size: 16px;
   background-color: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.black};
+  box-sizing: border-box;
 
   &::placeholder {
     color: ${({ theme }) => theme.color.lynch};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    padding: 6px 12px 6px 36px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px 8px 4px 32px;
+    font-size: 13px;
   }
 `;
