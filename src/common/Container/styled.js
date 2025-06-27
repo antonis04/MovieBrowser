@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   max-width: 1368px;
   margin: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    padding: 0 16px;
+  }
 `;
 
 export const HeaderPage = styled.div`
@@ -12,6 +16,10 @@ export const HeaderPage = styled.div`
   overflow: hidden;
   background-color: ${({ theme }) => theme.color.black};
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    height: 420px;
+  }
 `;
 
 export const ImagePosterBig = styled.div`
@@ -47,6 +55,13 @@ export const HeaderContent = styled.div`
   z-index: 3;
   padding: 50px;
   color: white;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    left: 0;
+    right: 0;
+    padding: 24px 16px;
+    text-align: center;
+  }
 `;
 
 export const HeaderTitle = styled.div`
@@ -55,6 +70,10 @@ export const HeaderTitle = styled.div`
   line-height: 120%;
   letter-spacing: 0px;
   vertical-align: middle;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 32px;
+  }
 `;
 
 export const HeaderDetails = styled.div`
@@ -62,6 +81,11 @@ export const HeaderDetails = styled.div`
   flex-direction: column;
   gap: 8px;
   margin-top: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    align-items: center;
+    margin-top: 16px;
+  }
 `;
 
 export const HeaderRow = styled.div`
@@ -73,6 +97,10 @@ export const HeaderRow = styled.div`
 export const HeaderSummary = styled.div`
   font-weight: 500;
   font-size: 22px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 18px;
+  }
 `;
 
 export const HeaderNote = styled.div`

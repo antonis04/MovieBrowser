@@ -7,6 +7,12 @@ export const Wrapper = styled.article`
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 40px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    grid-template-columns: 1fr;
+    grid-gap: 24px;
+    padding: 16px;
+  }
 `;
 
 export const Content = styled.div``;
@@ -15,10 +21,19 @@ export const Title = styled.header`
   font-weight: 600;
   font-size: 36px;
   margin-bottom: 24px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
 `;
 
 export const Year = styled.div`
   font-size: 22px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 18px;
+  }
 `;
 
 export const Tags = styled.ul`
@@ -41,6 +56,11 @@ export const Description = styled.p`
   font-size: 20px;
   margin: 24px 0 0 0;
   line-height: 1.6;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 16px;
+    margin: 16px 0 0 0;
+  }
 `;
 
 export const Section = styled.section`
@@ -48,12 +68,21 @@ export const Section = styled.section`
   flex-direction: column;
   gap: 40px;
   margin: 24px 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    gap: 16px;
+    margin: 16px 0;
+  }
 `;
 export const Paragraph = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 120%;
   letter-spacing: 0px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 16px;
+  }
 `;
 
 export const Strong = styled.span`
@@ -61,6 +90,10 @@ export const Strong = styled.span`
   font-size: 18px;
   color: ${({ theme }) => theme.color.stormgrey};
   margin-right: 4px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 16px;
+  }
 `;
 
 export const Details = styled.div`

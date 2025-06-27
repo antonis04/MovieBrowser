@@ -2,30 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GlobalStyle } from "../../GlobalStyle";
 import { Container } from "../../common/Container/styled";
-import {
-  Cast,
-  CastRow,
-  Name,
-  Picture,
-  PersonTitle,
-  Actor,
-} from "../../common/Cast/styled";
-import { Strong, Title } from "../../common/Wrapper/styled";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
+import { Title } from "../../common/Wrapper/styled";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
+import MovieTile from "../../components/MovieTile";
 import { movieService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
+import { MoviesGrid } from "./styled";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
+
+  // Fetch genres on component mount
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const genresData = await movieService.getGenres();
+        setGenres(genresData);
+      } catch (err) {
+        console.error("Error fetching genres:", err);
+        // Don't set error for genres, just continue without them
+      }
+    };
+
+    fetchGenres();
+  }, []);
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -127,36 +136,17 @@ const MovieList = () => {
 
         {movies.length > 0 && (
           <>
-            <Cast>
-              <CastRow>
-                {movies.map((movie) => (
-                  <Link
-                    to={`/movie/${movie.id}`}
-                    key={movie.id}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <PersonTitle>
-                      {movie.poster_path ? (
-                        <Picture
-                          src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
-                          alt={movie.title}
-                        />
-                      ) : (
-                        <EmptyPicture width={177} height={264} />
-                      )}
-                      <Name>
-                        <Actor>{movie.title}</Actor>
-                        <Strong>
-                          {movie.release_date
-                            ? movie.release_date.slice(0, 4)
-                            : "Unknown"}
-                        </Strong>
-                      </Name>
-                    </PersonTitle>
-                  </Link>
-                ))}
-              </CastRow>
-            </Cast>
+            <MoviesGrid>
+              {movies.map((movie) => (
+                <Link
+                  to={`/movie/${movie.id}`}
+                  key={movie.id}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <MovieTile movie={movie} genres={genres} />
+                </Link>
+              ))}
+            </MoviesGrid>
             
             <Pagination
               currentPage={currentPage}

@@ -6,6 +6,12 @@ export const Cast = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    padding: 0;
+    gap: 24px;
+  }
 `;
 
 export const CastRow = styled.div`
@@ -13,6 +19,12 @@ export const CastRow = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   justify-content: flex-start;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
 `;
 
 export const PersonTitle = styled.div`
@@ -25,6 +37,12 @@ export const PersonTitle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 324px;
+    padding: 16px;
+  }
 `;
 
 export const Name = styled.div``;
@@ -35,6 +53,10 @@ export const Actor = styled.div`
   line-height: 130%;
   letter-spacing: 0px;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 18px;
+  }
 `;
 
 export const Picture = styled.img`
@@ -43,4 +65,12 @@ export const Picture = styled.img`
   margin-top: -6px;
   border-radius: 5px;
   object-fit: cover;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 292px;
+    height: auto;
+    aspect-ratio: 177/264;
+    margin-top: 0;
+  }
 `;
