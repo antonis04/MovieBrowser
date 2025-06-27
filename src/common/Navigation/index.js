@@ -49,7 +49,7 @@ const Navigation = () => {
   return (
     <StyledNav>
       <Logo>
-        <NavLink to="/">
+        <NavLink to="/movielist">
           <Camera />
           <LogoText>Movies Browser</LogoText>
         </NavLink>
