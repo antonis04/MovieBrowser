@@ -7,7 +7,6 @@ import PeoplePage from "./features/people/PeoplePage.js";
 import MovieList from "./features/movies/MovieList.js";
 import MoviePage from "./features/movies/MoviePage.js";
 import PeopleList from "./features/people/PeopleList.js";
-import HomePage from "./components/HomePage";
 import { SearchProvider } from "./contexts/SearchContext";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
         <Router>
           <Navigation />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<MovieList />} />
             <Route path="/movielist" element={<MovieList />} />
             <Route path="/movie/:id" element={<MoviePage />} />
             <Route path="/peoplelist" element={<PeopleList />} />
