@@ -11,7 +11,8 @@ export const LoadingContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
-  min-height: 400px;
+  min-height: 60vh;
+  width: 100%;
 `;
 
 export const LoadingSpinner = styled.div`
