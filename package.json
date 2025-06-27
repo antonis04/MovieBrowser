@@ -2,7 +2,7 @@
   "name": "movie-browser",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://antonis04.github.io/MovieBrowser/",
+  "//homepage": "https://antonis04.github.io/MovieBrowser/",
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
