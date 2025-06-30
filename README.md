@@ -1,6 +1,13 @@
-# MovieBrowser
+# 🎬 MovieBrowser
 
 A web application for browsing and managing movies and people (actors, etc.), built with React using Redux Toolkit and React Router.
+
+---
+
+## Live Demo
+
+Check out the live version of the app:<br>
+[Movie Browser Live Demo](https://antonis04.github.io/MovieBrowser/)
 
 ---
 
@@ -24,6 +31,12 @@ A web application for browsing and managing movies and people (actors, etc.), bu
 - `src/components/Poster.jsx` — example SVG component
 - `src/App.js` — main app component with routing and Redux Provider
 - `src/store.js` — Redux Toolkit store configuration
+
+---
+
+## API
+
+This project uses an API provided by [The Movie Database](https://www.themoviedb.org/).
 
 ---
 
