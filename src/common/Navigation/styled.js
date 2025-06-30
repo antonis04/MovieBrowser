@@ -104,6 +104,7 @@ export const Item = styled.li`
     padding: 8px 24px;
     border-radius: 33px;
     border: 1px solid transparent;
+    text-transform: uppercase;
     transition: all 0.2s ease;
     display: block;
 
