@@ -80,6 +80,16 @@ const MoviePage = () => {
     loadMovieData();
   }, [id]);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("pl-PL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }); // Format DD.MM.RRRR
+  };
+
   if (loading) {
     return (
       <>
@@ -136,7 +146,11 @@ const MoviePage = () => {
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
               </HeaderRow>
-              <HeaderVotes>{movie.vote_count} votes</HeaderVotes>
+              <HeaderVotes>
+                {movie.vote_count === 0
+                  ? "No votes"
+                  : `${movie.vote_count} votes`}
+              </HeaderVotes>
             </HeaderDetails>
           </HeaderContent>
         </ImagePosterBig>
@@ -158,12 +172,17 @@ const MoviePage = () => {
             <Title>{movie.title}</Title>
             <Year>{new Date(movie.release_date).getFullYear()}</Year>
             <Section>
+              {movie.production_countries &&
+                movie.production_countries.length > 0 && (
+                  <Paragraph>
+                    <Strong>Production:</Strong>{" "}
+                    {movie.production_countries
+                      .map((country) => country.name)
+                      .join(", ")}
+                  </Paragraph>
+                )}
               <Paragraph>
-                <Strong>Genres:</Strong>{" "}
-                {movie.genres.map((g) => g.name).join(", ")}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Release date:</Strong> {movie.release_date}
+                <Strong>Release date:</Strong> {formatDate(movie.release_date)}
               </Paragraph>
               <Paragraph>
                 <Strong>Runtime:</Strong> {movie.runtime} min
@@ -182,7 +201,11 @@ const MoviePage = () => {
                 <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>
-              <Votes>{movie.vote_count} votes</Votes>
+              <Votes>
+                {movie.vote_count === 0
+                  ? "No votes"
+                  : `${movie.vote_count} votes`}
+              </Votes>{" "}
             </Details>
 
             <Description>{movie.overview}</Description>
