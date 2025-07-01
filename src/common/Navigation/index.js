@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Camera from "../../components/CameraSVG/index.js";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSearch } from "../../contexts/SearchContext";
@@ -18,6 +18,7 @@ const Navigation = () => {
   const [searchInput, setSearchInput] = useState("");
   const { handleSearch, resetSearch, isSearching } = useSearch();
   const navigate = useNavigate();
+  const debounceTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (!isSearching) {
@@ -27,8 +28,12 @@ const Navigation = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
     if (searchInput.trim()) {
       handleSearch(searchInput.trim());
+      navigate("/movielist");
     }
   };
 
@@ -36,10 +41,28 @@ const Navigation = () => {
     const newValue = e.target.value;
     setSearchInput(newValue);
 
-    if (newValue.trim() === "") {
-      resetSearch();
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
     }
+
+    debounceTimeoutRef.current = setTimeout(() => {
+      if (newValue.trim() === "") {
+        resetSearch();
+        navigate("/movielist");
+      } else {
+        handleSearch(newValue.trim());
+        navigate("/movielist");
+      }
+    }, 500);
   };
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
