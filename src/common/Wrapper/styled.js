@@ -20,6 +20,7 @@ export const Content = styled.div``;
 export const Title = styled.header`
   font-weight: 600;
   font-size: 36px;
+  padding-top: 50px;
   margin-bottom: 24px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {

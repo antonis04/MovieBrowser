@@ -9,7 +9,7 @@ export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 30px;
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -32,6 +32,7 @@ export const Logo = styled.div`
     display: flex;
     align-items: center;
     text-decoration: none;
+    cursor: pointer;
     color: ${({ theme }) => theme.color.white};
 
     &:hover {
@@ -107,6 +108,8 @@ export const Item = styled.li`
     text-transform: uppercase;
     transition: all 0.2s ease;
     display: block;
+    cursor: pointer;
+    transition: background-color 0.3s;
 
     &:hover {
       color: ${({ theme }) => theme.color.grey};
