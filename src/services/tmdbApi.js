@@ -217,14 +217,17 @@ export const movieService = {
         setTimeout(resolve, fallback.mockDataDelay * 0.8)
       );
 
+      const lowerCaseQuery = query.toLowerCase();
+
       const filteredMovies = mockPopularMovies.results.filter((movie) =>
-        movie.title.toLowerCase().includes(query.toLowerCase())
+        movie.title.toLowerCase().startsWith(lowerCaseQuery)
       );
 
       return {
         page: page,
         results: filteredMovies,
-        total_pages: filteredMovies.length > 0 ? 1 : 0,
+        total_pages:
+          filteredMovies.length > 0 ? Math.ceil(filteredMovies.length / 20) : 0,
         total_results: filteredMovies.length,
       };
     }
@@ -363,7 +366,7 @@ export const peopleService = {
       );
 
       const filteredPeople = mockPopularPeople.results.filter((person) =>
-        person.name.toLowerCase().includes(query.toLowerCase())
+        person.name.toLowerCase().startsWith(lowerCaseQuery)
       );
 
       return {
