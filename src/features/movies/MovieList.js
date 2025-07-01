@@ -84,7 +84,7 @@ const MovieList = () => {
 
   const sectionTitle = isSearching
     ? `Search results for "${searchQuery}"`
-    : "Popular Movies";
+    : "Popular movies";
 
   if (loading) {
     return (
