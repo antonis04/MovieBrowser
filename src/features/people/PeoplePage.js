@@ -21,6 +21,8 @@ import {
 import { GlobalStyle } from "../../GlobalStyle";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
 import { useEffect, useState } from "react";
+import { Loading } from "../../common/Loading";
+import { Error } from "../../common/Error";
 
 const PeoplePage = () => {
   const { id } = useParams();
@@ -44,8 +46,8 @@ const PeoplePage = () => {
     loadData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!person) return <div>Error loading person data</div>;
+  if (loading) return <Loading/>;
+  if (!person) return <Error/>;
 
   return (
     <>
