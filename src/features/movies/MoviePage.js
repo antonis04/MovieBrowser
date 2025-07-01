@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
 import { GlobalStyle } from "../../GlobalStyle.js";
-import { fetchMovieCredits, fetchMovieDetails } from "../../api/api.js";
+import { movieService } from "../../services/tmdbApi.js";
 import {
   Container,
   HeaderContent,
@@ -52,8 +52,9 @@ const MoviePage = () => {
   useEffect(() => {
     const loadMovieData = async () => {
       try {
-        const movieData = await fetchMovieDetails(id);
-        const creditsData = await fetchMovieCredits(id);
+        const movieData = await movieService.getMovieDetails(id);
+        const creditsData = await movieService.getMovieCredits(id);
+
         setMovie(movieData);
         setCredits(creditsData);
       } catch (error) {

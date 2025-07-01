@@ -4,17 +4,27 @@ import apiConfig from "../config/api-config.json";
 const { api, app } = apiConfig;
 const { tmdb, fallback } = api;
 
-const API_KEY = tmdb.apiKey;
+const API_KEY = process.env.REACT_APP_API_KEY;
+const API_TOKEN = process.env.REACT_APP_API_TOKEN;
 const BASE_URL = tmdb.baseUrl;
 const IMAGE_BASE_URL = tmdb.imageBaseUrl;
 const LANGUAGE = tmdb.language;
-const API_ENABLED = tmdb.enabled && API_KEY !== "YOUR_API_KEY_HERE";
+const API_ENABLED =
+  tmdb.enabled &&
+  API_KEY &&
+  API_TOKEN &&
+  API_KEY !== "YOUR_API_KEY_HERE" &&
+  API_TOKEN !== "YOUR_API_TOKEN_HERE";
 
 const tmdbApi = axios.create({
   baseURL: BASE_URL,
   params: {
     api_key: API_KEY,
     language: LANGUAGE,
+  },
+  headers: {
+    Authorization: `Bearer ${API_TOKEN}`,
+    Accept: "application/json",
   },
 });
 
@@ -31,15 +41,22 @@ const mockPopularMovies = {
   page: 1,
   results: [
     {
-      id: 1,
-      title: "The Shawshank Redemption",
-      poster_path: "/q6y0Go1LiNG1sw1cNsjf5DWGRs.jpg",
-      release_date: "1994-09-23",
-      genre_ids: [18, 80],
-      vote_average: 9.3,
-      vote_count: 2654321,
+      id: 157336,
+      title: "Interstellar",
+      poster_path: "/gEU2QniE6E77NI6touwmTKpZg2f.jpg",
+      release_date: "2014-11-05",
+      genre_ids: [12, 18, 878],
+      vote_average: 8.4,
+      vote_count: 32000,
       overview:
-        "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      backdrop_path: "/ee3rVusWj5sA26Xq6aH1H4k61QG.jpg",
+      runtime: 169,
+      genres: [
+        { id: 12, name: "Adventure" },
+        { id: 18, name: "Drama" },
+        { id: 878, name: "Science Fiction" },
+      ],
     },
     {
       id: 2,
@@ -62,61 +79,6 @@ const mockPopularMovies = {
       vote_count: 2987654,
       overview:
         "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
-    },
-    {
-      id: 4,
-      title: "Pulp Fiction",
-      poster_path: "/dM2w364MScsjFf8pfMbaINrw6WT.jpg",
-      release_date: "1994-10-14",
-      genre_ids: [80, 18],
-      vote_average: 8.9,
-      vote_count: 2123456,
-      overview:
-        "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
-    },
-    {
-      id: 5,
-      title: "Forrest Gump",
-      poster_path: "/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
-      release_date: "1994-07-06",
-      genre_ids: [18, 10749],
-      vote_average: 8.8,
-      vote_count: 2456789,
-      overview:
-        "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man.",
-    },
-    {
-      id: 6,
-      title: "Inception",
-      poster_path: "/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
-      release_date: "2010-07-16",
-      genre_ids: [28, 878, 53],
-      vote_average: 8.8,
-      vote_count: 2345678,
-      overview:
-        "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-    },
-    {
-      id: 7,
-      title: "The Matrix",
-      poster_path: "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
-      release_date: "1999-03-31",
-      genre_ids: [28, 878],
-      vote_average: 8.7,
-      vote_count: 1987654,
-      overview:
-        "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-    },
-    {
-      id: 8,
-      title: "Goodfellas",
-      poster_path: "/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg",
-      release_date: "1990-09-21",
-      genre_ids: [18, 80],
-      vote_average: 8.7,
-      vote_count: 1654321,
-      overview:
-        "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito.",
     },
   ],
   total_pages: 500,
@@ -162,43 +124,45 @@ const mockPopularPeople = {
       known_for_department: "Acting",
       popularity: 42.1,
     },
-    {
-      id: 3,
-      name: "Chris Evans",
-      profile_path: "/3bOGNsHlrswhyW79uvIHH1V43JI.jpg",
-      known_for_department: "Acting",
-      popularity: 40.8,
-    },
-    {
-      id: 4,
-      name: "Emma Stone",
-      profile_path: "/wqEypkGUUKVCjIb7ROQNKDRMDSQ.jpg",
-      known_for_department: "Acting",
-      popularity: 39.2,
-    },
-    {
-      id: 5,
-      name: "Leonardo DiCaprio",
-      profile_path: "/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg",
-      known_for_department: "Acting",
-      popularity: 38.5,
-    },
-    {
-      id: 6,
-      name: "Jennifer Lawrence",
-      profile_path: "/k6l8BWsInOOyUbfcFnlKlwY4Fjw.jpg",
-      known_for_department: "Acting",
-      popularity: 37.9,
-    },
   ],
   total_pages: 500,
   total_results: 10000,
 };
 
+const mockMovieCredits = {
+  cast: [
+    {
+      id: 1023158,
+      name: "Matthew McConaughey",
+      character: "Cooper",
+      profile_path: "/e0Vn6Qmtn21bQ5QoMhFq5mD1P.jpg",
+    },
+    {
+      id: 1083047,
+      name: "Anne Hathaway",
+      character: "Brand",
+      profile_path: "/l9fFf2L7c5rM1m1o2B6p4c2u2h.jpg",
+    },
+  ],
+  crew: [
+    {
+      id: 525,
+      name: "Christopher Nolan",
+      job: "Director",
+      profile_path: "/wuqC00Q8yvB39VqJmCq7dQJ0cWn.jpg",
+    },
+    {
+      id: 525,
+      name: "Christopher Nolan",
+      job: "Writer",
+      profile_path: "/wuqC00Q8yvB39VqJmCq7dQJ0cWn.jpg",
+    },
+  ],
+};
+
 export const movieService = {
   getPopularMovies: async (page = 1) => {
     if (!API_ENABLED || fallback.useMockData) {
-      console.warn("🎭 Using mock data - API not enabled or configured");
       await new Promise((resolve) =>
         setTimeout(resolve, fallback.mockDataDelay)
       );
@@ -209,21 +173,16 @@ export const movieService = {
     }
 
     try {
-      console.log(`📡 Fetching popular movies from TMDB API - Page ${page}`);
       const response = await tmdbApi.get("/movie/popular", {
         params: { page },
       });
-      console.log(
-        `✅ Successfully fetched ${response.data.results.length} movies`
-      );
       return response.data;
     } catch (error) {
       console.error(
-        "❌ Error fetching popular movies:",
+        "Error fetching popular movies:",
         error.response?.status,
         error.message
       );
-      console.warn("🎭 Falling back to mock data due to API error");
       return {
         ...mockPopularMovies,
         page: page,
@@ -233,7 +192,6 @@ export const movieService = {
 
   getGenres: async () => {
     if (!API_ENABLED || fallback.useMockData) {
-      console.warn("🎭 Using mock genres - API not enabled or configured");
       await new Promise((resolve) =>
         setTimeout(resolve, fallback.mockDataDelay / 2)
       );
@@ -241,35 +199,26 @@ export const movieService = {
     }
 
     try {
-      console.log("📡 Fetching genres from TMDB API");
       const response = await tmdbApi.get("/genre/movie/list");
-      console.log(
-        `✅ Successfully fetched ${response.data.genres.length} genres`
-      );
       return response.data.genres;
     } catch (error) {
       console.error(
-        "❌ Error fetching genres:",
+        "Error fetching genres:",
         error.response?.status,
         error.message
       );
-      console.warn("🎭 Falling back to mock genres due to API error");
       return mockGenres;
     }
   },
+
   searchMovies: async (query, page = 1) => {
     if (!API_ENABLED || fallback.useMockData) {
-      console.warn("🎭 Using mock search data - API not enabled or configured");
       await new Promise((resolve) =>
         setTimeout(resolve, fallback.mockDataDelay * 0.8)
       );
 
       const filteredMovies = mockPopularMovies.results.filter((movie) =>
         movie.title.toLowerCase().includes(query.toLowerCase())
-      );
-
-      console.log(
-        `🔍 Mock search for "${query}" found ${filteredMovies.length} results`
       );
 
       return {
@@ -281,20 +230,16 @@ export const movieService = {
     }
 
     try {
-      console.log(`🔍 Searching TMDB API for "${query}" - Page ${page}`);
       const response = await tmdbApi.get("/search/movie", {
         params: { query, page },
       });
-      console.log(`✅ Search found ${response.data.results.length} movies`);
       return response.data;
     } catch (error) {
       console.error(
-        "❌ Error searching movies:",
+        "Error searching movies:",
         error.response?.status,
         error.message
       );
-      console.warn("🎭 Falling back to mock search due to API error");
-
       const filteredMovies = mockPopularMovies.results.filter((movie) =>
         movie.title.toLowerCase().includes(query.toLowerCase())
       );
@@ -309,12 +254,74 @@ export const movieService = {
   },
 
   getMovieDetails: async (movieId) => {
+    if (!API_ENABLED || fallback.useMockData) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, fallback.mockDataDelay)
+      );
+      const mockMovie = mockPopularMovies.results.find(
+        (movie) => movie.id === Number(movieId)
+      );
+      if (mockMovie) {
+        return {
+          ...mockMovie,
+          genres: mockGenres.filter((genre) =>
+            mockMovie.genre_ids.includes(genre.id)
+          ),
+          runtime: mockMovie.runtime || 120,
+          overview: mockMovie.overview,
+          backdrop_path: mockMovie.backdrop_path,
+          release_date: mockMovie.release_date,
+        };
+      }
+      return null;
+    }
+
     try {
       const response = await tmdbApi.get(`/movie/${movieId}`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching movie details:", error);
-      throw error;
+      console.error(
+        "Error fetching movie details:",
+        error.response?.status,
+        error.message
+      );
+      const mockMovie = mockPopularMovies.results.find(
+        (movie) => movie.id === Number(movieId)
+      );
+      if (mockMovie) {
+        return {
+          ...mockMovie,
+          genres: mockGenres.filter((genre) =>
+            mockMovie.genre_ids.includes(genre.id)
+          ),
+          runtime: mockMovie.runtime || 120,
+          overview: mockMovie.overview,
+          backdrop_path: mockMovie.backdrop_path,
+          release_date: mockMovie.release_date,
+        };
+      }
+      return null;
+    }
+  },
+
+  getMovieCredits: async (movieId) => {
+    if (!API_ENABLED || fallback.useMockData) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, fallback.mockDataDelay)
+      );
+      return mockMovieCredits;
+    }
+
+    try {
+      const response = await tmdbApi.get(`/movie/${movieId}/credits`);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error fetching movie credits:",
+        error.response?.status,
+        error.message
+      );
+      return mockMovieCredits;
     }
   },
 };
@@ -322,7 +329,6 @@ export const movieService = {
 export const peopleService = {
   getPopularPeople: async (page = 1) => {
     if (!API_ENABLED || fallback.useMockData) {
-      console.warn("🎭 Using mock people data - API not enabled or configured");
       await new Promise((resolve) =>
         setTimeout(resolve, fallback.mockDataDelay)
       );
@@ -333,21 +339,16 @@ export const peopleService = {
     }
 
     try {
-      console.log(`📡 Fetching popular people from TMDB API - Page ${page}`);
       const response = await tmdbApi.get("/person/popular", {
         params: { page },
       });
-      console.log(
-        `✅ Successfully fetched ${response.data.results.length} people`
-      );
       return response.data;
     } catch (error) {
       console.error(
-        "❌ Error fetching popular people:",
+        "Error fetching popular people:",
         error.response?.status,
         error.message
       );
-      console.log("🎭 Falling back to mock people data");
       return {
         ...mockPopularPeople,
         page: page,
@@ -357,9 +358,6 @@ export const peopleService = {
 
   searchPeople: async (query, page = 1) => {
     if (!API_ENABLED || fallback.useMockData) {
-      console.warn(
-        "🎭 Using mock people search data - API not enabled or configured"
-      );
       await new Promise((resolve) =>
         setTimeout(resolve, fallback.mockDataDelay)
       );
@@ -377,20 +375,16 @@ export const peopleService = {
     }
 
     try {
-      console.log(`📡 Searching people: "${query}" - Page ${page}`);
       const response = await tmdbApi.get("/search/person", {
         params: {
           query: query,
           page: page,
         },
       });
-      console.log(
-        `✅ Found ${response.data.results.length} people for "${query}"`
-      );
       return response.data;
     } catch (error) {
       console.error(
-        "❌ Error searching people:",
+        "Error searching people:",
         error.response?.status,
         error.message
       );
