@@ -402,12 +402,63 @@ export const peopleService = {
   },
 
   getPersonDetails: async (personId) => {
+    if (!API_ENABLED || fallback.useMockData) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, fallback.mockDataDelay)
+      );
+      const mockPerson = mockPopularPeople.results.find(
+        (person) => person.id === Number(personId)
+      );
+      if (mockPerson) {
+        return {
+          ...mockPerson,
+          biography: "This is a mock biography for " + mockPerson.name,
+          birthday: "1980-01-01",
+          place_of_birth: "Mock City, Mockland",
+        };
+      }
+      return null;
+    }
+
     try {
       const response = await tmdbApi.get(`/person/${personId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching person details:", error);
       throw error;
+    }
+  },
+
+  getPersonCredits: async (personId) => {
+    if (!API_ENABLED || fallback.useMockData) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, fallback.mockDataDelay)
+      );
+      return {
+        cast: [
+          {
+            id: 157336,
+            title: "Interstellar",
+            character: "Joseph Cooper",
+            poster_path: "/gEU2QniE6E77NI6touwmTKpZg2f.jpg",
+          },
+          {
+            id: 3,
+            title: "The Dark Knight",
+            character: "Joker (voice)",
+            poster_path: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+          },
+        ],
+        crew: [],
+      };
+    }
+
+    try {
+      const response = await tmdbApi.get(`/person/${personId}/movie_credits`);
+      return response.data.cast;
+    } catch (error) {
+      console.error("Error fetching person credits:", error);
+      return [];
     }
   },
 };
