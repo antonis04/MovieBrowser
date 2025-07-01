@@ -1,7 +1,7 @@
 import axios from "axios";
 import apiConfig from "../config/api-config.json";
 
-const { api, app } = apiConfig;
+const { api } = apiConfig;
 const { tmdb, fallback } = api;
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -243,8 +243,11 @@ export const movieService = {
         error.response?.status,
         error.message
       );
+
+      const lowerCaseQuery = query.toLowerCase();
+
       const filteredMovies = mockPopularMovies.results.filter((movie) =>
-        movie.title.toLowerCase().includes(query.toLowerCase())
+        movie.title.toLowerCase().startsWith(lowerCaseQuery)
       );
 
       return {
@@ -365,6 +368,8 @@ export const peopleService = {
         setTimeout(resolve, fallback.mockDataDelay)
       );
 
+      const lowerCaseQuery = query.toLowerCase();
+
       const filteredPeople = mockPopularPeople.results.filter((person) =>
         person.name.toLowerCase().startsWith(lowerCaseQuery)
       );
@@ -391,8 +396,11 @@ export const peopleService = {
         error.response?.status,
         error.message
       );
+
+      const lowerCaseQuery = query.toLowerCase();
+
       const filteredPeople = mockPopularPeople.results.filter((person) =>
-        person.name.toLowerCase().includes(query.toLowerCase())
+        person.name.toLowerCase().startsWith(lowerCaseQuery)
       );
 
       return {
