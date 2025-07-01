@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
-import { GlobalStyle } from "../../GlobalStyle.js";
 import { movieService } from "../../services/tmdbApi.js";
 import {
   Container,
@@ -41,24 +41,37 @@ import {
   PersonTitle,
   Picture,
 } from "../../common/Cast/styled.js";
-import { useParams } from "react-router-dom";
+import Loading from "../../components/Loading/index.js";
+import ErrorState from "../../components/ErrorState/index.js";
 
 const MoviePage = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadMovieData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const movieData = await movieService.getMovieDetails(id);
         const creditsData = await movieService.getMovieCredits(id);
 
-        setMovie(movieData);
-        setCredits(creditsData);
+        if (!movieData) {
+          setError("Movie not found.");
+          setMovie(null);
+        } else {
+          setMovie(movieData);
+          setCredits(creditsData);
+        }
       } catch (error) {
         console.error("Error loading movie data:", error);
+        setError(
+          "A problem occurred while loading data. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -67,12 +80,41 @@ const MoviePage = () => {
     loadMovieData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!movie) return <div>Error loading movie data</div>;
+  if (loading) {
+    return (
+      <>
+        <Loading message="Loading movie data..." />
+      </>
+    );
+  }
+
+  if (error) {
+    const handleRetry = () => {
+      window.location.reload();
+    };
+
+    return (
+      <>
+        <ErrorState
+          title={
+            error === "Movie not found."
+              ? "Movie not found"
+              : "Oops! An error occurred!"
+          }
+          message={
+            error === "Movie not found."
+              ? "It seems that the movie with the given ID does not exist or the data is unavailable."
+              : error
+          }
+          onRetry={handleRetry}
+          isNoResults={error === "Movie not found."}
+        />
+      </>
+    );
+  }
 
   return (
     <>
-      <GlobalStyle />
       <HeaderPage>
         <ImagePosterBig>
           {movie.backdrop_path ? (
