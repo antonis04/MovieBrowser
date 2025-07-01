@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useHistory } from 'react';
 import { ErrorWrapper, ErrorIcon, ErrorMessage, ErrorDescription, Button } from "./styled";
 
 export const Error = () => {
