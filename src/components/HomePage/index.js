@@ -31,10 +31,10 @@ const HomePage = () => {
   }, []);
   useEffect(() => {
     const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
 
+      try {
         let data;
         if (isSearching && searchQuery) {
           data = await movieService.searchMovies(searchQuery, currentPage);
