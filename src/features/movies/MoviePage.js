@@ -42,6 +42,8 @@ import {
   Picture,
 } from "../../common/Cast/styled.js";
 import { useParams } from "react-router-dom";
+import {Loading} from "../../common/Loading/index.js";
+import {Error} from "../../common/Error/index.js";
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -66,8 +68,8 @@ const MoviePage = () => {
     loadMovieData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!movie) return <div>Error loading movie data</div>;
+  if (loading) return <Loading/>;
+  if (!movie) return <Error/>;
 
   return (
     <>
