@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
-import { GlobalStyle } from "../../GlobalStyle.js";
-import { fetchMovieCredits, fetchMovieDetails } from "../../api/api.js";
+import { movieService } from "../../services/tmdbApi.js";
 import {
   Container,
   HeaderContent,
@@ -41,23 +41,37 @@ import {
   PersonTitle,
   Picture,
 } from "../../common/Cast/styled.js";
-import { useParams } from "react-router-dom";
+import Loading from "../../components/Loading/index.js";
+import ErrorState from "../../components/ErrorState/index.js";
 
 const MoviePage = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadMovieData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const movieData = await fetchMovieDetails(id);
-        const creditsData = await fetchMovieCredits(id);
-        setMovie(movieData);
-        setCredits(creditsData);
+        const movieData = await movieService.getMovieDetails(id);
+        const creditsData = await movieService.getMovieCredits(id);
+
+        if (!movieData) {
+          setError("Movie not found.");
+          setMovie(null);
+        } else {
+          setMovie(movieData);
+          setCredits(creditsData);
+        }
       } catch (error) {
         console.error("Error loading movie data:", error);
+        setError(
+          "A problem occurred while loading data. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -66,12 +80,51 @@ const MoviePage = () => {
     loadMovieData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!movie) return <div>Error loading movie data</div>;
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("pl-PL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }); // Format DD.MM.RRRR
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Loading message="Loading movie data..." />
+      </>
+    );
+  }
+
+  if (error) {
+    const handleRetry = () => {
+      window.location.reload();
+    };
+
+    return (
+      <>
+        <ErrorState
+          title={
+            error === "Movie not found."
+              ? "Movie not found"
+              : "Oops! An error occurred!"
+          }
+          message={
+            error === "Movie not found."
+              ? "It seems that the movie with the given ID does not exist or the data is unavailable."
+              : error
+          }
+          onRetry={handleRetry}
+          isNoResults={error === "Movie not found."}
+        />
+      </>
+    );
+  }
 
   return (
     <>
-      <GlobalStyle />
       <HeaderPage>
         <ImagePosterBig>
           {movie.backdrop_path ? (
@@ -93,7 +146,11 @@ const MoviePage = () => {
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
               </HeaderRow>
-              <HeaderVotes>{movie.vote_count} votes</HeaderVotes>
+              <HeaderVotes>
+                {movie.vote_count === 0
+                  ? "No votes"
+                  : `${movie.vote_count} votes`}
+              </HeaderVotes>
             </HeaderDetails>
           </HeaderContent>
         </ImagePosterBig>
@@ -115,12 +172,17 @@ const MoviePage = () => {
             <Title>{movie.title}</Title>
             <Year>{new Date(movie.release_date).getFullYear()}</Year>
             <Section>
+              {movie.production_countries &&
+                movie.production_countries.length > 0 && (
+                  <Paragraph>
+                    <Strong>Production:</Strong>{" "}
+                    {movie.production_countries
+                      .map((country) => country.name)
+                      .join(", ")}
+                  </Paragraph>
+                )}
               <Paragraph>
-                <Strong>Genres:</Strong>{" "}
-                {movie.genres.map((g) => g.name).join(", ")}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Release date:</Strong> {movie.release_date}
+                <Strong>Release date:</Strong> {formatDate(movie.release_date)}
               </Paragraph>
               <Paragraph>
                 <Strong>Runtime:</Strong> {movie.runtime} min
@@ -139,7 +201,11 @@ const MoviePage = () => {
                 <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>
-              <Votes>{movie.vote_count} votes</Votes>
+              <Votes>
+                {movie.vote_count === 0
+                  ? "No votes"
+                  : `${movie.vote_count} votes`}
+              </Votes>{" "}
             </Details>
 
             <Description>{movie.overview}</Description>

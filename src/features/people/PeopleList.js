@@ -32,14 +32,14 @@ const PeopleList = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         let data;
         if (isSearching && searchQuery) {
           data = await peopleService.searchPeople(searchQuery, currentPage);
         } else {
           data = await peopleService.getPopularPeople(currentPage);
         }
-        
+
         setPeople(data.results);
         setTotalPages(Math.min(data.total_pages, 500)); // TMDB API limit
       } catch (err) {
@@ -53,7 +53,6 @@ const PeopleList = () => {
     loadPeople();
   }, [currentPage, searchQuery, isSearching]);
 
-  // Reset to first page when search query changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, isSearching]);
@@ -152,7 +151,7 @@ const PeopleList = () => {
                 ))}
               </CastRow>
             </Cast>
-            
+
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
