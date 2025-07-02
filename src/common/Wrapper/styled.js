@@ -20,11 +20,13 @@ export const Content = styled.div``;
 export const Title = styled.header`
   font-weight: 600;
   font-size: 36px;
-  margin-bottom: 24px;
+  margin-top: 56px;
+  margin-bottom: 16px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 24px;
-    margin-bottom: 16px;
+    margin-top: 24px;
+    margin-bottom: 8px;
   }
 `;
 

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const MovieCard = styled.div`
   background-color: ${({ theme }) => theme.color.white};
@@ -29,7 +29,7 @@ export const MoviePoster = styled.img`
   height: auto;
   min-height: 325px;
   max-height: 485px;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
   margin-bottom: 16px;
   background-color: ${({ theme }) => theme.color.postergrey};
@@ -50,6 +50,8 @@ export const MoviePoster = styled.img`
 export const MovieInfo = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
   gap: 8px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -67,10 +69,17 @@ export const MovieTitle = styled.h3`
   color: ${({ theme }) => theme.color.black};
   margin: 0;
   line-height: 1.3;
+  min-height: calc(1.3 * 2em);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 20px;
     line-height: 1.2;
+    min-height: calc(1.2 * 2em);
   }
 
   @media (max-width: 480px) {
@@ -149,7 +158,7 @@ export const StarIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   img {
     width: 20px;
     height: 20px;
