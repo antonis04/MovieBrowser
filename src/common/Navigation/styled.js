@@ -8,20 +8,42 @@ export const StyledNav = styled.nav`
   height: 94px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+  justify-content: center;
+  padding: 0;
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    padding: 0;
+    height: auto;
+    min-height: 80px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0;
+    min-height: 80px;
+  }
+`;
+
+export const NavigationContainer = styled.div`
+  max-width: 1368px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
-    height: 80px;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
   }
 
   @media (max-width: 480px) {
     padding: 0 12px;
-    height: auto;
-    min-height: 80px;
+    gap: 12px;
   }
 `;
 
@@ -65,9 +87,9 @@ export const LogoText = styled.span`
 `;
 
 export const NavMenu = styled.div`
-  flex-grow: 1;
   display: flex;
   justify-content: center;
+  flex-grow: 1;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     flex-grow: 0;
@@ -88,6 +110,8 @@ export const List = styled.ul`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   @media (max-width: 480px) {
@@ -129,15 +153,18 @@ export const Item = styled.li`
 `;
 
 export const SearchWrapper = styled.div`
-  width: 300px;
+  width: 432px;
   position: relative;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 200px;
+    width: 100%;
+    order: 3;
+    margin-left: 0;
   }
 
   @media (max-width: 480px) {
-    width: 150px;
+    width: 100%;
+    margin-left: 0;
   }
 `;
 
@@ -150,7 +177,7 @@ export const SearchIcon = styled(SearchSVG)`
   height: 20px;
   cursor: pointer;
   z-index: 1;
-  color: #9CA3AF;
+  color: #9ca3af;
 `;
 
 export const SearchInput = styled.input`
