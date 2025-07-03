@@ -160,7 +160,13 @@ const PeoplePage = () => {
                 )}
                 <Name>
                   <Actor>{movie.title}</Actor>
+                  {movie.release_date && (
+                    <Strong>{new Date(movie.release_date).getFullYear()}</Strong>
+                  )}
                   <Strong>{movie.character || "Unknown role"}</Strong>
+                  {movie.vote_average && (
+                    <Strong>★ {movie.vote_average.toFixed(1)}</Strong>
+                  )}
                 </Name>
               </PersonTitle>
             ))}
