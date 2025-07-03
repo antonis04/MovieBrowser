@@ -13,7 +13,7 @@ function App() {
   return (
     <Provider store={store}>
       <SearchProvider>
-        <Router>
+        <Router basename={process.env.PUBLIC_URL || "/"}>
           <Navigation />
           <Routes>
             <Route path="/" element={<MovieList />} />

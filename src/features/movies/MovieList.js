@@ -21,7 +21,6 @@ const MovieList = () => {
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
 
-  // Fetch genres on component mount
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -29,7 +28,6 @@ const MovieList = () => {
         setGenres(genresData);
       } catch (err) {
         console.error("Error fetching genres:", err);
-        // Don't set error for genres, just continue without them
       }
     };
 
@@ -41,16 +39,16 @@ const MovieList = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         let data;
         if (isSearching && searchQuery) {
           data = await movieService.searchMovies(searchQuery, currentPage);
         } else {
           data = await movieService.getPopularMovies(currentPage);
         }
-        
+
         setMovies(data.results);
-        setTotalPages(Math.min(data.total_pages, 500)); // TMDB API limit
+        setTotalPages(Math.min(data.total_pages, 500));
       } catch (err) {
         console.error("Error fetching movies:", err);
         setError(err.message || "Failed to fetch movies");
@@ -58,11 +56,10 @@ const MovieList = () => {
         setLoading(false);
       }
     };
-    
+
     loadMovies();
   }, [currentPage, searchQuery, isSearching]);
 
-  // Reset to first page when search query changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, isSearching]);
@@ -147,7 +144,7 @@ const MovieList = () => {
                 </Link>
               ))}
             </MoviesGrid>
-            
+
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
