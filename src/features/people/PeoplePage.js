@@ -30,6 +30,24 @@ const PeoplePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "Unknown";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  const formatBirthLabel = () => {
+    return window.innerWidth <= 768 ? "Birth:" : "Date of birth:";
+  };
+
+  const formatPlaceLabel = () => {
+    return window.innerWidth <= 768 ? "Place:" : "Place of birth:";
+  };
+
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -115,10 +133,10 @@ const PeoplePage = () => {
             <Title>{person.name}</Title>
             <Section>
               <Paragraph>
-                <Strong>Birth:</Strong> {person.birthday || "Unknown"}
+                <Strong>{formatBirthLabel()}</Strong> {formatDate(person.birthday)}
               </Paragraph>
               <Paragraph>
-                <Strong>Place:</Strong> {person.place_of_birth || "Unknown"}
+                <Strong>{formatPlaceLabel()}</Strong> {person.place_of_birth || "Unknown"}
               </Paragraph>
             </Section>
             <Description>
