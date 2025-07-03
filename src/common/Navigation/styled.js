@@ -31,7 +31,7 @@ export const NavigationContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 20px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -89,7 +89,7 @@ export const LogoText = styled.span`
 export const NavMenu = styled.div`
   display: flex;
   justify-content: center;
-  flex-grow: 1;
+  margin-left: 70px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     flex-grow: 0;
@@ -155,6 +155,7 @@ export const Item = styled.li`
 export const SearchWrapper = styled.div`
   width: 432px;
   position: relative;
+  margin-left: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
