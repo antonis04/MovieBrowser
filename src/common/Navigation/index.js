@@ -87,7 +87,14 @@ const Navigation = () => {
             <NavLink to="/movielist">Movies</NavLink>
           </Item>
           <Item>
-            <NavLink to="/peoplelist">People</NavLink>
+            <NavLink 
+              to="/peoplelist" 
+              className={({ isActive }) => 
+                isActive || location.pathname.startsWith('/people') ? 'active' : ''
+              }
+            >
+              People
+            </NavLink>
           </Item>
         </List>
       </NavMenu>
