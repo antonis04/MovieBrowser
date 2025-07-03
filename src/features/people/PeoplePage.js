@@ -146,7 +146,7 @@ const PeoplePage = () => {
         </Wrapper>
 
         <Cast>
-          <Title>Movies</Title>
+          <Title>Movies ({credits.length})</Title>
           <CastRow>
             {credits.map((movie) => (
               <PersonTitle key={movie.id}>
