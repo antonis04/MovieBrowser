@@ -7,17 +7,18 @@ export const Cast = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin: 40px auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    padding: 0;
+    padding: 0 16px;
     gap: 24px;
-    margin: 24px 0;
+    margin: 24px auto;
   }
 
   @media (max-width: 480px) {
     gap: 16px;
-    margin: 16px 0;
+    margin: 16px auto;
   }
 `;
 
