@@ -23,32 +23,40 @@ export const Cast = styled.div`
 `;
 
 export const CastRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
   gap: 20px;
   justify-content: flex-start;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
     justify-items: center;
   }
 
   @media (max-width: 480px) {
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 `;
 
 export const PersonTitle = styled.div`
   background: ${({ theme }) => theme.color.white};
-  width: 208px;
+  width: 100%;
+  max-width: 208px;
+  min-height: 340px;
   border-radius: 5px;
   box-shadow: 0px 4px 12px 0px #bac7d580;
   text-align: center;
   padding: 16px 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
   align-items: center;
   transition: transform 0.2s ease;
 
