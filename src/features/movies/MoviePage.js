@@ -87,7 +87,7 @@ const MoviePage = () => {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    }); // Format DD.MM.RRRR
+    });
   };
 
   if (loading) {
@@ -183,9 +183,6 @@ const MoviePage = () => {
                 )}
               <Paragraph>
                 <Strong>Release date:</Strong> {formatDate(movie.release_date)}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Runtime:</Strong> {movie.runtime} min
               </Paragraph>
             </Section>
 
