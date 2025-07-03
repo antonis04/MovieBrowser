@@ -12,6 +12,7 @@ import {
   SearchInput,
   LogoText,
   SearchIcon,
+  NavigationContainer,
 } from "./styled";
 
 const Navigation = () => {
@@ -72,46 +73,50 @@ const Navigation = () => {
       handleSearchSubmit(e);
     }
   };
+
   return (
     <StyledNav>
-      <Logo>
-        <NavLink to="/movielist">
-          <Camera />
-          <LogoText>Movies Browser</LogoText>
-        </NavLink>
-      </Logo>
+      <NavigationContainer>
+        <Logo>
+          <NavLink to="/movielist">
+            <Camera />
+            <LogoText>Movies Browser</LogoText>
+          </NavLink>
+        </Logo>
 
-      <NavMenu>
-        <List>
-          <Item>
-            <NavLink to="/movielist">Movies</NavLink>
-          </Item>
-          <Item>
-            <NavLink 
-              to="/peoplelist" 
-              className={({ isActive }) => 
-                isActive || location.pathname.startsWith('/people') ? 'active' : ''
-              }
-            >
-              People
-            </NavLink>
-          </Item>
-        </List>
-      </NavMenu>
+        <NavMenu>
+          <List>
+            <Item>
+              <NavLink to="/movielist">Movies</NavLink>
+            </Item>
+            <Item>
+              <NavLink 
+                to="/peoplelist" 
+                className={({ isActive }) => 
+                  isActive || location.pathname.startsWith('/people') ? 'active' : ''
+                }
+              >
+                People
+              </NavLink>
+            </Item>
+          </List>
+        </NavMenu>
 
-      <SearchWrapper>
-        <form onSubmit={handleSearchSubmit}>
-          <SearchInput
-            type="text"
-            placeholder={isOnPeoplePage ? "Search for people..." : "Search for movies..."}
-            value={searchInput}
-            onChange={handleSearchChange}
-            onKeyPress={handleKeyPress}
-          />
-          <SearchIcon onClick={handleSearchSubmit} />
-        </form>
-      </SearchWrapper>
+        <SearchWrapper>
+          <form onSubmit={handleSearchSubmit}>
+            <SearchInput
+              type="text"
+              placeholder={isOnPeoplePage ? "Search for people..." : "Search for movies..."}
+              value={searchInput}
+              onChange={handleSearchChange}
+              onKeyPress={handleKeyPress}
+            />
+            <SearchIcon onClick={handleSearchSubmit} />
+          </form>
+        </SearchWrapper>
+      </NavigationContainer>
     </StyledNav>
   );
 };
+
 export default Navigation;

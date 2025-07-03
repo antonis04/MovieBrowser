@@ -37,6 +37,7 @@ import {
   Actor,
   Cast,
   CastRow,
+  EmptyPictureWrapper,
   Name,
   PersonTitle,
   Picture,
@@ -87,7 +88,7 @@ const MoviePage = () => {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    }); // Format DD.MM.RRRR
+    });
   };
 
   if (loading) {
@@ -134,7 +135,9 @@ const MoviePage = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <EmptyPicture width="100%" height="400px" />
+            <EmptyPictureWrapper large>
+              <EmptyPicture width="100%" height="400px" />
+            </EmptyPictureWrapper>
           )}
           <HeaderContent>
             <HeaderTitle>{movie.title}</HeaderTitle>
@@ -166,7 +169,9 @@ const MoviePage = () => {
               style={{ borderRadius: "12px" }}
             />
           ) : (
-            <EmptyPicture width={200} height={300} />
+            <EmptyPictureWrapper small>
+              <EmptyPicture width={200} height={300} />
+            </EmptyPictureWrapper>
           )}
           <Content>
             <Title>{movie.title}</Title>
@@ -183,9 +188,6 @@ const MoviePage = () => {
                 )}
               <Paragraph>
                 <Strong>Release date:</Strong> {formatDate(movie.release_date)}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Runtime:</Strong> {movie.runtime} min
               </Paragraph>
             </Section>
 
@@ -223,7 +225,9 @@ const MoviePage = () => {
                     alt={person.name}
                   />
                 ) : (
-                  <EmptyPicture width={177} height={264} />
+                  <EmptyPictureWrapper>
+                    <EmptyPicture width="100%" height="100%" />
+                  </EmptyPictureWrapper>
                 )}
                 <Name>
                   <Actor>{person.name}</Actor>
@@ -245,7 +249,9 @@ const MoviePage = () => {
                     alt={person.name}
                   />
                 ) : (
-                  <EmptyPicture width={177} height={264} />
+                  <EmptyPictureWrapper>
+                    <EmptyPicture width="100%" height="100%" />
+                  </EmptyPictureWrapper>
                 )}
                 <Name>
                   <Actor>{person.name}</Actor>

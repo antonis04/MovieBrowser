@@ -7,17 +7,18 @@ export const Cast = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin: 40px auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    padding: 0;
+    padding: 0 16px;
     gap: 24px;
-    margin: 24px 0;
+    margin: 24px auto;
   }
 
   @media (max-width: 480px) {
     gap: 16px;
-    margin: 16px 0;
+    margin: 16px auto;
   }
 `;
 
@@ -101,7 +102,7 @@ export const Picture = styled.img`
   height: 264px;
   margin-top: -6px;
   border-radius: 5px;
-  object-fit: contain;
+  object-fit: cover;
   background-color: ${({ theme }) => theme.color.postergrey};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -110,6 +111,67 @@ export const Picture = styled.img`
     height: auto;
     aspect-ratio: 177/264;
     margin-top: 0;
+  }
+`;
+
+export const EmptyPictureWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.color.postergrey};
+  overflow: hidden;
+
+  width: 177px;
+  height: 264px;
+  margin-top: -6px;
+
+  ${({ large }) =>
+    large &&
+    `
+    width: 100%;
+    height: 400px; 
+    margin-top: 0; 
+    border-radius: 0; 
+  `}
+
+  ${({ small }) =>
+    small &&
+    `
+    width: 200px; 
+    height: 300px;
+    margin-top: 0;
+  `}
+
+
+  svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 292px;
+    height: auto;
+    aspect-ratio: 177/264;
+    margin-top: 0;
+
+    ${({ large }) =>
+      large &&
+      `
+      height: 400px; 
+    `}
+
+    ${({ small }) =>
+      small &&
+      `
+      width: 100%;
+      max-width: 200px; 
+      height: auto;
+      aspect-ratio: 200/300;
+    `}
   }
 `;
 

@@ -4,6 +4,7 @@ export const Container = styled.div`
   max-width: 1368px;
   margin: auto;
   box-sizing: border-box;
+  margin-top: 56px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
@@ -29,6 +30,7 @@ export const ImagePosterBig = styled.div`
   height: 100%;
   z-index: 1;
   overflow: hidden;
+  box-shadow: inset 0px 0px 120px 60px rgba(0, 0, 0, 0.9);
 
   img {
     width: 100%;
@@ -49,6 +51,7 @@ export const ImagePosterBig = styled.div`
     img {
       object-fit: cover;
       object-position: center top;
+      box-shadow: inset 0px 0px 80px 40px rgba(0, 0, 0, 0.9);
     }
   }
 `;
@@ -106,6 +109,11 @@ export const HeaderRow = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 export const HeaderSummary = styled.div`
