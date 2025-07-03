@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Camera from "../../components/CameraSVG/index.js";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useSearch } from "../../contexts/SearchContext";
 import {
   List,
@@ -18,7 +18,10 @@ const Navigation = () => {
   const [searchInput, setSearchInput] = useState("");
   const { handleSearch, resetSearch, isSearching } = useSearch();
   const navigate = useNavigate();
+  const location = useLocation();
   const debounceTimeoutRef = useRef(null);
+
+  const isOnPeoplePage = location.pathname.includes('people');
 
   useEffect(() => {
     if (!isSearching) {
@@ -33,7 +36,7 @@ const Navigation = () => {
     }
     if (searchInput.trim()) {
       handleSearch(searchInput.trim());
-      navigate("/movielist");
+      navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
     }
   };
 
@@ -48,10 +51,10 @@ const Navigation = () => {
     debounceTimeoutRef.current = setTimeout(() => {
       if (newValue.trim() === "") {
         resetSearch();
-        navigate("/movielist");
+        navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
       } else {
         handleSearch(newValue.trim());
-        navigate("/movielist");
+        navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
       }
     }, 500);
   };
@@ -93,7 +96,7 @@ const Navigation = () => {
         <form onSubmit={handleSearchSubmit}>
           <SearchInput
             type="text"
-            placeholder="Search for movies..."
+            placeholder={isOnPeoplePage ? "Search for people..." : "Search for movies..."}
             value={searchInput}
             onChange={handleSearchChange}
             onKeyPress={handleKeyPress}
