@@ -13,24 +13,15 @@ Check out the live version of the app:<br>
 
 ## Features
 
-- **Movie List** — displaying movies (data fetching from API planned)
-- **People List** — displaying people related to movies (e.g., actors)
-- **Movie Details** — detailed page for each movie (under development)
+- **Movie List** — displays a list of popular movies with: poster image, movie title, release year, genres, rating and vote count.
+- **People List** — Shows popular actors, directors, and other film industry professionals with their photos and names.
+- **Movie Details** —  View detailed information about movies, including: movie banner, production countries, full release date, movie description, cast and crew
+- **Person Profile** - shows a tile with: picture, name, date and place of birth, description and movie credits.
 - **Routing** — navigation between pages using React Router
 - **Global State Management** — handled by Redux Toolkit with `movies` and `people` slices
 - **Basic UI Components and Layout** — navigation, containers, wrappers, tags, etc.
-- **Basic Search Component** (in preparation)
-
----
-
-## Project Structure
-
-- `src/features/movies/` — components and slice for movies
-- `src/features/people/` — components and slice for people
-- `src/common/Navigation/` — navigation component
-- `src/components/Poster.jsx` — example SVG component
-- `src/App.js` — main app component with routing and Redux Provider
-- `src/store.js` — Redux Toolkit store configuration
+- **Basic Search Component** - available in the menu for searching movies and people. As you start typing a search query the result update dynamically without needing to submit a form.
+- **Responsive Design** - This app is optimized for desktop and mobile devices.
 
 ---
 
@@ -66,16 +57,6 @@ npm start
 
 ---
 
-## Future Plans
-
-- Integrate with TheMovieDB API to fetch real movie and people data
-- Expand list components and detail pages
-- Add search functionality for movies and people
-- Handle loading states and errors in Redux slices
-- Improve UI styling and responsiveness
-
----
-
 ## Technologies
 
 - React 18+
@@ -83,6 +64,18 @@ npm start
 - Redux Toolkit
 - Styled Components (partially)
 - Create React App
+
+---
+
+## Contributors
+
+This project was developed by: 
+
+- Wioletta Koperska - [GitHub](https://github.com/Gyrletta)
+
+- Antoni Samol - [GitHub](https://github.com/antonis04)
+
+- Agnieszka Szajnowska - [GitHub](https://github.com/AgnieszkaSzajnowska)
 
 ---
 
