@@ -31,6 +31,7 @@ import {
   Strong,
   Summary,
   Votes,
+  MoviePoster,
 } from "../../common/Wrapper/styled.js";
 import StarSVG from "../../components/StarSVG/StarSVG.js";
 import {
@@ -163,14 +164,13 @@ const MoviePage = () => {
       <Container>
         <Wrapper>
           {movie.poster_path ? (
-            <Picture
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+            <MoviePoster
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
-              style={{ borderRadius: "12px" }}
             />
           ) : (
             <EmptyPictureWrapper small>
-              <EmptyPicture width={200} height={300} />
+              <EmptyPicture width={312} height={464} />
             </EmptyPictureWrapper>
           )}
           <Content>
