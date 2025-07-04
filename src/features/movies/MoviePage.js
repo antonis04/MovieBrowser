@@ -152,7 +152,7 @@ const MoviePage = () => {
               </HeaderRow>
               <HeaderVotes>
                 {movie.vote_count === 0
-                  ? "No votes"
+                  ? "No votes yet"
                   : `${movie.vote_count} votes`}
               </HeaderVotes>
             </HeaderDetails>
@@ -205,7 +205,7 @@ const MoviePage = () => {
               <Note>/10</Note>
               <Votes>
                 {movie.vote_count === 0
-                  ? "No votes"
+                  ? "No votes yet"
                   : `${movie.vote_count} votes`}
               </Votes>{" "}
             </Details>
