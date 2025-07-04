@@ -18,6 +18,7 @@ const MovieList = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalResults, setTotalResults] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
 
@@ -39,7 +40,9 @@ const MovieList = () => {
       try {
         setLoading(true);
         setError(null);
+        setTotalResults(0);
 
+        const startTime = Date.now();
         let data;
         if (isSearching && searchQuery) {
           data = await movieService.searchMovies(searchQuery, currentPage);
@@ -47,8 +50,15 @@ const MovieList = () => {
           data = await movieService.getPopularMovies(currentPage);
         }
 
+        const loadTime = Date.now() - startTime;
+        const minLoadTime = 800;
+        if (loadTime < minLoadTime) {
+          await new Promise(resolve => setTimeout(resolve, minLoadTime - loadTime));
+        }
+
         setMovies(data.results);
         setTotalPages(Math.min(data.total_pages, 500));
+        setTotalResults(data.total_results);
       } catch (err) {
         console.error("Error fetching movies:", err);
         setError(err.message || "Failed to fetch movies");
@@ -80,7 +90,9 @@ const MovieList = () => {
   };
 
   const sectionTitle = isSearching
-    ? `Search results for "${searchQuery}"`
+    ? loading 
+      ? `Search results for "${searchQuery}"`
+      : `Search results for "${searchQuery}" (${totalResults})`
     : "Popular Movies";
 
   if (loading) {
