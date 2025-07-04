@@ -239,3 +239,18 @@ export const Votes = styled.div`
     font-size: 12px;
   }
 `;
+
+export const MoviePoster = styled.img`
+  width: 312px;
+  height: 464px;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.color.postergrey};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 312px;
+    height: auto;
+    aspect-ratio: 312/464;
+  }
+`;
