@@ -30,6 +30,7 @@ import {
   Strong,
   Summary,
   Votes,
+  MoviePoster,
 } from "../../common/Wrapper/styled.js";
 import {
   Actor,
@@ -147,7 +148,7 @@ const MoviePage = () => {
               </HeaderRow>
               <HeaderVotes>
                 {movie.vote_count === 0
-                  ? "No votes"
+                  ? "No votes yet"
                   : `${movie.vote_count} votes`}
               </HeaderVotes>
             </HeaderDetails>
@@ -159,10 +160,9 @@ const MoviePage = () => {
       <Container>
         <Wrapper>
           {movie.poster_path ? (
-            <Picture
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+            <MoviePoster
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
-              style={{ borderRadius: "12px" }}
             />
           ) : (
             <ImagePlaceholder type="movie" small />
@@ -199,7 +199,7 @@ const MoviePage = () => {
               <Note>/10</Note>
               <Votes>
                 {movie.vote_count === 0
-                  ? "No votes"
+                  ? "No votes yet"
                   : `${movie.vote_count} votes`}
               </Votes>{" "}
             </Details>

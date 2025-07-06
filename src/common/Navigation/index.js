@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Camera from "../../components/CameraSVG/index.js";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useSearch } from "../../contexts/SearchContext";
 import {
   List,
@@ -19,7 +19,10 @@ const Navigation = () => {
   const [searchInput, setSearchInput] = useState("");
   const { handleSearch, resetSearch, isSearching } = useSearch();
   const navigate = useNavigate();
+  const location = useLocation();
   const debounceTimeoutRef = useRef(null);
+
+  const isOnPeoplePage = location.pathname.includes('people');
 
   useEffect(() => {
     if (!isSearching) {
@@ -34,7 +37,7 @@ const Navigation = () => {
     }
     if (searchInput.trim()) {
       handleSearch(searchInput.trim());
-      navigate("/movielist");
+      navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
     }
   };
 
@@ -49,10 +52,10 @@ const Navigation = () => {
     debounceTimeoutRef.current = setTimeout(() => {
       if (newValue.trim() === "") {
         resetSearch();
-        navigate("/movielist");
+        navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
       } else {
         handleSearch(newValue.trim());
-        navigate("/movielist");
+        navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
       }
     }, 500);
   };
@@ -70,6 +73,7 @@ const Navigation = () => {
       handleSearchSubmit(e);
     }
   };
+
   return (
     <StyledNav>
       <NavigationContainer>
@@ -83,10 +87,24 @@ const Navigation = () => {
         <NavMenu>
           <List>
             <Item>
-              <NavLink to="/movielist">Movies</NavLink>
+              <NavLink 
+                to="/movielist"
+                className={({ isActive }) => 
+                  (isActive || location.pathname === '/' || location.pathname.startsWith('/movie')) ? 'active' : ''
+                }
+              >
+                Movies
+              </NavLink>
             </Item>
             <Item>
-              <NavLink to="/peoplelist">People</NavLink>
+              <NavLink 
+                to="/peoplelist" 
+                className={({ isActive }) => 
+                  isActive || location.pathname.startsWith('/people') ? 'active' : ''
+                }
+              >
+                People
+              </NavLink>
             </Item>
           </List>
         </NavMenu>
@@ -95,7 +113,7 @@ const Navigation = () => {
           <form onSubmit={handleSearchSubmit}>
             <SearchInput
               type="text"
-              placeholder="Search for movies..."
+              placeholder={isOnPeoplePage ? "Search for people..." : "Search for movies..."}
               value={searchInput}
               onChange={handleSearchChange}
               onKeyPress={handleKeyPress}
@@ -107,4 +125,5 @@ const Navigation = () => {
     </StyledNav>
   );
 };
+
 export default Navigation;

@@ -70,6 +70,12 @@ export const PersonTitle = styled.div`
   &:hover {
     transform: translateY(-2px);
   }
+  align-items: center;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 8px;
