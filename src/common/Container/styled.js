@@ -34,15 +34,24 @@ export const ImagePosterBig = styled.div`
   margin: 0 auto;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-      linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, transparent 15%, transparent 85%, rgba(0, 0, 0, 0.8) 100%),
-      radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.8) 0%,
+        transparent 15%,
+        transparent 85%,
+        rgba(0, 0, 0, 0.8) 100%
+      ),
+      radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
     z-index: 2;
     pointer-events: none;
   }
@@ -55,13 +64,22 @@ export const ImagePosterBig = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    
+
     &::before {
-      background: 
-        linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.6) 100%),
-        radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+      background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.6) 0%,
+          transparent 20%,
+          transparent 80%,
+          rgba(0, 0, 0, 0.6) 100%
+        ),
+        radial-gradient(
+          ellipse at center,
+          transparent 50%,
+          rgba(0, 0, 0, 0.5) 100%
+        );
     }
-    
+
     img {
       object-fit: cover;
       object-position: center top;

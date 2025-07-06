@@ -9,7 +9,7 @@ export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 8px 0;
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -50,6 +50,7 @@ export const NavigationContainer = styled.div`
 export const Logo = styled.div`
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   a {
     display: flex;
     align-items: center;
@@ -94,6 +95,8 @@ export const NavMenu = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     flex-grow: 0;
     margin: 0 16px;
+    width: 100%;
+    justify-content: center;
   }
 
   @media (max-width: 480px) {
@@ -156,16 +159,21 @@ export const SearchWrapper = styled.div`
   width: 432px;
   position: relative;
   margin-left: auto;
+  padding-bottom: 8px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
     order: 3;
     margin-left: 0;
+    padding: 0 16px 8px 16px;
+    box-sizing: border-box;
   }
 
   @media (max-width: 480px) {
     width: 100%;
     margin-left: 0;
+    padding: 0 12px 8px 12px;
+    box-sizing: border-box;
   }
 `;
 

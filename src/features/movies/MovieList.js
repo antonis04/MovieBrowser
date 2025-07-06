@@ -20,7 +20,7 @@ const MovieList = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
-  const { searchQuery, isSearching, resetSearch } = useSearch();
+  const { searchQuery, isSearching } = useSearch();
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -53,7 +53,9 @@ const MovieList = () => {
         const loadTime = Date.now() - startTime;
         const minLoadTime = 800;
         if (loadTime < minLoadTime) {
-          await new Promise(resolve => setTimeout(resolve, minLoadTime - loadTime));
+          await new Promise((resolve) =>
+            setTimeout(resolve, minLoadTime - loadTime)
+          );
         }
 
         setMovies(data.results);
@@ -84,15 +86,10 @@ const MovieList = () => {
     setCurrentPage(1);
   };
 
-  const resetToPopular = () => {
-    resetSearch();
-    setCurrentPage(1);
-  };
-
   const sectionTitle = isSearching
     ? movies.length > 0
       ? `Search results for "${searchQuery}" (${totalResults})`
-      : `Search results for "${searchQuery0}"`
+      : `Search results for "${searchQuery}"`
     : "Popular Movies";
 
   if (loading) {
