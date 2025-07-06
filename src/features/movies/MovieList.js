@@ -40,12 +40,20 @@ const MovieList = () => {
       try {
         setLoading(true);
         setError(null);
+        setTotalResults(0);
 
+        const startTime = Date.now();
         let data;
         if (isSearching && searchQuery) {
           data = await movieService.searchMovies(searchQuery, currentPage);
         } else {
           data = await movieService.getPopularMovies(currentPage);
+        }
+
+        const loadTime = Date.now() - startTime;
+        const minLoadTime = 800;
+        if (loadTime < minLoadTime) {
+          await new Promise(resolve => setTimeout(resolve, minLoadTime - loadTime));
         }
 
         setMovies(data.results);
@@ -83,8 +91,8 @@ const MovieList = () => {
 
   const sectionTitle = isSearching
     ? movies.length > 0
-      ? `Search results for "${searchQuery}" (${totalResults} results)`
-      : `Search results for "${searchQuery}"`
+      ? `Search results for "${searchQuery}" (${totalResults})`
+      : `Search results for "${searchQuery0}"`
     : "Popular Movies";
 
   if (loading) {
@@ -125,8 +133,8 @@ const MovieList = () => {
         {isSearching && movies.length === 0 && (
           <ErrorState
             title={`Sorry, there are no results for "${searchQuery}"`}
-            message="Try searching for a different movie title or browse our popular movies instead."
-            onRetry={resetToPopular}
+            message=""
+            onRetry={null}
             isNoResults={true}
           />
         )}

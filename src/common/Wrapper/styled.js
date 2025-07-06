@@ -25,13 +25,12 @@ export const Content = styled.div`
 export const Title = styled.header`
   font-weight: 600;
   font-size: 36px;
-  margin-top: 0;
-  margin-bottom: 16px;
+margin: 56px 0 24px 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 8px;
+@media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+  font-size: 24px;
+  margin: 32px 0 16px 0;
+}
   }
 `;
 
@@ -237,5 +236,20 @@ export const Votes = styled.div`
 
   @media (max-width: 480px) {
     font-size: 12px;
+  }
+`;
+
+export const MoviePoster = styled.img`
+  width: 312px;
+  height: 464px;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.color.postergrey};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 312px;
+    height: auto;
+    aspect-ratio: 312/464;
   }
 `;
