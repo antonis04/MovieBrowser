@@ -11,7 +11,7 @@ import {
 import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
 import { GlobalStyle } from "../../GlobalStyle";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
+import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
@@ -41,7 +41,7 @@ const PeopleList = () => {
         }
 
         setPeople(data.results);
-        setTotalPages(Math.min(data.total_pages, 500)); // TMDB API limit
+        setTotalPages(Math.min(data.total_pages, 500));
       } catch (err) {
         console.error("Error fetching people:", err);
         setError(err.message || "Failed to fetch people");
@@ -141,7 +141,7 @@ const PeopleList = () => {
                           alt={person.name}
                         />
                       ) : (
-                        <EmptyPicture width={177} height={264} />
+                        <ImagePlaceholder type="person" />
                       )}
                       <Name>
                         <Actor>{person.name}</Actor>

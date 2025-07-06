@@ -90,9 +90,9 @@ const MovieList = () => {
   };
 
   const sectionTitle = isSearching
-    ? loading 
-      ? `Search results for "${searchQuery}"`
-      : `Search results for "${searchQuery}" (${totalResults})`
+    ? movies.length > 0
+      ? `Search results for "${searchQuery}" (${totalResults})`
+      : `Search results for "${searchQuery0}"`
     : "Popular Movies";
 
   if (loading) {
@@ -101,11 +101,7 @@ const MovieList = () => {
         <GlobalStyle />
         <Container>
           <Title>{sectionTitle}</Title>
-          <Loading
-            message={
-              isSearching ? "Searching movies..." : "Loading popular movies..."
-            }
-          />
+          <Loading />
         </Container>
       </>
     );

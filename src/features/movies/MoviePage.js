@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
 import { movieService } from "../../services/tmdbApi.js";
 import {
   Container,
@@ -33,16 +32,15 @@ import {
   Votes,
   MoviePoster,
 } from "../../common/Wrapper/styled.js";
-import StarSVG from "../../components/StarSVG/StarSVG.js";
 import {
   Actor,
   Cast,
   CastRow,
-  EmptyPictureWrapper,
   Name,
   PersonTitle,
   Picture,
 } from "../../common/Cast/styled.js";
+import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
 import Loading from "../../components/Loading/index.js";
 import ErrorState from "../../components/ErrorState/index.js";
 
@@ -95,7 +93,7 @@ const MoviePage = () => {
   if (loading) {
     return (
       <>
-        <Loading message="Loading movie data..." />
+        <Loading />
       </>
     );
   }
@@ -136,16 +134,14 @@ const MoviePage = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <EmptyPictureWrapper large>
-              <EmptyPicture width="100%" height="400px" />
-            </EmptyPictureWrapper>
+            <ImagePlaceholder type="movie" large />
           )}
           <HeaderContent>
             <HeaderTitle>{movie.title}</HeaderTitle>
             <HeaderDetails>
               <HeaderRow>
                 <HeaderSummary>
-                  <StarSVG />
+                  <ImagePlaceholder type="star" />{" "}
                   {movie.vote_average.toFixed(1)}
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
@@ -169,9 +165,7 @@ const MoviePage = () => {
               alt={movie.title}
             />
           ) : (
-            <EmptyPictureWrapper small>
-              <EmptyPicture width={312} height={464} />
-            </EmptyPictureWrapper>
+            <ImagePlaceholder type="movie" small />
           )}
           <Content>
             <Title>{movie.title}</Title>
@@ -199,7 +193,7 @@ const MoviePage = () => {
 
             <Details>
               <DetailStar>
-                <StarSVG />
+                <ImagePlaceholder type="star" />
                 <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>
@@ -225,9 +219,7 @@ const MoviePage = () => {
                     alt={person.name}
                   />
                 ) : (
-                  <EmptyPictureWrapper>
-                    <EmptyPicture width="100%" height="100%" />
-                  </EmptyPictureWrapper>
+                  <ImagePlaceholder type="person" />
                 )}
                 <Name>
                   <Actor>{person.name}</Actor>
@@ -249,9 +241,7 @@ const MoviePage = () => {
                     alt={person.name}
                   />
                 ) : (
-                  <EmptyPictureWrapper>
-                    <EmptyPicture width="100%" height="100%" />
-                  </EmptyPictureWrapper>
+                  <ImagePlaceholder type="person" />
                 )}
                 <Name>
                   <Actor>{person.name}</Actor>

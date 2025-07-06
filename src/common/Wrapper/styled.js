@@ -160,7 +160,6 @@ export const DetailStar = styled.div`
   svg {
     width: 24px;
     height: 24px;
-    fill: gold;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {

@@ -8,7 +8,9 @@ export const MovieCard = styled.div`
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  width: 100%;
+  max-width: 324px;
+  min-height: 570px;
 
   &:hover {
     transform: translateY(-4px);
@@ -17,33 +19,42 @@ export const MovieCard = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 12px;
     box-shadow: 0px 2px 8px rgba(186, 199, 213, 0.4);
+    display: grid;
+    grid-template-columns: 114px 1fr;
+    gap: 16px;
+    width: 100%;
+    min-height: 201px;
+    height: auto;
   }
 
   @media (max-width: 480px) {
     padding: 8px;
+    grid-template-columns: 114px 1fr;
+    gap: 12px;
+    min-height: 201px;
   }
 `;
 
 export const MoviePoster = styled.img`
-  width: 100%;
-  height: auto;
-  min-height: 325px;
-  max-height: 485px;
+  width: 292px;
+  height: 434px;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 16px;
   background-color: ${({ theme }) => theme.color.postergrey};
+  flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    min-height: 280px;
-    max-height: 420px;
-    margin-bottom: 12px;
+    width: 114px;
+    height: 170px;
+    margin-bottom: 0;
   }
 
   @media (max-width: 480px) {
-    min-height: 240px;
-    max-height: 360px;
-    margin-bottom: 8px;
+    min-height: 114px;
+    max-height: 170px;
+    width: 114px;
+    height: 170px;
   }
 `;
 
@@ -56,6 +67,7 @@ export const MovieInfo = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
+    margin-top: 0;
   }
 
   @media (max-width: 480px) {
@@ -77,13 +89,14 @@ export const MovieTitle = styled.h3`
   -webkit-box-orient: vertical;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.2;
     min-height: calc(1.2 * 2em);
+    -webkit-line-clamp: 3;
   }
 
   @media (max-width: 480px) {
-    font-size: 18px;
+    font-size: 14px;
   }
 `;
 
@@ -93,11 +106,11 @@ export const MovieYear = styled.span`
   margin: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   @media (max-width: 480px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
@@ -127,13 +140,13 @@ export const GenreTag = styled.span`
   font-weight: 400;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 6px 12px;
-    font-size: 13px;
+    padding: 4px 8px;
+    font-size: 10px;
   }
 
   @media (max-width: 480px) {
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 3px 6px;
+    font-size: 9px;
   }
 `;
 
@@ -158,21 +171,6 @@ export const StarIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    width: 20px;
-    height: 20px;
-
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-      width: 18px;
-      height: 18px;
-    }
-
-    @media (max-width: 480px) {
-      width: 16px;
-      height: 16px;
-    }
-  }
 `;
 
 export const Rating = styled.span`
@@ -181,11 +179,11 @@ export const Rating = styled.span`
   color: ${({ theme }) => theme.color.black};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   @media (max-width: 480px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
@@ -194,10 +192,10 @@ export const VoteCount = styled.span`
   color: ${({ theme }) => theme.color.darkergrey};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
+    font-size: 9px;
   }
 `;
