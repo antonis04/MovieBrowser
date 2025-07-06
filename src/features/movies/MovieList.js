@@ -18,6 +18,7 @@ const MovieList = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalResults, setTotalResults] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
 
@@ -49,6 +50,7 @@ const MovieList = () => {
 
         setMovies(data.results);
         setTotalPages(Math.min(data.total_pages, 500));
+        setTotalResults(data.total_results);
       } catch (err) {
         console.error("Error fetching movies:", err);
         setError(err.message || "Failed to fetch movies");
@@ -80,7 +82,9 @@ const MovieList = () => {
   };
 
   const sectionTitle = isSearching
-    ? `Search results for "${searchQuery}"`
+    ? movies.length > 0
+      ? `Search results for "${searchQuery}" (${totalResults} results)`
+      : `Search results for "${searchQuery}"`
     : "Popular Movies";
 
   if (loading) {
@@ -89,11 +93,7 @@ const MovieList = () => {
         <GlobalStyle />
         <Container>
           <Title>{sectionTitle}</Title>
-          <Loading
-            message={
-              isSearching ? "Searching movies..." : "Loading popular movies..."
-            }
-          />
+          <Loading />
         </Container>
       </>
     );
