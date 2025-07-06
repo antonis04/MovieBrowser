@@ -137,8 +137,8 @@ const MovieList = () => {
         {isSearching && movies.length === 0 && (
           <ErrorState
             title={`Sorry, there are no results for "${searchQuery}"`}
-            message="Try searching for a different movie title or browse our popular movies instead."
-            onRetry={resetToPopular}
+            message=""
+            onRetry={null}
             isNoResults={true}
           />
         )}
