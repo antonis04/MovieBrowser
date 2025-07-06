@@ -24,27 +24,31 @@ export const Cast = styled.div`
 
 export const CastRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  justify-content: center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.desktopMax}px) {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  @media (max-width: 1368px) {
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  @media (max-width: 1020px) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  @media (max-width: 620px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 374px) {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 `;
@@ -52,12 +56,14 @@ export const CastRow = styled.div`
 export const PersonTitle = styled.div`
   background: ${({ theme }) => theme.color.white};
   width: 100%;
+  max-width: 100%;
   border-radius: 5px;
   box-shadow: 0px 4px 12px 0px #bac7d580;
-  text-align: center;
   padding: 16px;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   transition: transform 0.2s ease;
 
@@ -73,6 +79,9 @@ export const PersonTitle = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 8px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   @media (max-width: 480px) {
@@ -87,8 +96,10 @@ export const Actor = styled.div`
   font-size: 22px;
   line-height: 130%;
   letter-spacing: 0px;
-  justify-content: center;
   margin: 8px 0 4px 0;
+  word-break: break-word;
+  text-align: center;
+  min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 16px;
@@ -101,19 +112,16 @@ export const Actor = styled.div`
 `;
 
 export const Picture = styled.img`
-  width: 177px;
-  height: 264px;
-  margin-top: -6px;
-  border-radius: 5px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/3;
+  max-width: none;
   object-fit: cover;
+  border-radius: 5px;
   background-color: ${({ theme }) => theme.color.postergrey};
-  flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 100%;
     max-width: 100px;
-    height: auto;
-    aspect-ratio: 2/3;
   }
 `;
 
@@ -122,6 +130,9 @@ export const Strong = styled.div`
   font-size: 16px;
   color: ${({ theme }) => theme.color.darkergrey};
   margin-top: 4px;
+  word-break: break-word;
+  text-align: center;
+  min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 14px;
