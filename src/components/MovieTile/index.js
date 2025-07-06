@@ -12,7 +12,8 @@ import {
   Rating,
   VoteCount,
 } from "./styled";
-import StarSvg from "../../images/Star.svg";
+import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
+import { ReactComponent as StarSvg } from "../../images/Star.svg";
 import { getImageUrl } from "../../services/tmdbApi";
 
 const MovieTile = ({ movie, genres = [] }) => {
@@ -38,20 +39,13 @@ const MovieTile = ({ movie, genres = [] }) => {
 
   const year = release_date ? new Date(release_date).getFullYear() : "";
 
-  const posterUrl =
-    getImageUrl(poster_path) ||
-    "https://via.placeholder.com/324x482/C4C4C4/FFFFFF?text=No+Image";
-
   return (
     <MovieCard>
-      <MoviePoster
-        src={posterUrl}
-        alt={title}
-        onError={(e) => {
-          e.target.src =
-            "https://via.placeholder.com/324x482/C4C4C4/FFFFFF?text=No+Image";
-        }}
-      />
+      {poster_path ? (
+        <MoviePoster src={getImageUrl(poster_path)} alt={title} />
+      ) : (
+        <ImagePlaceholder type="movieTile" />
+      )}
       <MovieInfo>
         <MovieTitle>{title}</MovieTitle>
         {year && <MovieYear>{year}</MovieYear>}
@@ -64,11 +58,11 @@ const MovieTile = ({ movie, genres = [] }) => {
         )}
         <RatingSection>
           <StarIcon>
-            <img src={StarSvg} alt="Star" />
+            <StarSvg />
           </StarIcon>
           <Rating>{vote_average ? vote_average.toFixed(1) : "N/A"}</Rating>
           <VoteCount>
-            {vote_count > 0 ? `${vote_count} votes` : "no votes"}
+            {vote_count > 0 ? `${vote_count} votes` : "No votes yet"}
           </VoteCount>
         </RatingSection>
       </MovieInfo>
