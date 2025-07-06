@@ -9,8 +9,7 @@ export const MovieCard = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 324px;
-  min-height: 570px;
+  justify-content: space-between;
 
   &:hover {
     transform: translateY(-4px);
@@ -20,7 +19,7 @@ export const MovieCard = styled.div`
     padding: 12px;
     box-shadow: 0px 2px 8px rgba(186, 199, 213, 0.4);
     display: grid;
-    grid-template-columns: 114px 1fr;
+    grid-template-columns: 100px 1fr;
     gap: 16px;
     width: 100%;
     min-height: 201px;
@@ -29,14 +28,15 @@ export const MovieCard = styled.div`
 
   @media (max-width: 480px) {
     padding: 8px;
-    grid-template-columns: 114px 1fr;
+    grid-template-columns: 90px 1fr;
     gap: 12px;
     min-height: 201px;
   }
 `;
 
 export const MoviePoster = styled.img`
-  width: 292px;
+  width: 100%;
+  max-width: 292px;
   height: 434px;
   object-fit: cover;
   border-radius: 5px;
@@ -45,16 +45,17 @@ export const MoviePoster = styled.img`
   flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 114px;
+    width: 100%;
     height: 170px;
+    aspect-ratio: 2/3;
     margin-bottom: 0;
   }
 
   @media (max-width: 480px) {
     min-height: 114px;
-    max-height: 170px;
-    width: 114px;
+    width: 100%;
     height: 170px;
+    aspect-ratio: 2/3;
   }
 `;
 
