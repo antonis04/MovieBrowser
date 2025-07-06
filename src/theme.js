@@ -1,6 +1,9 @@
 export const theme = {
   breakpoint: {
-    mobileMax: 767,
+    desktopMax: 1368,
+    laptopMax: 1020,
+    tabletMax: 767,
+    mobileMax: 374,
   },
   breakpointDescription: {
     mobileS: 510,
@@ -12,7 +15,7 @@ export const theme = {
     tabletMedium: 879,
     tabletMax: 991,
     laptopMax: 1400,
-    DesktopMax: 1723,
+    desktopMax: 1723,
   },
   color: {
     white: "#FFFFFF",
