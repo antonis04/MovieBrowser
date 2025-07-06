@@ -18,7 +18,7 @@ import {
   Wrapper,
   Strong,
 } from "../../common/Wrapper/styled";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
+import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
@@ -109,7 +109,7 @@ const PeoplePage = () => {
               style={{ width: "200px", height: "auto", borderRadius: "12px" }}
             />
           ) : (
-            <EmptyPicture width={200} height={300} />
+            <ImagePlaceholder type="person" />
           )}
           <Content>
             <Title>{person.name}</Title>
@@ -138,7 +138,7 @@ const PeoplePage = () => {
                     alt={movie.title}
                   />
                 ) : (
-                  <EmptyPicture width={177} height={264} />
+                  <ImagePlaceholder type="movileTile" />
                 )}
                 <Name>
                   <Actor>{movie.title}</Actor>

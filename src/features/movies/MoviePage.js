@@ -31,7 +31,6 @@ import {
   Summary,
   Votes,
 } from "../../common/Wrapper/styled.js";
-import { ReactComponent as StarSvg } from "../../images/Star.svg";
 import {
   Actor,
   Cast,
@@ -141,7 +140,7 @@ const MoviePage = () => {
             <HeaderDetails>
               <HeaderRow>
                 <HeaderSummary>
-                  <StarSvg />
+                  <ImagePlaceholder type="star" />{" "}
                   {movie.vote_average.toFixed(1)}
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
@@ -194,7 +193,7 @@ const MoviePage = () => {
 
             <Details>
               <DetailStar>
-                <StarSvg />
+                <ImagePlaceholder type="star" />
                 <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>

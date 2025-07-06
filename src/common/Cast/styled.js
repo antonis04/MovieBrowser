@@ -23,30 +23,39 @@ export const Cast = styled.div`
 `;
 
 export const CastRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+  gap: 24px;
+  justify-content: center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    justify-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoint.desktopMax}px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 12px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
   }
 `;
 
 export const PersonTitle = styled.div`
   background: ${({ theme }) => theme.color.white};
-  width: 208px;
+  width: 100%;
   border-radius: 5px;
   box-shadow: 0px 4px 12px 0px #bac7d580;
   text-align: center;
-  padding: 16px 0;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,15 +66,11 @@ export const PersonTitle = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 100%;
-    max-width: 324px;
-    padding: 16px;
-    box-shadow: 0px 2px 8px rgba(186, 199, 213, 0.4);
+    padding: 8px;
   }
 
   @media (max-width: 480px) {
-    padding: 12px;
-    max-width: 280px;
+    padding: 6px;
   }
 `;
 
@@ -80,12 +85,12 @@ export const Actor = styled.div`
   margin: 8px 0 4px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 18px;
-    margin: 6px 0 4px 0;
+    font-size: 16px;
+    margin: 4px 0 2px 0;
   }
 
   @media (max-width: 480px) {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -96,74 +101,13 @@ export const Picture = styled.img`
   border-radius: 5px;
   object-fit: cover;
   background-color: ${({ theme }) => theme.color.postergrey};
+  flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    max-width: 292px;
+    max-width: 100px;
     height: auto;
-    aspect-ratio: 177/264;
-    margin-top: 0;
-  }
-`;
-
-export const EmptyPictureWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.color.postergrey};
-  overflow: hidden;
-
-  width: 177px;
-  height: 264px;
-  margin-top: -6px;
-
-  ${({ large }) =>
-    large &&
-    `
-    width: 100%;
-    height: 400px; 
-    margin-top: 0; 
-    border-radius: 0; 
-  `}
-
-  ${({ small }) =>
-    small &&
-    `
-    width: 200px; 
-    height: 300px;
-    margin-top: 0;
-  `}
-
-
-  svg {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 100%;
-    max-width: 292px;
-    height: auto;
-    aspect-ratio: 177/264;
-    margin-top: 0;
-
-    ${({ large }) =>
-      large &&
-      `
-      height: 400px; 
-    `}
-
-    ${({ small }) =>
-      small &&
-      `
-      width: 100%;
-      max-width: 200px; 
-      height: auto;
-      aspect-ratio: 200/300;
-    `}
+    aspect-ratio: 2/3;
   }
 `;
 

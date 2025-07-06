@@ -38,15 +38,6 @@ export const ImagePosterBig = styled.div`
     object-fit: cover;
   }
 
-  svg {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 100%;
-    width: auto;
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     img {
       object-fit: cover;
@@ -117,11 +108,22 @@ export const HeaderRow = styled.div`
 `;
 
 export const HeaderSummary = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 500;
   font-size: 22px;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 18px;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 

@@ -4,7 +4,6 @@ export const ImagePlaceholderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.color.postergrey};
   overflow: hidden;
   border-radius: 5px;
   flex-shrink: 0;
@@ -16,14 +15,15 @@ export const ImagePlaceholderWrapper = styled.div`
     height: 100%;
     object-fit: contain;
     display: block;
-    color: ${({ theme }) => theme.color.darkGrey};
+    color: ${({ theme }) => theme.color.darkergrey};
   }
 
   ${({ type }) =>
     type === "person" &&
     css`
       width: 176px;
-      height: 231px;
+      height: 264px;
+      border-radius: 5px;
 
       svg {
         max-width: 120px;
@@ -65,8 +65,8 @@ export const ImagePlaceholderWrapper = styled.div`
     type === "movie" &&
     small &&
     css`
-      width: 200px;
-      height: 300px;
+      width: 300px;
+      height: 450px;
       border-radius: 12px;
       svg {
         max-width: 100px;
@@ -77,7 +77,7 @@ export const ImagePlaceholderWrapper = styled.div`
         width: 100%;
         max-width: 200px;
         height: auto;
-        aspect-ratio: 200/300;
+        aspect-ratio: 2/3;
         svg {
           max-width: 80px;
           max-height: 80px;
@@ -100,7 +100,7 @@ export const ImagePlaceholderWrapper = styled.div`
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
         width: 114px;
         height: 170px;
-        margin-bottom: 12px;
+        margin-bottom: 0px;
         svg {
           max-width: 60px;
           max-height: 60px;
@@ -114,10 +114,39 @@ export const ImagePlaceholderWrapper = styled.div`
       css`
         width: 114px;
         height: 170px;
-        margin-bottom: 8px;
+        margin-bottom: 0;
         svg {
           max-width: 50px;
           max-height: 50px;
+        }
+      `}
+
+    ${({ type }) =>
+      type === "star" &&
+      css`
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border-radius: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          width: 100%;
+          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
+        }
+
+        @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+          width: 16px;
+          height: 16px;
+        }
+
+        @media (max-width: 480px) {
+          width: 14px;
+          height: 14px;
         }
       `}
   }

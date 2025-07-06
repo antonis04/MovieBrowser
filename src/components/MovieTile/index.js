@@ -13,7 +13,6 @@ import {
   VoteCount,
 } from "./styled";
 import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
-import { ReactComponent as StarSvg } from "../../images/Star.svg";
 import { getImageUrl } from "../../services/tmdbApi";
 
 const MovieTile = ({ movie, genres = [] }) => {
@@ -58,7 +57,7 @@ const MovieTile = ({ movie, genres = [] }) => {
         )}
         <RatingSection>
           <StarIcon>
-            <StarSvg />
+            <ImagePlaceholder type="star" />
           </StarIcon>
           <Rating>{vote_average ? vote_average.toFixed(1) : "N/A"}</Rating>
           <VoteCount>

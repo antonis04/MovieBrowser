@@ -2,9 +2,18 @@ import React from "react";
 import { ImagePlaceholderWrapper } from "./styled";
 import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
 import { ReactComponent as Camera } from "../../images/Camera.svg";
+import { ReactComponent as StarSvg } from "../../images/Star.svg";
 
 const ImagePlaceholder = ({ type = "person", ...props }) => {
-  const PlaceholderSVG = type === "movie" ? Camera : EmptyPicture;
+  let PlaceholderSVG;
+
+  if (type === "movie" || type === "movieTile") {
+    PlaceholderSVG = Camera;
+  } else if (type === "star") {
+    PlaceholderSVG = StarSvg;
+  } else {
+    PlaceholderSVG = EmptyPicture;
+  }
 
   return (
     <ImagePlaceholderWrapper type={type} {...props}>
