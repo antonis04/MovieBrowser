@@ -24,26 +24,26 @@ export const Cast = styled.div`
 
 export const CastRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
   gap: 24px;
 
   @media (max-width: 1368px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
     gap: 20px;
   }
 
   @media (max-width: 1020px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
     gap: 16px;
   }
 
   @media (max-width: 767px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
     gap: 12px;
   }
 
   @media (max-width: 620px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
     gap: 12px;
   }
 
@@ -55,23 +55,17 @@ export const CastRow = styled.div`
 
 export const PersonTitle = styled.div`
   background: ${({ theme }) => theme.color.white};
-  width: 100%;
-  max-width: 100%;
+  width: 208px;
+  height: 339px;
   border-radius: 5px;
   box-shadow: 0px 4px 12px 0px #bac7d580;
   padding: 16px;
 
   display: flex;
   flex-direction: column;
-
   align-items: center;
   transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-  align-items: center;
-  transition: transform 0.2s ease;
+  flex-shrink: 0;
 
   &:hover {
     transform: translateY(-2px);
@@ -79,6 +73,8 @@ export const PersonTitle = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 8px;
+    width: 100%;
+    height: auto;
     flex-direction: row;
     align-items: flex-start;
     gap: 12px;
@@ -89,7 +85,13 @@ export const PersonTitle = styled.div`
   }
 `;
 
-export const Name = styled.div``;
+export const Name = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+`;
 
 export const Actor = styled.div`
   font-weight: 500;
@@ -104,6 +106,7 @@ export const Actor = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 16px;
     margin: 4px 0 2px 0;
+    text-align: left;
   }
 
   @media (max-width: 480px) {
@@ -112,16 +115,17 @@ export const Actor = styled.div`
 `;
 
 export const Picture = styled.img`
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2/3;
-  max-width: none;
+  width: 176px;
+  height: 231px;
   object-fit: cover;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.color.postergrey};
+  flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    max-width: 100px;
+    width: 72px;
+    height: 96px;
+    min-width: 72px;
   }
 `;
 
@@ -136,6 +140,7 @@ export const Strong = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 14px;
+    text-align: left;
   }
 
   @media (max-width: 480px) {
