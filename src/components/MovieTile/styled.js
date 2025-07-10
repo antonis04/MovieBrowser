@@ -45,6 +45,10 @@ export const MovieInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    justify-content: space-between;
+  }
 `;
 
 export const MovieTitle = styled.h3`
@@ -108,7 +112,7 @@ export const RatingSection = styled.div`
   margin-top: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    margin-top: 0;
+    margin-top: auto;
     gap: 6px;
   }
 `;
