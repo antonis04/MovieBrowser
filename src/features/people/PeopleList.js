@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  Cast,
-  CastRow,
-  PersonTitle,
-  Picture,
-  Name,
-  Actor,
-} from "../../common/Cast/styled";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Cast, CastRow } from "../../common/Cast/styled";
 import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
 import { GlobalStyle } from "../../GlobalStyle";
-import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import { peopleService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
 import { Pagination } from "../../common/PagesNumbering/index";
 import { pageQueryParamName } from "../../common/QueryParamName";
+import PersonTile from "../../components/PersonTile";
 
 const PeopleList = () => {
   const location = useLocation();
@@ -155,25 +148,11 @@ const PeopleList = () => {
             <Cast>
               <CastRow>
                 {people.map((person) => (
-                  <Link
+                  <PersonTile
                     key={person.id}
-                    to={`/people/${person.id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <PersonTitle>
-                      {person.profile_path ? (
-                        <Picture
-                          src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                          alt={person.name}
-                        />
-                      ) : (
-                        <ImagePlaceholder type="person" />
-                      )}
-                      <Name>
-                        <Actor>{person.name}</Actor>
-                      </Name>
-                    </PersonTitle>
-                  </Link>
+                    person={person}
+                    isDetailed={false}
+                  />
                 ))}
               </CastRow>
             </Cast>
