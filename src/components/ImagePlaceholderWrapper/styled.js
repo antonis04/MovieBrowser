@@ -9,8 +9,6 @@ export const ImagePlaceholderWrapper = styled.div`
   flex-shrink: 0;
 
   svg {
-    max-width: 100px;
-    max-height: 100px;
     width: 100%;
     height: 100%;
     object-fit: contain;
