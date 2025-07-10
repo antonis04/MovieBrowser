@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../../GlobalStyle";
 import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
-import Pagination from "../../components/Pagination";
+import { Pagination } from "../../common/PagesNumbering/index";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import MovieTile from "../../components/MovieTile";
 import { movieService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
 import { MoviesGrid } from "./styled";
+import { pageQueryParamName } from "../../common/QueryParamName";
 
 const MovieList = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
   const { searchQuery, isSearching } = useSearch();
+
+  const query = new URLSearchParams(location.search);
+  const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -36,6 +41,21 @@ const MovieList = () => {
   }, []);
 
   useEffect(() => {
+    if (currentPageFromUrl !== 1 && (searchQuery || isSearching)) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    }
+  }, [
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+    currentPageFromUrl,
+    navigate,
+  ]);
+
+  useEffect(() => {
     const loadMovies = async () => {
       try {
         setLoading(true);
@@ -45,9 +65,12 @@ const MovieList = () => {
         const startTime = Date.now();
         let data;
         if (isSearching && searchQuery) {
-          data = await movieService.searchMovies(searchQuery, currentPage);
+          data = await movieService.searchMovies(
+            searchQuery,
+            currentPageFromUrl
+          );
         } else {
-          data = await movieService.getPopularMovies(currentPage);
+          data = await movieService.getPopularMovies(currentPageFromUrl);
         }
 
         const loadTime = Date.now() - startTime;
@@ -70,24 +93,27 @@ const MovieList = () => {
     };
 
     loadMovies();
-  }, [currentPage, searchQuery, isSearching]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, isSearching]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, [
+    currentPageFromUrl,
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+  ]);
 
   const handleRetry = () => {
     setError(null);
-    setCurrentPage(1);
+    if (currentPageFromUrl !== 1) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    } else {
+      window.location.reload();
+    }
   };
 
   const sectionTitle = isSearching
-    ? movies.length > 0
+    ? !loading && totalResults > 0
       ? `Search results for "${searchQuery}" (${totalResults})`
       : `Search results for "${searchQuery}"`
     : "Popular Movies";
@@ -150,11 +176,7 @@ const MovieList = () => {
               ))}
             </MoviesGrid>
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            <Pagination totalPages={totalPages} />
           </>
         )}
       </Container>
