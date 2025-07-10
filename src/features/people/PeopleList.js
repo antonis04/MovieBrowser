@@ -85,7 +85,7 @@ const PeopleList = () => {
   const handleRetry = () => {
     setError(null);
     if (currentPageFromUrl !== 1) {
-      const params = new URLSearchParams(location.search); // Zadeklaruj params tutaj
+      const params = new URLSearchParams(location.search);
       params.set(pageQueryParamName, 1);
       navigate(`${location.pathname}?${params.toString()}`, { replace: true });
     } else {
@@ -93,11 +93,9 @@ const PeopleList = () => {
     }
   };
 
-  const resetToPopular = () => {
+  const resetToPopularPeople = () => {
     resetSearch();
-    const params = new URLSearchParams();
-    params.set(pageQueryParamName, 1);
-    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    navigate(`/people?${pageQueryParamName}=1`, { replace: true });
   };
 
   const sectionTitle = isSearching
@@ -145,10 +143,10 @@ const PeopleList = () => {
 
         {isSearching && people.length === 0 && (
           <ErrorState
+            isNoResults={true}
             title={`Sorry, there are no results for "${searchQuery}"`}
             message="Try searching for a different person or browse our popular people instead."
-            onRetry={resetToPopular}
-            isNoResults={true}
+            onRetry={resetToPopularPeople}
           />
         )}
 
@@ -180,7 +178,10 @@ const PeopleList = () => {
               </CastRow>
             </Cast>
 
-            <Pagination totalPages={totalPages} />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPageFromUrl}
+            />
           </>
         )}
       </Container>

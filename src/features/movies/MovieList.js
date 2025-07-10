@@ -22,7 +22,7 @@ const MovieList = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
-  const { searchQuery, isSearching } = useSearch();
+  const { searchQuery, isSearching, resetSearch } = useSearch();
 
   const query = new URLSearchParams(location.search);
   const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
@@ -112,6 +112,11 @@ const MovieList = () => {
     }
   };
 
+  const resetToPopularMovies = () => {
+    resetSearch();
+    navigate(`/movies?${pageQueryParamName}=1`, { replace: true });
+  };
+
   const sectionTitle = isSearching
     ? !loading && totalResults > 0
       ? `Search results for "${searchQuery}" (${totalResults})`
@@ -155,10 +160,10 @@ const MovieList = () => {
 
         {isSearching && movies.length === 0 && (
           <ErrorState
-            title={`Sorry, there are no results for "${searchQuery}"`}
-            message=""
-            onRetry={null}
             isNoResults={true}
+            title={`Sorry, there are no results for "${searchQuery}"`}
+            message="Try searching for a different movie title or browse our popular movies instead."
+            onRetry={resetToPopularMovies}
           />
         )}
 
@@ -176,7 +181,10 @@ const MovieList = () => {
               ))}
             </MoviesGrid>
 
-            <Pagination totalPages={totalPages} />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPageFromUrl}
+            />
           </>
         )}
       </Container>
