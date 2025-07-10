@@ -10,15 +10,23 @@ import {
   PageNumber,
 } from "./styled.js";
 import { theme } from "../../theme.js";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min.js";
+import { useNavigate, useLocation } from "react-router-dom";
 import { pageQueryParamName } from "../../common/QueryParamName.js";
+import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+import { useEffect, useMemo, useCallback } from "react";
 
-const PaginationButton = ({ onClick, disabled, children, direction }) => (
+const PaginationButton = ({
+  onClick,
+  disabled,
+  children,
+  direction,
+  isMobile,
+}) => (
   <Button disabled={disabled} onClick={onClick}>
     {direction === "left" && (
       <>
         <PrimaryArrow $disabled={disabled} direction={direction} />
-        {children === "First" ? (
+        {children === "First" && !isMobile ? (
           <SecondaryArrow $disabled={disabled} direction={direction} />
         ) : (
           ""
@@ -29,7 +37,7 @@ const PaginationButton = ({ onClick, disabled, children, direction }) => (
     {direction === "right" && (
       <>
         <PrimaryArrow $disabled={disabled} direction={direction} />
-        {children === "Last" ? (
+        {children === "Last" && !isMobile ? (
           <SecondaryArrow $disabled={disabled} direction={direction} />
         ) : (
           ""
@@ -39,20 +47,37 @@ const PaginationButton = ({ onClick, disabled, children, direction }) => (
   </Button>
 );
 
-export const Pagination = ({ page, totalPages }) => {
+export const Pagination = ({ totalPages }) => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery(
+    `(max-width: ${theme.breakpoint.mobileMax}px)`
+  );
 
-  const isMobile = window.innerWidth <= theme.breakpoint.mobileMax;
+  const query = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
+  const page = currentPageFromUrl;
 
-  const handleSetCurrentPage = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      const params = new URLSearchParams(location.search);
-      params.set(pageQueryParamName, page);
+  const handleSetCurrentPage = useCallback(
+    (newPage) => {
+      const maxPages = totalPages > 500 ? 500 : totalPages;
+      if (newPage >= 1 && newPage <= maxPages) {
+        const params = new URLSearchParams(location.search);
+        params.set(pageQueryParamName, newPage);
+        navigate(`?${params.toString()}`, { replace: true });
+      }
+    },
+    [location.search, navigate, totalPages]
+  );
 
-      history.push(`${location.pathname}?${params.toString()}`);
+  useEffect(() => {
+    if (!query.get(pageQueryParamName)) {
+      handleSetCurrentPage(1);
     }
-  };
+  }, [location.search, handleSetCurrentPage, query]);
 
   return (
     <Wrapper>
