@@ -1,13 +1,6 @@
 import { useParams } from "react-router-dom";
 import { peopleService } from "../../services/tmdbApi";
-import {
-  Actor,
-  Cast,
-  CastRow,
-  Name,
-  PersonTitle,
-  Picture,
-} from "../../common/Cast/styled";
+import { Cast, CastRow, Picture } from "../../common/Cast/styled";
 import { Container } from "../../common/Container/styled";
 import {
   Content,
@@ -22,6 +15,9 @@ import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
+import MovieTile from "../../components/MovieTile";
+import { Link } from "react-router-dom";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const PeoplePage = () => {
   const { id } = useParams();
@@ -29,6 +25,8 @@ const PeoplePage = () => {
   const [credits, setCredits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown";
@@ -41,11 +39,11 @@ const PeoplePage = () => {
   };
 
   const formatBirthLabel = () => {
-    return window.innerWidth <= 768 ? "Birth:" : "Date of birth:";
+    return isMobile ? "Birth:" : "Date of birth:";
   };
 
   const formatPlaceLabel = () => {
-    return window.innerWidth <= 768 ? "Place:" : "Place of birth:";
+    return isMobile ? "Place of birth:" : "Place of birth:";
   };
 
   useEffect(() => {
@@ -133,10 +131,12 @@ const PeoplePage = () => {
             <Title>{person.name}</Title>
             <Section>
               <Paragraph>
-                <Strong>{formatBirthLabel()}</Strong> {formatDate(person.birthday)}
+                <Strong>{formatBirthLabel()}</Strong>{" "}
+                {formatDate(person.birthday)}
               </Paragraph>
               <Paragraph>
-                <Strong>{formatPlaceLabel()}</Strong> {person.place_of_birth || "Unknown"}
+                <Strong>{formatPlaceLabel()}</Strong>{" "}
+                {person.place_of_birth || "Unknown"}
               </Paragraph>
             </Section>
             <Description>
@@ -149,26 +149,13 @@ const PeoplePage = () => {
           <Title>Movies ({credits.length})</Title>
           <CastRow>
             {credits.map((movie) => (
-              <PersonTitle key={movie.id}>
-                {movie.poster_path ? (
-                  <Picture
-                    src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
-                    alt={movie.title}
-                  />
-                ) : (
-                  <ImagePlaceholder type="movileTile" />
-                )}
-                <Name>
-                  <Actor>{movie.title}</Actor>
-                  {movie.release_date && (
-                    <Strong>{new Date(movie.release_date).getFullYear()}</Strong>
-                  )}
-                  <Strong>{movie.character || "Unknown role"}</Strong>
-                  {movie.vote_average && (
-                    <Strong>★ {movie.vote_average.toFixed(1)}</Strong>
-                  )}
-                </Name>
-              </PersonTitle>
+              <Link
+                to={`/movie/${movie.id}`}
+                key={movie.id}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <MovieTile movie={movie} />
+              </Link>
             ))}
           </CastRow>
         </Cast>
