@@ -32,17 +32,11 @@ import {
   Votes,
   MoviePoster,
 } from "../../common/Wrapper/styled.js";
-import {
-  Actor,
-  Cast,
-  CastRow,
-  Name,
-  PersonTitle,
-  Picture,
-} from "../../common/Cast/styled.js";
+import { Cast, CastRow } from "../../common/Cast/styled.js";
 import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
-import Loading from "../../components/Loading/index.js";
+import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState/index.js";
+import PersonTile from "../../components/PersonTile";
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -212,20 +206,12 @@ const MoviePage = () => {
           <Title>Cast</Title>
           <CastRow>
             {credits.cast.map((person) => (
-              <PersonTitle key={person.id}>
-                {person.profile_path ? (
-                  <Picture
-                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                    alt={person.name}
-                  />
-                ) : (
-                  <ImagePlaceholder type="person" />
-                )}
-                <Name>
-                  <Actor>{person.name}</Actor>
-                  <Strong>{person.character}</Strong>
-                </Name>
-              </PersonTitle>
+              <PersonTile
+                key={person.id}
+                person={person}
+                roleOrJob={person.character}
+                isDetailed={false}
+              />
             ))}
           </CastRow>
         </Cast>
@@ -234,20 +220,12 @@ const MoviePage = () => {
           <Title>Crew</Title>
           <CastRow>
             {credits.crew.map((person) => (
-              <PersonTitle key={person.id}>
-                {person.profile_path ? (
-                  <Picture
-                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                    alt={person.name}
-                  />
-                ) : (
-                  <ImagePlaceholder type="person" />
-                )}
-                <Name>
-                  <Actor>{person.name}</Actor>
-                  <Strong>{person.job}</Strong>
-                </Name>
-              </PersonTitle>
+              <PersonTile
+                key={person.id}
+                person={person}
+                roleOrJob={person.job}
+                isDetailed={false}
+              />
             ))}
           </CastRow>
         </Cast>
