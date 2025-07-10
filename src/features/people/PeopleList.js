@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Cast,
   CastRow,
@@ -12,20 +12,40 @@ import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
 import { GlobalStyle } from "../../GlobalStyle";
 import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
-import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import { peopleService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
+import { Pagination } from "../../common/PagesNumbering/index";
+import { pageQueryParamName } from "../../common/QueryParamName";
 
 const PeopleList = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
+
+  const query = new URLSearchParams(location.search);
+  const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
+
+  useEffect(() => {
+    if (currentPageFromUrl !== 1 && (searchQuery || isSearching)) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    }
+  }, [
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+    currentPageFromUrl,
+    navigate,
+  ]);
 
   useEffect(() => {
     const loadPeople = async () => {
@@ -35,9 +55,12 @@ const PeopleList = () => {
 
         let data;
         if (isSearching && searchQuery) {
-          data = await peopleService.searchPeople(searchQuery, currentPage);
+          data = await peopleService.searchPeople(
+            searchQuery,
+            currentPageFromUrl
+          );
         } else {
-          data = await peopleService.getPopularPeople(currentPage);
+          data = await peopleService.getPopularPeople(currentPageFromUrl);
         }
 
         setPeople(data.results);
@@ -51,25 +74,30 @@ const PeopleList = () => {
     };
 
     loadPeople();
-  }, [currentPage, searchQuery, isSearching]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, isSearching]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, [
+    currentPageFromUrl,
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+  ]);
 
   const handleRetry = () => {
     setError(null);
-    setCurrentPage(1);
+    if (currentPageFromUrl !== 1) {
+      const params = new URLSearchParams(location.search); // Zadeklaruj params tutaj
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    } else {
+      window.location.reload();
+    }
   };
 
   const resetToPopular = () => {
     resetSearch();
-    setCurrentPage(1);
+    const params = new URLSearchParams();
+    params.set(pageQueryParamName, 1);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
   };
 
   const sectionTitle = isSearching
@@ -152,11 +180,7 @@ const PeopleList = () => {
               </CastRow>
             </Cast>
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            <Pagination totalPages={totalPages} />
           </>
         )}
       </Container>
