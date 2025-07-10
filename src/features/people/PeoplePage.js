@@ -1,23 +1,14 @@
 import { useParams } from "react-router-dom";
 import { peopleService } from "../../services/tmdbApi";
-import { Cast, CastRow, Picture } from "../../common/Cast/styled";
+import { Cast, CastRow } from "../../common/Cast/styled";
 import { Container } from "../../common/Container/styled";
-import {
-  Content,
-  Description,
-  Paragraph,
-  Section,
-  Title,
-  Wrapper,
-  Strong,
-} from "../../common/Wrapper/styled";
-import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index";
+import { Title } from "../../common/Wrapper/styled";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import MovieTile from "../../components/MovieTile";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import PersonTile from "../../components/PersonTile";
 
 const PeoplePage = () => {
   const { id } = useParams();
@@ -25,26 +16,6 @@ const PeoplePage = () => {
   const [credits, setCredits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "Unknown";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  };
-
-  const formatBirthLabel = () => {
-    return isMobile ? "Birth:" : "Date of birth:";
-  };
-
-  const formatPlaceLabel = () => {
-    return isMobile ? "Place of birth:" : "Place of birth:";
-  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -117,48 +88,24 @@ const PeoplePage = () => {
   return (
     <>
       <Container>
-        <Wrapper>
-          {person.profile_path ? (
-            <Picture
-              src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-              alt={person.name}
-              style={{ width: "200px", height: "auto", borderRadius: "12px" }}
-            />
-          ) : (
-            <ImagePlaceholder type="person" />
-          )}
-          <Content>
-            <Title>{person.name}</Title>
-            <Section>
-              <Paragraph>
-                <Strong>{formatBirthLabel()}</Strong>{" "}
-                {formatDate(person.birthday)}
-              </Paragraph>
-              <Paragraph>
-                <Strong>{formatPlaceLabel()}</Strong>{" "}
-                {person.place_of_birth || "Unknown"}
-              </Paragraph>
-            </Section>
-            <Description>
-              {person.biography || "No biography available."}
-            </Description>
-          </Content>
-        </Wrapper>
+        <PersonTile person={person} isDetailed={true} />
 
-        <Cast>
-          <Title>Movies ({credits.length})</Title>
-          <CastRow>
-            {credits.map((movie) => (
-              <Link
-                to={`/movie/${movie.id}`}
-                key={movie.id}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <MovieTile movie={movie} />
-              </Link>
-            ))}
-          </CastRow>
-        </Cast>
+        {credits.length > 0 && (
+          <Cast>
+            <Title>Movies ({credits.length})</Title>
+            <CastRow>
+              {credits.map((movie) => (
+                <Link
+                  to={`/movie/${movie.id}`}
+                  key={movie.id}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <MovieTile movie={movie} />
+                </Link>
+              ))}
+            </CastRow>
+          </Cast>
+        )}
       </Container>
     </>
   );
