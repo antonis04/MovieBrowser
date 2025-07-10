@@ -13,7 +13,7 @@ export const StyledNav = styled.nav`
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 0;
+    padding: 8px 12px;
     height: auto;
     min-height: 80px;
   }
@@ -125,6 +125,7 @@ export const List = styled.ul`
 export const Item = styled.li`
   font-weight: 600;
   list-style: none;
+
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.color.white};
@@ -132,15 +133,19 @@ export const Item = styled.li`
     border-radius: 33px;
     border: 1px solid transparent;
     text-transform: uppercase;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s, color 0.2s, border 0.2s;
     display: block;
+    cursor: pointer;
 
     &:hover {
-      color: ${({ theme }) => theme.color.grey};
+      filter: brightness(1.3);
+      transform: scale(1.05);
     }
 
     &.active {
+      transform: scale(1.1);
       border: 1px solid ${({ theme }) => theme.color.white};
+      filter: brightness(1.5);
     }
 
     @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
