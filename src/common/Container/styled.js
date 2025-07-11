@@ -4,6 +4,7 @@ export const Container = styled.div`
   max-width: 1368px;
   margin: auto;
   box-sizing: border-box;
+  margin-top: 56px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
@@ -25,10 +26,35 @@ export const HeaderPage = styled.div`
 
 export const ImagePosterBig = styled.div`
   position: relative;
-  width: 100%;
+  width: 1368px;
+  max-width: 100%;
   height: 100%;
   z-index: 1;
   overflow: hidden;
+  margin: 0 auto;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.8) 0%,
+        transparent 15%,
+        transparent 85%,
+        rgba(0, 0, 0, 0.8) 100%
+      ),
+      radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+    z-index: 2;
+    pointer-events: none;
+  }
 
   img {
     width: 100%;
@@ -36,16 +62,24 @@ export const ImagePosterBig = styled.div`
     object-fit: cover;
   }
 
-  svg {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 100%;
-    width: auto;
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+
+    &::before {
+      background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.6) 0%,
+          transparent 20%,
+          transparent 80%,
+          rgba(0, 0, 0, 0.6) 100%
+        ),
+        radial-gradient(
+          ellipse at center,
+          transparent 50%,
+          rgba(0, 0, 0, 0.5) 100%
+        );
+    }
+
     img {
       object-fit: cover;
       object-position: center top;
@@ -65,7 +99,7 @@ export const Overlay = styled.div`
 export const HeaderContent = styled.div`
   position: absolute;
   bottom: 0;
-  left: 25%;
+  left: 0;
   z-index: 3;
   padding: 50px;
   color: white;
@@ -74,7 +108,7 @@ export const HeaderContent = styled.div`
     left: 0;
     right: 0;
     padding: 24px 16px;
-    text-align: center;
+    text-align: left;
   }
 `;
 
@@ -106,14 +140,30 @@ export const HeaderRow = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 export const HeaderSummary = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 500;
   font-size: 22px;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 18px;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 

@@ -16,7 +16,7 @@ export const SearchProvider = ({ children }) => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    setIsSearching(true);
+    setIsSearching(!!query.trim());
   };
 
   const resetSearch = () => {

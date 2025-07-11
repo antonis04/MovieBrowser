@@ -1,47 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Cast,
-  CastRow,
-  PersonTitle,
-  Picture,
-  Name,
-  Actor,
-} from "../../common/Cast/styled";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Cast, CastRow } from "../../common/Cast/styled";
 import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
 import { GlobalStyle } from "../../GlobalStyle";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
-import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import { peopleService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
+import { Pagination } from "../../common/PagesNumbering/index";
+import { pageQueryParamName } from "../../common/QueryParamName";
+import PersonTile from "../../components/PersonTile";
 
 const PeopleList = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
+
+  const query = new URLSearchParams(location.search);
+  const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
+
+  useEffect(() => {
+    if (currentPageFromUrl !== 1 && (searchQuery || isSearching)) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    }
+  }, [
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+    currentPageFromUrl,
+    navigate,
+  ]);
 
   useEffect(() => {
     const loadPeople = async () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         let data;
         if (isSearching && searchQuery) {
-          data = await peopleService.searchPeople(searchQuery, currentPage);
+          data = await peopleService.searchPeople(
+            searchQuery,
+            currentPageFromUrl
+          );
         } else {
-          data = await peopleService.getPopularPeople(currentPage);
+          data = await peopleService.getPopularPeople(currentPageFromUrl);
         }
-        
+
         setPeople(data.results);
-        setTotalPages(Math.min(data.total_pages, 500)); // TMDB API limit
+        setTotalPages(Math.min(data.total_pages, 500));
       } catch (err) {
         console.error("Error fetching people:", err);
         setError(err.message || "Failed to fetch people");
@@ -51,26 +67,28 @@ const PeopleList = () => {
     };
 
     loadPeople();
-  }, [currentPage, searchQuery, isSearching]);
-
-  // Reset to first page when search query changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, isSearching]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, [
+    currentPageFromUrl,
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+  ]);
 
   const handleRetry = () => {
     setError(null);
-    setCurrentPage(1);
+    if (currentPageFromUrl !== 1) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    } else {
+      window.location.reload();
+    }
   };
 
-  const resetToPopular = () => {
+  const resetToPopularPeople = () => {
     resetSearch();
-    setCurrentPage(1);
+    navigate(`/people?${pageQueryParamName}=1`, { replace: true });
   };
 
   const sectionTitle = isSearching
@@ -118,10 +136,10 @@ const PeopleList = () => {
 
         {isSearching && people.length === 0 && (
           <ErrorState
+            isNoResults={true}
             title={`Sorry, there are no results for "${searchQuery}"`}
             message="Try searching for a different person or browse our popular people instead."
-            onRetry={resetToPopular}
-            isNoResults={true}
+            onRetry={resetToPopularPeople}
           />
         )}
 
@@ -130,33 +148,18 @@ const PeopleList = () => {
             <Cast>
               <CastRow>
                 {people.map((person) => (
-                  <Link
+                  <PersonTile
                     key={person.id}
-                    to={`/people/${person.id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <PersonTitle>
-                      {person.profile_path ? (
-                        <Picture
-                          src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                          alt={person.name}
-                        />
-                      ) : (
-                        <EmptyPicture width={177} height={264} />
-                      )}
-                      <Name>
-                        <Actor>{person.name}</Actor>
-                      </Name>
-                    </PersonTitle>
-                  </Link>
+                    person={person}
+                    isDetailed={false}
+                  />
                 ))}
               </CastRow>
             </Cast>
-            
+
             <Pagination
-              currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={handlePageChange}
+              currentPage={currentPageFromUrl}
             />
           </>
         )}

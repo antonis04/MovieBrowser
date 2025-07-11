@@ -1,94 +1,80 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const MovieCard = styled.div`
-  background-color: ${({ theme }) => theme.color.white};
+  background: ${({ theme }) => theme.color.white};
+  width: 324px;
+  height: 650px;
   border-radius: 5px;
+  box-shadow: 0px 4px 12px 0px #bac7d580;
   padding: 16px;
-  box-shadow: 0px 4px 12px rgba(186, 199, 213, 0.5);
-  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  transition: transform 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 12px;
-    box-shadow: 0px 2px 8px rgba(186, 199, 213, 0.4);
-  }
-
-  @media (max-width: 480px) {
+    width: 100%;
+    height: auto;
     padding: 8px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
   }
 `;
 
 export const MoviePoster = styled.img`
-  width: 100%;
-  height: auto;
-  min-height: 325px;
-  max-height: 485px;
-  object-fit: contain;
+  width: 292px;
+  height: 434px;
+  object-fit: cover;
   border-radius: 5px;
   margin-bottom: 16px;
   background-color: ${({ theme }) => theme.color.postergrey};
+  flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    min-height: 280px;
-    max-height: 420px;
-    margin-bottom: 12px;
-  }
-
-  @media (max-width: 480px) {
-    min-height: 240px;
-    max-height: 360px;
-    margin-bottom: 8px;
+    width: 114px;
+    height: 170px;
+    margin-bottom: 0;
   }
 `;
 
 export const MovieInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  flex-grow: 1;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    gap: 6px;
-  }
-
-  @media (max-width: 480px) {
-    gap: 4px;
+    justify-content: space-between;
   }
 `;
 
 export const MovieTitle = styled.h3`
-  font-size: 22px;
   font-weight: 500;
-  color: ${({ theme }) => theme.color.black};
-  margin: 0;
-  line-height: 1.3;
+  font-size: 22px;
+  line-height: 130%;
+  margin: 0 0 8px 0;
+  word-break: break-word;
+  color: ${({ theme }) => theme.color.woodsmoke};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 20px;
-    line-height: 1.2;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 18px;
+    font-size: 16px;
+    margin-bottom: 4px;
   }
 `;
 
-export const MovieYear = styled.span`
+export const MovieYear = styled.p`
+  font-weight: 400;
   font-size: 16px;
+  line-height: 150%;
   color: ${({ theme }) => theme.color.darkergrey};
-  margin: 0;
+  margin: 0 0 8px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 15px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 4px;
   }
 `;
 
@@ -96,70 +82,53 @@ export const GenreTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 8px 0;
+  margin-bottom: 8px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
-    margin: 6px 0;
-  }
-
-  @media (max-width: 480px) {
-    gap: 4px;
-    margin: 4px 0;
+    margin-bottom: 4px;
   }
 `;
 
 export const GenreTag = styled.span`
-  background-color: ${({ theme }) => theme.color.grey};
-  color: ${({ theme }) => theme.color.black};
-  padding: 8px 16px;
+  background: ${({ theme }) => theme.color.grey};
   border-radius: 5px;
-  font-size: 14px;
+  padding: 8px 16px;
   font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: ${({ theme }) => theme.color.woodsmoke};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-
-  @media (max-width: 480px) {
     padding: 4px 8px;
-    font-size: 12px;
+    font-size: 10px;
   }
 `;
 
 export const RatingSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 12px;
+  margin-top: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    margin-top: auto;
     gap: 6px;
-    margin-top: 6px;
-  }
-
-  @media (max-width: 480px) {
-    gap: 4px;
-    margin-top: 4px;
   }
 `;
 
 export const StarIcon = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  
-  img {
-    width: 20px;
-    height: 20px;
 
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-      width: 18px;
-      height: 18px;
-    }
+  svg {
+    width: 24px;
+    height: 24px;
+    color: ${({ theme }) => theme.color.sunflower};
+  }
 
-    @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    svg {
       width: 16px;
       height: 16px;
     }
@@ -167,28 +136,23 @@ export const StarIcon = styled.div`
 `;
 
 export const Rating = styled.span`
-  font-size: 16px;
   font-weight: 600;
-  color: ${({ theme }) => theme.color.black};
-
-  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 15px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
-  }
-`;
-
-export const VoteCount = styled.span`
-  font-size: 14px;
-  color: ${({ theme }) => theme.color.darkergrey};
+  font-size: 16px;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.woodsmoke};
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 13px;
   }
+`;
 
-  @media (max-width: 480px) {
-    font-size: 12px;
+export const VoteCount = styled.span`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: ${({ theme }) => theme.color.darkergrey};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    font-size: 13px;
   }
 `;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ReactComponent as EmptyPicture } from "../../images/EmptyPicture.svg";
-import { GlobalStyle } from "../../GlobalStyle.js";
-import { fetchMovieCredits, fetchMovieDetails } from "../../api/api.js";
+import { useParams } from "react-router-dom";
+import { movieService } from "../../services/tmdbApi.js";
 import {
   Container,
   HeaderContent,
@@ -31,33 +30,42 @@ import {
   Strong,
   Summary,
   Votes,
+  MoviePoster,
 } from "../../common/Wrapper/styled.js";
-import StarSVG from "../../components/StarSVG/StarSVG.js";
-import {
-  Actor,
-  Cast,
-  CastRow,
-  Name,
-  PersonTitle,
-  Picture,
-} from "../../common/Cast/styled.js";
-import { useParams } from "react-router-dom";
+import { Cast, CastRow } from "../../common/Cast/styled.js";
+import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
+import Loading from "../../components/Loading";
+import ErrorState from "../../components/ErrorState/index.js";
+import PersonTile from "../../components/PersonTile";
 
 const MoviePage = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadMovieData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const movieData = await fetchMovieDetails(id);
-        const creditsData = await fetchMovieCredits(id);
-        setMovie(movieData);
-        setCredits(creditsData);
+        const movieData = await movieService.getMovieDetails(id);
+        const creditsData = await movieService.getMovieCredits(id);
+
+        if (!movieData) {
+          setError("Movie not found.");
+          setMovie(null);
+        } else {
+          setMovie(movieData);
+          setCredits(creditsData);
+        }
       } catch (error) {
         console.error("Error loading movie data:", error);
+        setError(
+          "A problem occurred while loading data. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -66,12 +74,51 @@ const MoviePage = () => {
     loadMovieData();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!movie) return <div>Error loading movie data</div>;
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("pl-PL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
+
+  if (error) {
+    const handleRetry = () => {
+      window.location.reload();
+    };
+
+    return (
+      <>
+        <ErrorState
+          title={
+            error === "Movie not found."
+              ? "Movie not found"
+              : "Oops! An error occurred!"
+          }
+          message={
+            error === "Movie not found."
+              ? "It seems that the movie with the given ID does not exist or the data is unavailable."
+              : error
+          }
+          onRetry={handleRetry}
+          isNoResults={error === "Movie not found."}
+        />
+      </>
+    );
+  }
 
   return (
     <>
-      <GlobalStyle />
       <HeaderPage>
         <ImagePosterBig>
           {movie.backdrop_path ? (
@@ -81,19 +128,23 @@ const MoviePage = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <EmptyPicture width="100%" height="400px" />
+            <ImagePlaceholder type="movie" large />
           )}
           <HeaderContent>
             <HeaderTitle>{movie.title}</HeaderTitle>
             <HeaderDetails>
               <HeaderRow>
                 <HeaderSummary>
-                  <StarSVG />
+                  <ImagePlaceholder type="star" />{" "}
                   {movie.vote_average.toFixed(1)}
                 </HeaderSummary>
                 <HeaderNote>/10</HeaderNote>
               </HeaderRow>
-              <HeaderVotes>{movie.vote_count} votes</HeaderVotes>
+              <HeaderVotes>
+                {movie.vote_count === 0
+                  ? "No votes yet"
+                  : `${movie.vote_count} votes`}
+              </HeaderVotes>
             </HeaderDetails>
           </HeaderContent>
         </ImagePosterBig>
@@ -103,27 +154,28 @@ const MoviePage = () => {
       <Container>
         <Wrapper>
           {movie.poster_path ? (
-            <Picture
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+            <MoviePoster
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
-              style={{ borderRadius: "12px" }}
             />
           ) : (
-            <EmptyPicture width={200} height={300} />
+            <ImagePlaceholder type="movie" small />
           )}
           <Content>
             <Title>{movie.title}</Title>
             <Year>{new Date(movie.release_date).getFullYear()}</Year>
             <Section>
+              {movie.production_countries &&
+                movie.production_countries.length > 0 && (
+                  <Paragraph>
+                    <Strong>Production:</Strong>{" "}
+                    {movie.production_countries
+                      .map((country) => country.name)
+                      .join(", ")}
+                  </Paragraph>
+                )}
               <Paragraph>
-                <Strong>Genres:</Strong>{" "}
-                {movie.genres.map((g) => g.name).join(", ")}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Release date:</Strong> {movie.release_date}
-              </Paragraph>
-              <Paragraph>
-                <Strong>Runtime:</Strong> {movie.runtime} min
+                <Strong>Release date:</Strong> {formatDate(movie.release_date)}
               </Paragraph>
             </Section>
 
@@ -135,11 +187,15 @@ const MoviePage = () => {
 
             <Details>
               <DetailStar>
-                <StarSVG />
+                <ImagePlaceholder type="star" />
                 <Summary>{movie.vote_average.toFixed(1)}</Summary>
               </DetailStar>
               <Note>/10</Note>
-              <Votes>{movie.vote_count} votes</Votes>
+              <Votes>
+                {movie.vote_count === 0
+                  ? "No votes yet"
+                  : `${movie.vote_count} votes`}
+              </Votes>{" "}
             </Details>
 
             <Description>{movie.overview}</Description>
@@ -150,20 +206,12 @@ const MoviePage = () => {
           <Title>Cast</Title>
           <CastRow>
             {credits.cast.map((person) => (
-              <PersonTitle key={person.id}>
-                {person.profile_path ? (
-                  <Picture
-                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                    alt={person.name}
-                  />
-                ) : (
-                  <EmptyPicture width={177} height={264} />
-                )}
-                <Name>
-                  <Actor>{person.name}</Actor>
-                  <Strong>{person.character}</Strong>
-                </Name>
-              </PersonTitle>
+              <PersonTile
+                key={person.id}
+                person={person}
+                roleOrJob={person.character}
+                isDetailed={false}
+              />
             ))}
           </CastRow>
         </Cast>
@@ -172,20 +220,12 @@ const MoviePage = () => {
           <Title>Crew</Title>
           <CastRow>
             {credits.crew.map((person) => (
-              <PersonTitle key={person.id}>
-                {person.profile_path ? (
-                  <Picture
-                    src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                    alt={person.name}
-                  />
-                ) : (
-                  <EmptyPicture width={177} height={264} />
-                )}
-                <Name>
-                  <Actor>{person.name}</Actor>
-                  <Strong>{person.job}</Strong>
-                </Name>
-              </PersonTitle>
+              <PersonTile
+                key={person.id}
+                person={person}
+                roleOrJob={person.job}
+                isDetailed={false}
+              />
             ))}
           </CastRow>
         </Cast>

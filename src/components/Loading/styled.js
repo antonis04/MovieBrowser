@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }
@@ -17,7 +17,7 @@ export const LoadingContainer = styled.div`
 
 export const LoadingSpinner = styled.div`
   margin-bottom: 24px;
-  
+
   img {
     width: 48px;
     height: 48px;

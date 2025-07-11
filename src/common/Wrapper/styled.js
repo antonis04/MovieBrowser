@@ -6,33 +6,41 @@ export const Wrapper = styled.article`
   box-shadow: 0px 4px 12px 0px rgba(186, 199, 213, 0.5);
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-gap: 40px;
+  gap: 40px;
+  margin-top: 56px;
+  border-radius: 5px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     grid-template-columns: 1fr;
-    grid-gap: 24px;
+    gap: 16px;
     padding: 16px;
+    margin-top: 16px;
   }
 `;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const Title = styled.header`
   font-weight: 600;
   font-size: 36px;
-  margin-bottom: 24px;
+  margin: 56px 0 24px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 24px;
-    margin-bottom: 16px;
+    font-size: 20px;
+    margin-bottom: 8px;
   }
 `;
 
 export const Year = styled.div`
   font-size: 22px;
+  margin: 0 0 24px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 18px;
+    font-size: 13px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -41,11 +49,12 @@ export const Tags = styled.ul`
   padding-left: 0;
   display: flex;
   flex-wrap: wrap;
-  margin: 16px -8px;
+  gap: 8px;
+  margin: 0 0 24px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    margin: 12px -4px;
-    justify-content: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
   }
 
   @media (max-width: 480px) {
@@ -57,52 +66,43 @@ export const Tag = styled.li`
   background: ${({ theme }) => theme.color.grey};
   padding: 8px 16px;
   font-size: 14px;
-  margin: 8px;
   border-radius: 5px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 6px 12px;
-    font-size: 13px;
-    margin: 4px;
-  }
-
-  @media (max-width: 480px) {
     padding: 4px 8px;
-    font-size: 12px;
-    margin: 2px;
+    font-size: 10x;
   }
 `;
 
 export const Description = styled.p`
   font-size: 20px;
-  margin: 24px 0 0 0;
-  line-height: 1.6;
+  margin: 0;
+  line-height: 160%;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 16px;
-    margin: 16px 0 0 0;
+    font-size: 14px;
   }
 `;
 
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  margin: 24px 0;
+  gap: 8px;
+  margin-bottom: 24px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    gap: 16px;
-    margin: 16px 0;
+    gap: 4px;
+    margin-bottom: 12px;
   }
 `;
 export const Paragraph = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 120%;
-  letter-spacing: 0px;
+  margin: 0px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 16px;
+    font-size: 12px;
   }
 `;
 
@@ -110,51 +110,44 @@ export const Strong = styled.span`
   font-weight: 400;
   font-size: 18px;
   color: ${({ theme }) => theme.color.stormgrey};
-  margin-right: 4px;
+  margin-right: 10px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 16px;
+    font-size: 12px;
+    margin-right: 4px;
   }
 `;
 
 export const Details = styled.div`
-  width: 185px;
-  height: 29px;
   list-style: none;
   padding-left: 0;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-left: 0%;
-  margin: 16px -8px;
+  margin: 0 0 24px 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: auto;
-    height: auto;
-    margin: 12px 0;
-    justify-content: flex-start;
-    gap: 8px;
-  }
-
-  @media (max-width: 480px) {
     gap: 6px;
-    margin: 8px 0;
+    margin: 12px 0;
   }
 `;
 
 export const DetailStar = styled.div`
-  width: 64px;
-  height: 29px;
-  top: 255px;
   gap: 8px;
   display: flex;
   align-items: center;
 
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: auto;
-    height: auto;
-    top: auto;
-    gap: 6px;
+    gap: 4px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
@@ -223,5 +216,20 @@ export const Votes = styled.div`
 
   @media (max-width: 480px) {
     font-size: 12px;
+  }
+`;
+
+export const MoviePoster = styled.img`
+  width: 312px;
+  height: 464px;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.color.postergrey};
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    width: 100%;
+    max-width: 312px;
+    height: auto;
+    aspect-ratio: 312/464;
   }
 `;
