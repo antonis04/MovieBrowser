@@ -7,10 +7,9 @@ export const ImagePlaceholderWrapper = styled.div`
   overflow: hidden;
   border-radius: 5px;
   flex-shrink: 0;
+  background-color: ${({ theme }) => theme.color.postergrey};
 
   svg {
-    max-width: 100px;
-    max-height: 100px;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -22,20 +21,21 @@ export const ImagePlaceholderWrapper = styled.div`
     type === "person" &&
     css`
       width: 176px;
-      height: 264px;
+      height: 231px;
       border-radius: 5px;
 
       svg {
-        max-width: 120px;
-        max-height: 120px;
+        max-width: 100px;
+        max-height: 100px;
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        width: 100px;
-        height: 150px;
+        width: 72px;
+        height: 96px;
+        min-width: 72px;
         svg {
-          max-width: 80px;
-          max-height: 80px;
+          max-width: 60px;
+          max-height: 60px;
         }
       }
     `}
@@ -88,19 +88,19 @@ export const ImagePlaceholderWrapper = styled.div`
   ${({ type }) =>
     type === "movieTile" &&
     css`
-      width: 292px;
-      height: 434px;
-      margin-bottom: 16px;
+      width: 176px;
+      height: 231px;
       border-radius: 5px;
+      background-color: ${({ theme }) => theme.color.postergrey};
       svg {
         max-width: 80px;
         max-height: 80px;
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        width: 114px;
-        height: 170px;
-        margin-bottom: 0px;
+        width: 72px;
+        height: 96px;
+        min-width: 72px;
         svg {
           max-width: 60px;
           max-height: 60px;
@@ -115,6 +115,7 @@ export const ImagePlaceholderWrapper = styled.div`
         width: 114px;
         height: 170px;
         margin-bottom: 0;
+        min-width: 114px;
         svg {
           max-width: 50px;
           max-height: 50px;

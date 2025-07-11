@@ -7,7 +7,7 @@ A web application for browsing and managing movies and people (actors, etc.), bu
 ## Live Demo
 
 Check out the live version of the app:<br>
-[Movie Browser Live Demo](https://agnieszkaszajnowska.github.io/MovieBrowser/)
+[Movie Browser Live Demo](https://antonis04.github.io/MovieBrowser/)
 
 ---
 
@@ -15,7 +15,7 @@ Check out the live version of the app:<br>
 
 - **Movie List** — displays a list of popular movies with: poster image, movie title, release year, genres, rating and vote count.
 - **People List** — Shows popular actors, directors, and other film industry professionals with their photos and names.
-- **Movie Details** —  View detailed information about movies, including: movie banner, production countries, full release date, movie description, cast and crew
+- **Movie Details** — View detailed information about movies, including: movie banner, production countries, full release date, movie description, cast and crew
 - **Person Profile** - shows a tile with: picture, name, date and place of birth, description and movie credits.
 - **Routing** — navigation between pages using React Router
 - **Global State Management** — handled by Redux Toolkit with `movies` and `people` slices
@@ -69,7 +69,7 @@ npm start
 
 ## Contributors
 
-This project was developed by: 
+This project was developed by:
 
 - Wioletta Koperska - [GitHub](https://github.com/Gyrletta)
 

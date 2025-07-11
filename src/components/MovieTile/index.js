@@ -59,7 +59,11 @@ const MovieTile = ({ movie, genres = [] }) => {
           <StarIcon>
             <ImagePlaceholder type="star" />
           </StarIcon>
-          <Rating>{vote_average && vote_average > 0 ? vote_average.toFixed(1) : ""}</Rating>
+          <Rating>
+            {typeof vote_average === "number" && vote_average > 0
+              ? vote_average.toFixed(1)
+              : "N/A"}
+          </Rating>
           <VoteCount>
             {vote_count > 0 ? `${vote_count} votes` : "No votes yet"}
           </VoteCount>

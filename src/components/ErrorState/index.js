@@ -1,23 +1,29 @@
-import React from 'react';
-import { ErrorContainer, ErrorImage, ErrorTitle, ErrorMessage, RetryButton } from './styled';
-import NoResultsSvg from '../../images/NoResults.svg';
+import React from "react";
+import {
+  ErrorContainer,
+  ErrorImage,
+  ErrorTitle,
+  ErrorMessage,
+  RetryButton,
+} from "./styled";
+import NoResultsSvg from "../../images/NoResults.svg";
 
-const ErrorState = ({ 
-  title = "Oops! Something went wrong", 
-  message = "We couldn't load the movies. Please try again.",
+const ErrorState = ({
+  title = "Oops! Something went wrong",
+  message = "We couldn't load the data. Please try again.",
   onRetry,
-  isNoResults = false
+  isNoResults = false,
 }) => {
   return (
     <ErrorContainer>
       <ErrorImage>
-        <img src={NoResultsSvg} alt={isNoResults ? "No results" : "Error"} />
+        <img src={NoResultsSvg} alt={isNoResults ? "Brak wyników" : "Błąd"} />
       </ErrorImage>
       <ErrorTitle>{title}</ErrorTitle>
       <ErrorMessage>{message}</ErrorMessage>
       {onRetry && (
         <RetryButton onClick={onRetry}>
-          {isNoResults ? "Back to Popular Movies" : "Try Again"}
+          {isNoResults ? "Wróć do popularnych filmów" : "Spróbuj ponownie"}
         </RetryButton>
       )}
     </ErrorContainer>

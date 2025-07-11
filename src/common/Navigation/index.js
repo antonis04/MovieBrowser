@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Camera from "../../components/CameraSVG/index.js";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useSearch } from "../../contexts/SearchContext";
 import {
   List,
@@ -20,23 +25,71 @@ const Navigation = () => {
   const { handleSearch, resetSearch, isSearching } = useSearch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const debounceTimeoutRef = useRef(null);
 
-  const isOnPeoplePage = location.pathname.includes('people');
+  const isOnPeoplePage = location.pathname.includes("people");
+  const searchParam = searchParams.get("search");
 
   useEffect(() => {
-    if (!isSearching) {
+    if (searchParam) {
+      setSearchInput(searchParam);
+      handleSearch(searchParam);
+    } else if (!isSearching) {
       setSearchInput("");
     }
-  }, [isSearching]);
+  }, [searchParam, isSearching, handleSearch]);
+
+  useEffect(() => {
+    if (!isSearching && !searchParam) {
+      setSearchInput("");
+    }
+  }, [isSearching, searchParam]);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const previousPath = location.state?.fromPath;
+
+    if (
+      !previousPath ||
+      (currentPath.includes("movie") && previousPath.includes("movie")) ||
+      (currentPath.includes("people") && previousPath.includes("people"))
+    ) {
+      return;
+    }
+
+    if (isSearching) {
+      resetSearch();
+      setSearchParams({});
+      setSearchInput("");
+    }
+  }, [
+    location.pathname,
+    isSearching,
+    resetSearch,
+    setSearchParams,
+    setSearchInput,
+    location.state,
+  ]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
     }
-    if (searchInput.trim()) {
-      handleSearch(searchInput.trim());
+
+    const trimmedInput = searchInput.trim();
+    if (trimmedInput) {
+      handleSearch(trimmedInput);
+      setSearchParams({ search: trimmedInput });
+      navigate(
+        isOnPeoplePage
+          ? `/peoplelist?search=${trimmedInput}`
+          : `/movielist?search=${trimmedInput}`
+      );
+    } else {
+      resetSearch();
+      setSearchParams({});
       navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
     }
   };
@@ -50,12 +103,19 @@ const Navigation = () => {
     }
 
     debounceTimeoutRef.current = setTimeout(() => {
-      if (newValue.trim() === "") {
+      const trimmedValue = newValue.trim();
+      if (trimmedValue === "") {
         resetSearch();
+        setSearchParams({});
         navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
       } else {
-        handleSearch(newValue.trim());
-        navigate(isOnPeoplePage ? "/peoplelist" : "/movielist");
+        handleSearch(trimmedValue);
+        setSearchParams({ search: trimmedValue });
+        navigate(
+          isOnPeoplePage
+            ? `/peoplelist?search=${trimmedValue}`
+            : `/movielist?search=${trimmedValue}`
+        );
       }
     }, 500);
   };
@@ -87,20 +147,28 @@ const Navigation = () => {
         <NavMenu>
           <List>
             <Item>
-              <NavLink 
+              <NavLink
                 to="/movielist"
-                className={({ isActive }) => 
-                  (isActive || location.pathname === '/' || location.pathname.startsWith('/movie')) ? 'active' : ''
+                state={{ fromPath: location.pathname }}
+                className={({ isActive }) =>
+                  isActive ||
+                  location.pathname === "/" ||
+                  location.pathname.startsWith("/movie")
+                    ? "active"
+                    : ""
                 }
               >
                 Movies
               </NavLink>
             </Item>
             <Item>
-              <NavLink 
-                to="/peoplelist" 
-                className={({ isActive }) => 
-                  isActive || location.pathname.startsWith('/people') ? 'active' : ''
+              <NavLink
+                to="/peoplelist"
+                state={{ fromPath: location.pathname }}
+                className={({ isActive }) =>
+                  isActive || location.pathname.startsWith("/people")
+                    ? "active"
+                    : ""
                 }
               >
                 People
@@ -113,7 +181,9 @@ const Navigation = () => {
           <form onSubmit={handleSearchSubmit}>
             <SearchInput
               type="text"
-              placeholder={isOnPeoplePage ? "Search for people..." : "Search for movies..."}
+              placeholder={
+                isOnPeoplePage ? "Search for people..." : "Search for movies..."
+              }
               value={searchInput}
               onChange={handleSearchChange}
               onKeyPress={handleKeyPress}

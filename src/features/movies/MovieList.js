@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../../GlobalStyle";
 import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
-import Pagination from "../../components/Pagination";
+import { Pagination } from "../../common/PagesNumbering/index";
 import Loading from "../../components/Loading";
 import ErrorState from "../../components/ErrorState";
 import MovieTile from "../../components/MovieTile";
 import { movieService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
 import { MoviesGrid } from "./styled";
+import { pageQueryParamName } from "../../common/QueryParamName";
 
 const MovieList = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
   const { searchQuery, isSearching, resetSearch } = useSearch();
+
+  const query = new URLSearchParams(location.search);
+  const currentPageFromUrl = parseInt(query.get(pageQueryParamName)) || 1;
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -36,6 +41,21 @@ const MovieList = () => {
   }, []);
 
   useEffect(() => {
+    if (currentPageFromUrl !== 1 && (searchQuery || isSearching)) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    }
+  }, [
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+    currentPageFromUrl,
+    navigate,
+  ]);
+
+  useEffect(() => {
     const loadMovies = async () => {
       try {
         setLoading(true);
@@ -45,15 +65,20 @@ const MovieList = () => {
         const startTime = Date.now();
         let data;
         if (isSearching && searchQuery) {
-          data = await movieService.searchMovies(searchQuery, currentPage);
+          data = await movieService.searchMovies(
+            searchQuery,
+            currentPageFromUrl
+          );
         } else {
-          data = await movieService.getPopularMovies(currentPage);
+          data = await movieService.getPopularMovies(currentPageFromUrl);
         }
 
         const loadTime = Date.now() - startTime;
         const minLoadTime = 800;
         if (loadTime < minLoadTime) {
-          await new Promise(resolve => setTimeout(resolve, minLoadTime - loadTime));
+          await new Promise((resolve) =>
+            setTimeout(resolve, minLoadTime - loadTime)
+          );
         }
 
         setMovies(data.results);
@@ -68,31 +93,34 @@ const MovieList = () => {
     };
 
     loadMovies();
-  }, [currentPage, searchQuery, isSearching]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, isSearching]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, [
+    currentPageFromUrl,
+    searchQuery,
+    isSearching,
+    location.search,
+    location.pathname,
+  ]);
 
   const handleRetry = () => {
     setError(null);
-    setCurrentPage(1);
+    if (currentPageFromUrl !== 1) {
+      const params = new URLSearchParams(location.search);
+      params.set(pageQueryParamName, 1);
+      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+    } else {
+      window.location.reload();
+    }
   };
 
-  const resetToPopular = () => {
+  const resetToPopularMovies = () => {
     resetSearch();
-    setCurrentPage(1);
+    navigate(`/movies?${pageQueryParamName}=1`, { replace: true });
   };
 
   const sectionTitle = isSearching
-    ? movies.length > 0
+    ? !loading && totalResults > 0
       ? `Search results for "${searchQuery}" (${totalResults})`
-      : `Search results for "${searchQuery0}"`
+      : `Search results for "${searchQuery}"`
     : "Popular Movies";
 
   if (loading) {
@@ -132,10 +160,10 @@ const MovieList = () => {
 
         {isSearching && movies.length === 0 && (
           <ErrorState
-            title={`Sorry, there are no results for "${searchQuery}"`}
-            message=""
-            onRetry={null}
             isNoResults={true}
+            title={`Sorry, there are no results for "${searchQuery}"`}
+            message="Try searching for a different movie title or browse our popular movies instead."
+            onRetry={resetToPopularMovies}
           />
         )}
 
@@ -154,9 +182,8 @@ const MovieList = () => {
             </MoviesGrid>
 
             <Pagination
-              currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={handlePageChange}
+              currentPage={currentPageFromUrl}
             />
           </>
         )}
