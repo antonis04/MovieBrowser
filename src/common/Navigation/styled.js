@@ -37,13 +37,17 @@ export const NavigationContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
   }
 
   @media (max-width: 480px) {
     padding: 0 12px;
-    gap: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
   }
 `;
 
@@ -64,6 +68,11 @@ export const Logo = styled.div`
   svg {
     width: 40px;
     height: 40px;
+
+    @media (max-width: 480px) {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 
@@ -82,8 +91,10 @@ export const LogoText = styled.span`
   }
 
   @media (max-width: 480px) {
-    font-size: 18px;
+    font-size: 13px;
     line-height: 28px;
+    margin-left: 4px;
+    white-space: nowrap;
   }
 `;
 
@@ -93,14 +104,18 @@ export const NavMenu = styled.div`
   margin-left: 70px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    flex-grow: 0;
-    margin: 0 16px;
-    width: 100%;
-    justify-content: center;
+    margin-left: 0;
+    order: 0;
+    flex-grow: 1;
+    justify-content: flex-start;
   }
 
   @media (max-width: 480px) {
-    margin: 0 8px;
+    margin-left: 0;
+    width: auto;
+    justify-content: flex-end;
+    order: 1;
+    flex-grow: 1;
   }
 `;
 
@@ -113,12 +128,15 @@ export const List = styled.ul`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
 
   @media (max-width: 480px) {
     gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
 `;
 
@@ -151,11 +169,12 @@ export const Item = styled.li`
     @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
       padding: 6px 16px;
       font-size: 14px;
+      white-space: nowrap;
     }
 
     @media (max-width: 480px) {
-      padding: 4px 12px;
-      font-size: 13px;
+      padding: 4px 10px;
+      font-size: 12px;
     }
   }
 `;
@@ -168,7 +187,7 @@ export const SearchWrapper = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    order: 3;
+    order: 2;
     margin-left: 0;
     padding: 0 16px 8px 16px;
     box-sizing: border-box;
@@ -179,6 +198,7 @@ export const SearchWrapper = styled.div`
     margin-left: 0;
     padding: 0 12px 8px 12px;
     box-sizing: border-box;
+    order: 1;
   }
 `;
 
@@ -192,6 +212,12 @@ export const SearchIcon = styled(SearchSVG)`
   cursor: pointer;
   z-index: 1;
   color: #9ca3af;
+
+  @media (max-width: 480px) {
+    width: 16px;
+    height: 16px;
+    left: 12px;
+  }
 `;
 
 export const SearchInput = styled.input`
