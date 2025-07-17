@@ -86,13 +86,6 @@ export const PersonCard = styled.div`
             gap: 12px;
             padding: 8px;
           }
-
-          @media (max-width: 400px) {
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            padding: 8px;
-          }
         `
       : css`
           width: 208px;
@@ -100,6 +93,7 @@ export const PersonCard = styled.div`
           display: flex;
           flex-direction: column;
           align-items: center;
+          padding: 16px;
 
           &:hover {
             transform: translateY(-2px);
@@ -109,10 +103,9 @@ export const PersonCard = styled.div`
             padding: 8px;
             width: 100%;
             height: auto;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 12px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
           }
 
           @media (max-width: 480px) {
@@ -128,6 +121,7 @@ export const PersonImageWrapper = styled.div`
       ? css`
           width: 312px;
           height: 464px;
+
           @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
             width: 116px;
             height: 163px;
@@ -163,18 +157,42 @@ export const PersonInfoWrapper = styled.div`
   flex-direction: column;
   flex-grow: 1;
 
-  @media (max-width: 400px) {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-  }
+  ${({ isDetailed }) =>
+    isDetailed
+      ? css`
+          width: auto;
+          align-items: flex-start;
+          text-align: left;
+
+          @media (max-width: 400px) {
+            align-items: flex-start;
+            text-align: left;
+          }
+        `
+      : css`
+          width: 100%;
+          align-items: center;
+          text-align: center;
+        `}
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    flex-basis: calc(100% - 72px - 12px);
+    flex-basis: auto;
+    width: 100%;
+
+    ${({ isDetailed }) =>
+      isDetailed
+        ? css`
+            align-items: flex-start;
+            text-align: left;
+          `
+        : css`
+            align-items: center;
+            text-align: center;
+          `}
   }
 `;
 
@@ -182,19 +200,31 @@ export const Name = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-grow: 1;
-  text-align: left;
+  text-align: center;
+
+  ${({ isDetailed }) =>
+    isDetailed &&
+    css`
+      align-items: flex-start;
+      text-align: left;
+    `}
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    align-items: flex-start;
+    ${({ isDetailed }) =>
+      isDetailed
+        ? css`
+            align-items: flex-start;
+            text-align: left;
+          `
+        : css`
+            align-items: center;
+            text-align: center;
+          `}
+
     flex-grow: 0;
     width: 100%;
-  }
-
-  @media (max-width: 400px) {
-    align-items: center;
-    text-align: center;
   }
 `;
 
@@ -205,21 +235,17 @@ export const Actor = styled.div`
   letter-spacing: 0px;
   margin: 8px 0 4px 0;
   word-break: break-word;
-  text-align: left;
+  text-align: inherit;
   min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 16px;
     margin: 0;
-    text-align: left;
+    text-align: inherit;
   }
 
   @media (max-width: 480px) {
     font-size: 14px;
-  }
-
-  @media (max-width: 400px) {
-    text-align: center;
   }
 `;
 
@@ -229,21 +255,17 @@ export const Strong = styled.div`
   color: ${({ theme }) => theme.color.darkergrey};
   margin-top: 4px;
   word-break: break-word;
-  text-align: left;
+  text-align: inherit;
   min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 14px;
-    text-align: left;
+    text-align: inherit;
     margin-top: 0;
   }
 
   @media (max-width: 480px) {
     font-size: 13px;
-  }
-
-  @media (max-width: 400px) {
-    text-align: center;
   }
 `;
 
@@ -252,15 +274,12 @@ export const PersonDetailsText = styled.p`
   line-height: 1.3;
   margin: 4px 0;
   color: ${({ theme }) => theme.color.darkergrey};
+  text-align: inherit;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 12px;
     margin: 2px 0;
-  }
-
-  @media (max-width: 400px) {
-    text-align: center;
-    width: 100%;
+    text-align: inherit;
   }
 `;
 
@@ -274,6 +293,13 @@ export const PersonDescription = styled.p`
   line-height: 1.5;
   margin-top: 24px;
   display: block;
+  text-align: inherit;
+
+  ${({ isHidden }) =>
+    isHidden &&
+    css`
+      display: none;
+    `}
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 12px;
@@ -285,10 +311,6 @@ export const PersonDescription = styled.p`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     width: 100%;
-  }
-
-  @media (max-width: 400px) {
-    text-align: center;
-    margin-top: 16px;
+    text-align: inherit;
   }
 `;

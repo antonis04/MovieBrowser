@@ -42,8 +42,8 @@ const PersonTile = ({ person, roleOrJob, isDetailed = false }) => {
             <ImagePlaceholder type="person" />
           )}
         </PersonImageWrapper>
-        <PersonInfoWrapper>
-          <Name>
+        <PersonInfoWrapper isDetailed={isDetailed}>
+          <Name isDetailed={isDetailed}>
             <Actor>{name}</Actor>
             {roleOrJob && <Strong>{roleOrJob}</Strong>}
             {isDetailed && (
