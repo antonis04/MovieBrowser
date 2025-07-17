@@ -304,12 +304,6 @@ export const PersonDescription = styled.p`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 12px;
     margin-top: 8px;
-    max-height: 60px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
     width: 100%;
     text-align: inherit;
   }
