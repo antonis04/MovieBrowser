@@ -14,10 +14,13 @@ import {
 } from "../../common/Cast/styled";
 import ImagePlaceholder from "../../components/ImagePlaceholderWrapper";
 import { getImageUrl } from "../../services/tmdbApi";
+import useIsMobileSmall from "../../hooks/useIsMobileSmall";
 
 const PersonTile = ({ person, roleOrJob, isDetailed = false }) => {
   const { id, profile_path, name, birthday, place_of_birth, biography } =
     person;
+
+  const isMobileSmall = useIsMobileSmall();
 
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown";
