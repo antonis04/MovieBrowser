@@ -50,7 +50,9 @@ const PersonTile = ({ person, roleOrJob, isDetailed = false }) => {
               <>
                 {birthday && (
                   <PersonDetailsText>
-                    <Strong>Birth:</Strong>
+                    <Strong>
+                      {isMobileSmall ? "Birth:" : "Date of birth:"}
+                    </Strong>
                     <DetailValue> {formatDate(birthday)}</DetailValue>{" "}
                   </PersonDetailsText>
                 )}
