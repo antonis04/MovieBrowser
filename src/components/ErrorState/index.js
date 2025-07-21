@@ -5,6 +5,7 @@ import {
   ErrorTitle,
   ErrorMessage,
   RetryButton,
+  ErrorContentBlock,
 } from "./styled";
 import NoResultsSvg from "../../images/NoResults.svg";
 
@@ -17,15 +18,17 @@ const ErrorState = ({
   return (
     <ErrorContainer>
       <ErrorImage>
-        <img src={NoResultsSvg} alt={isNoResults ? "Brak wyników" : "Błąd"} />
+        <img src={NoResultsSvg} alt={isNoResults ? "No Results" : "Error"} />
       </ErrorImage>
-      <ErrorTitle>{title}</ErrorTitle>
-      <ErrorMessage>{message}</ErrorMessage>
-      {onRetry && (
-        <RetryButton onClick={onRetry}>
-          {isNoResults ? "Wróć do popularnych filmów" : "Spróbuj ponownie"}
-        </RetryButton>
-      )}
+      <ErrorContentBlock>
+        <ErrorTitle>{title}</ErrorTitle>
+        <ErrorMessage>{message}</ErrorMessage>
+        {onRetry && (
+          <RetryButton onClick={onRetry}>
+            {isNoResults ? "Back to home page" : "Try Again"}
+          </RetryButton>
+        )}
+      </ErrorContentBlock>
     </ErrorContainer>
   );
 };
