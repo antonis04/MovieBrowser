@@ -64,26 +64,13 @@ const PeoplePage = () => {
               ? "Person not found"
               : "Oops! An error occurred!"
           }
-          message={
-            error === "Person not found."
-              ? "It seems that the person with the given ID does not exist or the data is unavailable."
-              : error
-          }
+          message={error === "Person not found." ? "" : error}
           onRetry={handleRetry}
           isNoResults={error === "Person not found."}
         />
       </>
     );
   }
-
-  if (!person)
-    return (
-      <ErrorState
-        title="Person data unavailable"
-        message="We could not retrieve details for this person."
-        onRetry={() => window.location.reload()}
-      />
-    );
 
   return (
     <>

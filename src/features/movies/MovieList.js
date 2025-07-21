@@ -117,6 +117,8 @@ const MovieList = () => {
     navigate(`/movies?${pageQueryParamName}=1`, { replace: true });
   };
 
+  const shouldShowSectionTitle =
+    !loading && !error && !(isSearching && movies.length === 0);
   const sectionTitle = isSearching
     ? !loading && totalResults > 0
       ? `Search results for "${searchQuery}" (${totalResults})`
@@ -140,7 +142,6 @@ const MovieList = () => {
       <>
         <GlobalStyle />
         <Container>
-          <Title>{sectionTitle}</Title>
           <ErrorState
             title="Oops! Something went wrong"
             message="We couldn't fetch the movie data. Please check your internet connection and try again."
@@ -152,20 +153,27 @@ const MovieList = () => {
     );
   }
 
+  if (isSearching && movies.length === 0) {
+    return (
+      <>
+        <GlobalStyle />
+        <Container>
+          <ErrorState
+            isNoResults={true}
+            title={`Sorry, there are no results for "${searchQuery}"`}
+            message=""
+            onRetry={resetToPopularMovies}
+          />
+        </Container>
+      </>
+    );
+  }
+
   return (
     <>
       <GlobalStyle />
       <Container>
-        <Title>{sectionTitle}</Title>
-
-        {isSearching && movies.length === 0 && (
-          <ErrorState
-            isNoResults={true}
-            title={`Sorry, there are no results for "${searchQuery}"`}
-            message="Try searching for a different movie title or browse our popular movies instead."
-            onRetry={resetToPopularMovies}
-          />
-        )}
+        {shouldShowSectionTitle && <Title>{sectionTitle}</Title>}
 
         {movies.length > 0 && (
           <>

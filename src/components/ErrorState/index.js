@@ -16,16 +16,18 @@ const ErrorState = ({
   isNoResults = false,
 }) => {
   return (
-    <ErrorContainer>
-      <ErrorImage>
+    <ErrorContainer isNoResults={isNoResults}>
+      <ErrorImage isNoResults={isNoResults}>
         <img src={NoResultsSvg} alt={isNoResults ? "No Results" : "Error"} />
       </ErrorImage>
-      <ErrorContentBlock>
-        <ErrorTitle>{title}</ErrorTitle>
-        <ErrorMessage>{message}</ErrorMessage>
-        {onRetry && (
-          <RetryButton onClick={onRetry}>
-            {isNoResults ? "Back to home page" : "Try Again"}
+      <ErrorContentBlock isNoResults={isNoResults}>
+        <ErrorTitle isNoResults={isNoResults}>{title}</ErrorTitle>
+        {!isNoResults && (
+          <ErrorMessage isNoResults={isNoResults}>{message}</ErrorMessage>
+        )}
+        {!isNoResults && onRetry && (
+          <RetryButton onClick={onRetry} isNoResults={isNoResults}>
+            Try Again
           </RetryButton>
         )}
       </ErrorContentBlock>

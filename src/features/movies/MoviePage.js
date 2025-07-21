@@ -105,11 +105,7 @@ const MoviePage = () => {
               ? "Movie not found"
               : "Oops! An error occurred!"
           }
-          message={
-            error === "Movie not found."
-              ? "It seems that the movie with the given ID does not exist or the data is unavailable."
-              : error
-          }
+          message={error === "Movie not found." ? "" : error}
           onRetry={handleRetry}
           isNoResults={error === "Movie not found."}
         />

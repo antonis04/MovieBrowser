@@ -91,6 +91,8 @@ const PeopleList = () => {
     navigate(`/people?${pageQueryParamName}=1`, { replace: true });
   };
 
+  const shouldShowSectionTitle =
+    !loading && !error && !(isSearching && people.length === 0);
   const sectionTitle = isSearching
     ? `Search results for "${searchQuery}"`
     : "Popular People";
@@ -116,7 +118,6 @@ const PeopleList = () => {
       <>
         <GlobalStyle />
         <Container>
-          <Title>{sectionTitle}</Title>
           <ErrorState
             title="Oops! Something went wrong"
             message="We couldn't fetch the people data. Please check your internet connection and try again."
@@ -128,20 +129,27 @@ const PeopleList = () => {
     );
   }
 
+  if (isSearching && people.length === 0) {
+    return (
+      <>
+        <GlobalStyle />
+        <Container>
+          <ErrorState
+            isNoResults={true}
+            title={`Sorry, there are no results for "${searchQuery}"`}
+            message=""
+            onRetry={resetToPopularPeople}
+          />
+        </Container>
+      </>
+    );
+  }
+
   return (
     <>
       <GlobalStyle />
       <Container>
-        <Title>{sectionTitle}</Title>
-
-        {isSearching && people.length === 0 && (
-          <ErrorState
-            isNoResults={true}
-            title={`Sorry, there are no results for "${searchQuery}"`}
-            message="Try searching for a different person or browse our popular people instead."
-            onRetry={resetToPopularPeople}
-          />
-        )}
+        {shouldShowSectionTitle && <Title>{sectionTitle}</Title>}
 
         {people.length > 0 && (
           <>

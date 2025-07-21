@@ -29,6 +29,7 @@ const HomePage = () => {
 
     fetchGenres();
   }, []);
+
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
@@ -58,6 +59,7 @@ const HomePage = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, isSearching]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -72,6 +74,9 @@ const HomePage = () => {
     resetSearch();
     setCurrentPage(1);
   };
+
+  const shouldShowSectionTitle =
+    !loading && !error && !(isSearching && movies.length === 0);
   const sectionTitle = isSearching
     ? `Search results for "${searchQuery}"`
     : "Popular movies";
@@ -92,7 +97,6 @@ const HomePage = () => {
   if (error) {
     return (
       <MainContainer>
-        <SectionTitle>{sectionTitle}</SectionTitle>{" "}
         <ErrorState
           title="Oops! Something went wrong"
           message={`We couldn't fetch the movie data. Please check your internet connection and try again.`}
@@ -103,17 +107,22 @@ const HomePage = () => {
     );
   }
 
+  if (isSearching && movies.length === 0) {
+    return (
+      <MainContainer>
+        <ErrorState
+          isNoResults={true}
+          title={`Sorry, there are no results for "${searchQuery}"`}
+          message=""
+          onRetry={resetToPopular}
+        />
+      </MainContainer>
+    );
+  }
+
   return (
     <MainContainer>
-      <SectionTitle>{sectionTitle}</SectionTitle>{" "}
-      {isSearching && movies.length === 0 && (
-        <ErrorState
-          title={`Sorry, there are no results for "${searchQuery}"`}
-          message="Try searching for a different movie title or browse our popular movies instead."
-          onRetry={resetToPopular}
-          isNoResults={true}
-        />
-      )}
+      {shouldShowSectionTitle && <SectionTitle>{sectionTitle}</SectionTitle>}{" "}
       {movies.length > 0 && (
         <>
           <MoviesGrid>
