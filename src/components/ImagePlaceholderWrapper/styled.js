@@ -7,7 +7,6 @@ export const ImagePlaceholderWrapper = styled.div`
   overflow: hidden;
   border-radius: 5px;
   flex-shrink: 0;
-  background-color: ${({ theme }) => theme.color.postergrey};
 
   svg {
     width: 100%;
