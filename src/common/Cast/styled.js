@@ -60,16 +60,24 @@ export const PersonCard = styled.div`
   padding: 16px;
   transition: transform 0.2s ease;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 208px;
+  height: 339px;
+  gap: 8px;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   ${({ isDetailed }) =>
     isDetailed
       ? css`
           width: 100%;
           height: auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
           gap: 24px;
+          flex-direction: column;
 
           @media (min-width: ${({ theme }) =>
               theme.breakpoint.mobileMax + 1}px) {
@@ -88,16 +96,8 @@ export const PersonCard = styled.div`
           }
         `
       : css`
-          width: 208px;
-          height: 339px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
           padding: 16px;
-
-          &:hover {
-            transform: translateY(-2px);
-          }
+          gap: 8px;
 
           @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
             padding: 8px;
@@ -106,16 +106,19 @@ export const PersonCard = styled.div`
             flex-direction: column;
             align-items: center;
             gap: 8px;
+            max-width: 170px;
           }
 
           @media (max-width: 480px) {
             padding: 6px;
+            max-width: 140px;
           }
         `}
 `;
 
 export const PersonImageWrapper = styled.div`
   flex-shrink: 0;
+
   ${({ isDetailed }) =>
     isDetailed
       ? css`
@@ -135,10 +138,17 @@ export const PersonImageWrapper = styled.div`
       : css`
           width: 176px;
           height: 231px;
+
           @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-            width: 72px;
-            height: 96px;
+            width: 100%;
+            height: auto;
             min-width: 72px;
+          }
+          @media (max-width: 374px) {
+            width: 100%;
+            max-width: 120px;
+            height: auto;
+            min-width: unset;
           }
         `}
 `;
