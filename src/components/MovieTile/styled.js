@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const MovieCard = styled.div`
   background: ${({ theme }) => theme.color.white};
   width: 324px;
-  height: 650px;
   border-radius: 5px;
   box-shadow: 0px 4px 12px 0px #bac7d580;
   padding: 16px;
@@ -18,8 +17,8 @@ export const MovieCard = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
     width: 100%;
-    max-width: 300px;
     height: auto;
+    max-width: 300px;
     padding: 14px;
   }
 
@@ -48,8 +47,8 @@ export const MovieCard = styled.div`
 `;
 
 export const MoviePoster = styled.img`
-  width: 292px;
-  height: 434px;
+  width: 100%;
+  aspect-ratio: 292 / 434;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 16px;
@@ -58,26 +57,27 @@ export const MoviePoster = styled.img`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
     width: 100%;
-    height: auto;
     max-width: calc(280px - 2 * 14px);
     margin-bottom: 14px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
+    width: 100%;
+    aspect-ratio: 292 / 434;
     max-width: calc(220px - 2 * 10px);
     margin-bottom: 10px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 114px;
-    height: 170px;
+    aspect-ratio: 292 / 434;
     min-width: 114px;
     margin-bottom: 0;
   }
 
   @media (max-width: 480px) {
     width: 90px;
-    height: 135px;
+    aspect-ratio: 292 / 434;
     min-width: 90px;
   }
 `;

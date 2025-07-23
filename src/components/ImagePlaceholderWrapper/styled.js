@@ -7,6 +7,7 @@ export const ImagePlaceholderWrapper = styled.div`
   overflow: hidden;
   border-radius: 5px;
   flex-shrink: 0;
+  margin-bottom: 16px;
 
   svg {
     width: 100%;
@@ -19,9 +20,10 @@ export const ImagePlaceholderWrapper = styled.div`
   ${({ type }) =>
     type === "person" &&
     css`
-      width: 176px;
-      height: 231px;
+      width: 100%;
+      aspect-ratio: 176 / 231;
       border-radius: 5px;
+      background-color: ${({ theme }) => theme.color.postergrey};
 
       svg {
         max-width: 100px;
@@ -29,9 +31,10 @@ export const ImagePlaceholderWrapper = styled.div`
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        width: 72px;
-        height: 96px;
+        width: 100%;
+        aspect-ratio: 176 / 231;
         min-width: 72px;
+
         svg {
           max-width: 60px;
           max-height: 60px;
@@ -64,9 +67,11 @@ export const ImagePlaceholderWrapper = styled.div`
     type === "movie" &&
     small &&
     css`
-      width: 300px;
-      height: 450px;
+      width: 100%;
+      aspect-ratio: 292 / 434;
       border-radius: 12px;
+      background-color: ${({ theme }) => theme.color.postergrey};
+
       svg {
         max-width: 100px;
         max-height: 100px;
@@ -76,7 +81,8 @@ export const ImagePlaceholderWrapper = styled.div`
         width: 100%;
         max-width: 200px;
         height: auto;
-        aspect-ratio: 2/3;
+        aspect-ratio: 292 / 434;
+
         svg {
           max-width: 80px;
           max-height: 80px;
@@ -87,19 +93,21 @@ export const ImagePlaceholderWrapper = styled.div`
   ${({ type }) =>
     type === "movieTile" &&
     css`
-      width: 176px;
-      height: 231px;
+      width: 100%;
+      aspect-ratio: 292 / 434;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.color.postergrey};
+
       svg {
         max-width: 80px;
         max-height: 80px;
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        width: 72px;
-        height: 96px;
+        width: 100%;
+        aspect-ratio: 292 / 434;
         min-width: 72px;
+
         svg {
           max-width: 60px;
           max-height: 60px;
@@ -111,10 +119,23 @@ export const ImagePlaceholderWrapper = styled.div`
     ${({ type }) =>
       type === "movieTile" &&
       css`
-        width: 114px;
-        height: 170px;
+        width: 100%;
+        aspect-ratio: 292 / 434;
         margin-bottom: 0;
         min-width: 114px;
+
+        svg {
+          max-width: 50px;
+          max-height: 50px;
+        }
+      `}
+
+    ${({ type }) =>
+      type === "person" &&
+      css`
+        width: 100%;
+        aspect-ratio: 176 / 231;
+
         svg {
           max-width: 50px;
           max-height: 50px;
