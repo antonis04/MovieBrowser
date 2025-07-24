@@ -63,6 +63,7 @@ export const Year = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 13px;
     margin-bottom: 12px;
+    color: ${({ theme }) => theme.color.stormgrey};
   }
 `;
 
@@ -237,6 +238,7 @@ export const Votes = styled.div`
     top: auto;
     left: auto;
     font-size: 13px;
+    color: ${({ theme }) => theme.color.stormgrey};
   }
 
   @media (max-width: 480px) {
