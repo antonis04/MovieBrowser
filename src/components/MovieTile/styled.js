@@ -10,6 +10,7 @@ export const MovieCard = styled.div`
   flex-direction: column;
   transition: transform 0.2s ease;
   flex-shrink: 0;
+  height: 100%;
 
   &:hover {
     transform: translateY(-2px);
@@ -24,6 +25,7 @@ export const MovieCard = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
     width: 100%;
+    height: auto;
     max-width: 450px;
     padding: 10px;
   }
@@ -39,8 +41,10 @@ export const MovieCard = styled.div`
     margin: 0 auto;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
+    width: 100%;
     max-width: 300px;
+    height: auto;
     padding: 12px;
     gap: 12px;
   }
@@ -73,7 +77,7 @@ export const MoviePoster = styled.img`
     margin-bottom: 0;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
     width: 90px;
     aspect-ratio: 292 / 434;
     min-width: 90px;
