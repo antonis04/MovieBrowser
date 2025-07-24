@@ -7,7 +7,11 @@ import { ReactComponent as StarSvg } from "../../images/Star.svg";
 const ImagePlaceholder = ({ type = "person", ...props }) => {
   let PlaceholderSVG;
 
-  if (type === "movie" || type === "movieTile") {
+  if (
+    type === "movie" ||
+    type === "movieTile" ||
+    type === "movieDetailsPoster"
+  ) {
     PlaceholderSVG = Camera;
   } else if (type === "star") {
     PlaceholderSVG = StarSvg;
