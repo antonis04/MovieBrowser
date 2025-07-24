@@ -6,7 +6,6 @@ export const ImagePlaceholderWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 5px;
-  flex-shrink: 0;
 
   svg {
     width: 100%;
@@ -71,6 +70,7 @@ export const ImagePlaceholderWrapper = styled.div`
     css`
       width: 100%;
       aspect-ratio: 292 / 434;
+      object-fit: cover;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.color.postergrey};
       margin-bottom: 16px;
@@ -78,6 +78,26 @@ export const ImagePlaceholderWrapper = styled.div`
       svg {
         max-width: 80px;
         max-height: 80px;
+      }
+
+      @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
+        width: 100%;
+        margin-bottom: 14px;
+
+        svg {
+          max-width: 80px;
+          max-height: 80px;
+        }
+      }
+      @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
+        width: 100%;
+        aspect-ratio: 292 / 434;
+        margin-bottom: 10px;
+
+        svg {
+          max-width: 80px;
+          max-height: 80px;
+        }
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
@@ -109,7 +129,6 @@ export const ImagePlaceholderWrapper = styled.div`
       aspect-ratio: 312 / 464;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.color.postergrey};
-      flex-shrink: 0;
       margin-bottom: 0;
 
       svg {

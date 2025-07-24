@@ -57,14 +57,12 @@ export const MoviePoster = styled.img`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
     width: 100%;
-    max-width: calc(280px - 2 * 14px);
     margin-bottom: 14px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
     width: 100%;
     aspect-ratio: 292 / 434;
-    max-width: calc(220px - 2 * 10px);
     margin-bottom: 10px;
   }
 
