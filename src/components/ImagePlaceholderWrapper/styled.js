@@ -126,7 +126,8 @@ export const ImagePlaceholderWrapper = styled.div`
     type === "movieDetailsPoster" &&
     css`
       width: 312px;
-      aspect-ratio: 312 / 464;
+      height: 464px;
+      // aspect-ratio: 312 / 464;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.color.postergrey};
       margin-bottom: 0;
@@ -158,7 +159,7 @@ export const ImagePlaceholderWrapper = styled.div`
         }
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
         width: 110px;
         min-width: 110px;
         svg {

@@ -5,7 +5,7 @@ export const Wrapper = styled.article`
   padding: 40px;
   box-shadow: 0px 4px 12px 0px rgba(186, 199, 213, 0.5);
   display: grid;
-  grid-template-columns: 312px 1fr;
+  grid-template-columns: 40% 1fr;
   grid-template-areas:
     "poster content"
     "poster description";
@@ -14,14 +14,14 @@ export const Wrapper = styled.article`
   border-radius: 5px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 40% 1fr;
     gap: 24px;
     padding: 24px;
     margin-top: 32px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    grid-template-columns: 114px 1fr;
+    grid-template-columns: 40% 1fr;
     grid-template-areas:
       "poster content"
       "description description";
@@ -31,7 +31,7 @@ export const Wrapper = styled.article`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 40% 1fr;
     gap: 12px;
     padding: 12px;
   }
@@ -245,8 +245,9 @@ export const Votes = styled.div`
 `;
 
 export const MoviePoster = styled.img`
-  width: 312px;
-  height: 464px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 312 / 464;
   border-radius: 5px;
   object-fit: cover;
   background-color: ${({ theme }) => theme.color.postergrey};
@@ -254,20 +255,20 @@ export const MoviePoster = styled.img`
   grid-area: poster;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
-    width: 250px;
+    width: 100%;
     height: auto;
     aspect-ratio: 312 / 464;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 114px;
+    width: 100%;
     height: auto;
     aspect-ratio: 312 / 464;
     min-width: 114px;
   }
 
-  @media (max-width: 480px) {
-    width: 90px;
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
+    width: 100%;
     height: auto;
     aspect-ratio: 312 / 464;
     min-width: 90px;
