@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../../GlobalStyle";
-import { Container } from "../../common/Container/styled";
 import { Title } from "../../common/Wrapper/styled";
 import { Pagination } from "../../common/PagesNumbering/index";
 import Loading from "../../components/Loading";
@@ -9,7 +8,7 @@ import ErrorState from "../../components/ErrorState";
 import MovieTile from "../../components/MovieTile";
 import { movieService } from "../../services/tmdbApi";
 import { useSearch } from "../../contexts/SearchContext";
-import { MoviesGrid } from "./styled";
+import { MainContainer, MoviesGrid } from "../../components/HomePage/styled";
 import { pageQueryParamName } from "../../common/QueryParamName";
 
 const MovieList = () => {
@@ -129,10 +128,10 @@ const MovieList = () => {
     return (
       <>
         <GlobalStyle />
-        <Container>
+        <MainContainer>
           <Title>{sectionTitle}</Title>
           <Loading />
-        </Container>
+        </MainContainer>
       </>
     );
   }
@@ -141,14 +140,14 @@ const MovieList = () => {
     return (
       <>
         <GlobalStyle />
-        <Container>
+        <MainContainer>
           <ErrorState
             title="Oops! Something went wrong"
             message="We couldn't fetch the movie data. Please check your internet connection and try again."
             onRetry={handleRetry}
             isNoResults={false}
           />
-        </Container>
+        </MainContainer>
       </>
     );
   }
@@ -157,14 +156,14 @@ const MovieList = () => {
     return (
       <>
         <GlobalStyle />
-        <Container>
+        <MainContainer>
           <ErrorState
             isNoResults={true}
             title={`Sorry, there are no results for "${searchQuery}"`}
             message=""
             onRetry={resetToPopularMovies}
           />
-        </Container>
+        </MainContainer>
       </>
     );
   }
@@ -172,7 +171,7 @@ const MovieList = () => {
   return (
     <>
       <GlobalStyle />
-      <Container>
+      <MainContainer>
         {shouldShowSectionTitle && <Title>{sectionTitle}</Title>}
 
         {movies.length > 0 && (
@@ -195,7 +194,7 @@ const MovieList = () => {
             />
           </>
         )}
-      </Container>
+      </MainContainer>
     </>
   );
 };

@@ -124,7 +124,7 @@ const MoviePage = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <ImagePlaceholder type="movie" large />
+            <ImagePlaceholder type="movieDetailsPoster" />
           )}
           <HeaderContent>
             <HeaderTitle>{movie.title}</HeaderTitle>
@@ -155,7 +155,7 @@ const MoviePage = () => {
               alt={movie.title}
             />
           ) : (
-            <ImagePlaceholder type="movie" small />
+            <ImagePlaceholder type="movieDetailsPoster" />
           )}
           <Content>
             <Title>{movie.title}</Title>
@@ -193,9 +193,8 @@ const MoviePage = () => {
                   : `${movie.vote_count} votes`}
               </Votes>{" "}
             </Details>
-
-            <Description>{movie.overview}</Description>
           </Content>
+          <Description>{movie.overview}</Description>
         </Wrapper>
 
         <Cast>

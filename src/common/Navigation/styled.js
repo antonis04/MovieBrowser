@@ -13,7 +13,7 @@ export const StyledNav = styled.nav`
   box-sizing: border-box;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 8px 12px;
+    padding: 8px 0px;
     height: auto;
     min-height: 80px;
   }
@@ -33,6 +33,7 @@ export const NavigationContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
+  padding: 0 24px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     padding: 0 16px;
