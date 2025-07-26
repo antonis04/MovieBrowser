@@ -149,9 +149,10 @@ export const MovieYear = styled.p`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 13px;
     margin-bottom: 4px;
+    color: ${({ theme }) => theme.color.stormgrey};
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
     font-size: 12px;
   }
 `;
