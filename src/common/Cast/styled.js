@@ -118,6 +118,12 @@ export const PersonCard = styled.div`
 
 export const PersonImageWrapper = styled.div`
   flex-shrink: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.color.postergrey};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   ${({ isDetailed }) =>
     isDetailed
@@ -133,6 +139,7 @@ export const PersonImageWrapper = styled.div`
             width: 100%;
             max-width: 116px;
             height: auto;
+            aspect-ratio: 312 / 464;
           }
         `
       : css`
@@ -142,12 +149,14 @@ export const PersonImageWrapper = styled.div`
           @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
             width: 100%;
             height: auto;
+            aspect-ratio: 176 / 231;
             min-width: 72px;
           }
           @media (max-width: 374px) {
             width: 100%;
             max-width: 120px;
             height: auto;
+            aspect-ratio: 176 / 231;
             min-width: unset;
           }
         `}
@@ -157,8 +166,6 @@ export const Picture = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.color.postergrey};
   flex-shrink: 0;
 `;
 
