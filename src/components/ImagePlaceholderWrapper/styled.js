@@ -19,25 +19,21 @@ export const ImagePlaceholderWrapper = styled.div`
     type === "person" &&
     css`
       width: 100%;
+      height: 100%;
       aspect-ratio: 176 / 231;
-      border-radius: 5px;
-      background-color: ${({ theme }) => theme.color.postergrey};
-      margin-bottom: 16px;
 
       svg {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 150px;
+        max-height: 150px;
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
         width: 100%;
-        aspect-ratio: 176 / 231;
-        min-width: 72px;
-        margin-bottom: 12px;
+        height: 100%;
 
         svg {
-          max-width: 60px;
-          max-height: 60px;
+          max-width: 110px;
+          max-height: 110px;
         }
       }
     `}
