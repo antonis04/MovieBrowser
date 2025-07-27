@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 export const Cast = styled.div`
-  max-width: 1368px;
   width: 100%;
   padding: 10px;
   display: flex;
@@ -27,28 +26,23 @@ export const CastRow = styled.div`
   grid-template-columns: repeat(6, minmax(150px, 1fr));
   gap: 24px;
 
-  @media (max-width: 1368px) {
-    grid-template-columns: repeat(5, minmax(150px, 1fr));
+  @media (max-width: ${({ theme }) => theme.breakpoint.laptopMax}px) {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 20px;
   }
 
-  @media (max-width: 1020px) {
-    grid-template-columns: repeat(4, minmax(120px, 1fr));
+  @media (max-width: ${({ theme }) => theme.breakpoint.tabletMax}px) {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 16px;
   }
 
-  @media (max-width: 767px) {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 12px;
   }
 
-  @media (max-width: 620px) {
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
-    gap: 12px;
-  }
-
-  @media (max-width: 374px) {
-    grid-template-columns: 1fr;
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 10px;
   }
 `;
@@ -98,6 +92,9 @@ export const PersonCard = styled.div`
       : css`
           padding: 16px;
           gap: 8px;
+          width: 100%;
+          height: 385px;
+          overflow: hidden;
 
           @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
             padding: 8px;
