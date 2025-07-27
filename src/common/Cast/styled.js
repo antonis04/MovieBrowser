@@ -64,7 +64,7 @@ export const PersonCard = styled.div`
   flex-direction: column;
   align-items: center;
   width: 208px;
-  height: 339px;
+  height: 380px;
   gap: 8px;
 
   &:hover {
@@ -107,11 +107,13 @@ export const PersonCard = styled.div`
             align-items: center;
             gap: 8px;
             max-width: 170px;
+            height: 300px;
           }
 
           @media (max-width: 480px) {
             padding: 6px;
             max-width: 140px;
+            height: 280px;
           }
         `}
 `;
@@ -173,6 +175,7 @@ export const PersonInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: hidden;
 
   ${({ isDetailed }) =>
     isDetailed
@@ -190,13 +193,14 @@ export const PersonInfoWrapper = styled.div`
           width: 100%;
           align-items: center;
           text-align: center;
+          justify-content: center;
         `}
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     flex-basis: auto;
     width: 100%;
 
@@ -209,6 +213,7 @@ export const PersonInfoWrapper = styled.div`
         : css`
             align-items: center;
             text-align: center;
+            justify-content: center;
           `}
   }
 `;
@@ -262,7 +267,7 @@ export const Actor = styled.div`
   }
 
   @media (max-width: 480px) {
-    font-size: 14px;
+    font-size: 10px;
   }
 `;
 
@@ -276,13 +281,13 @@ export const Strong = styled.div`
   min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    font-size: 14px;
+    font-size: 13px;
     text-align: inherit;
     margin-top: 0;
   }
 
   @media (max-width: 480px) {
-    font-size: 13px;
+    font-size: 10px;
   }
 `;
 
