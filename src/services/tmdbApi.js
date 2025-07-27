@@ -360,10 +360,10 @@ export const peopleService = {
 
     try {
       const response = await tmdbApi.get(`/person/${personId}/movie_credits`);
-      return response.data.cast;
+      return response.data;
     } catch (error) {
       console.error("Error fetching person credits:", error);
-      return [];
+      return { cast: [], crew: [] };
     }
   },
 };
