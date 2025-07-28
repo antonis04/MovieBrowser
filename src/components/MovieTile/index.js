@@ -15,7 +15,7 @@ import {
 import ImagePlaceholder from "../../components/ImagePlaceholderWrapper/index.js";
 import { getImageUrl } from "../../services/tmdbApi";
 
-const MovieTile = ({ movie, genres = [] }) => {
+const MovieTile = ({ movie, genres = [], isCompact }) => {
   const {
     title,
     poster_path,
@@ -39,32 +39,34 @@ const MovieTile = ({ movie, genres = [] }) => {
   const year = release_date ? new Date(release_date).getFullYear() : "";
 
   return (
-    <MovieCard>
+    <MovieCard isCompact={isCompact}>
       {poster_path ? (
         <MoviePoster src={getImageUrl(poster_path)} alt={title} />
       ) : (
         <ImagePlaceholder type="movieTile" />
       )}
-      <MovieInfo>
-        <MovieTitle>{title}</MovieTitle>
-        {year && <MovieYear>{year}</MovieYear>}
+      <MovieInfo isCompact={isCompact}>
+        <MovieTitle isCompact={isCompact}>{title}</MovieTitle>
+        {year && <MovieYear isCompact={isCompact}>{year}</MovieYear>}
         {movieGenres.length > 0 && (
-          <GenreTags>
+          <GenreTags isCompact={isCompact}>
             {movieGenres.map((genre, index) => (
-              <GenreTag key={index}>{genre}</GenreTag>
+              <GenreTag key={index} isCompact={isCompact}>
+                {genre}
+              </GenreTag>
             ))}
           </GenreTags>
         )}
-        <RatingSection>
-          <StarIcon>
+        <RatingSection isCompact={isCompact}>
+          <StarIcon isCompact={isCompact}>
             <ImagePlaceholder type="star" />
           </StarIcon>
-          <Rating>
+          <Rating isCompact={isCompact}>
             {typeof vote_average === "number" && vote_average > 0
               ? vote_average.toFixed(1)
               : "N/A"}
           </Rating>
-          <VoteCount>
+          <VoteCount isCompact={isCompact}>
             {vote_count > 0 ? `${vote_count} votes` : "No votes yet"}
           </VoteCount>
         </RatingSection>
