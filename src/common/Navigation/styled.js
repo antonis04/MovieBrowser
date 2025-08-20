@@ -36,14 +36,14 @@ export const NavigationContainer = styled.div`
   padding: 0 24px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 0 16px;
+    padding: 0 12px;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
   }
 
   @media (max-width: 480px) {
-    padding: 0 12px;
+    padding: 0 8px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -106,15 +106,16 @@ export const NavMenu = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     margin-left: 0;
-    order: 0;
+    order: 1;
     flex-grow: 1;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: center;
   }
 
   @media (max-width: 480px) {
     margin-left: 0;
-    width: auto;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: center;
     order: 1;
     flex-grow: 1;
   }
@@ -130,14 +131,16 @@ export const List = styled.ul`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 12px;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: center;
+    width: 100%;
   }
 
   @media (max-width: 480px) {
     gap: 8px;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: visible;
     padding-bottom: 4px;
+    justify-content: center;
   }
 `;
 
@@ -162,7 +165,7 @@ export const Item = styled.li`
     }
 
     &.active {
-      transform: scale(1.1);
+      transform: scale(1.05);
       border: 1px solid ${({ theme }) => theme.color.white};
       filter: brightness(1.5);
     }
@@ -171,6 +174,13 @@ export const Item = styled.li`
       padding: 6px 16px;
       font-size: 14px;
       white-space: nowrap;
+
+      &:hover {
+        transform: none;
+      }
+      &.active {
+        transform: none;
+      }
     }
 
     @media (max-width: 480px) {
@@ -190,16 +200,16 @@ export const SearchWrapper = styled.div`
     width: 100%;
     order: 2;
     margin-left: 0;
-    padding: 0 16px 8px 16px;
+    padding: 0 0 8px 0;
     box-sizing: border-box;
   }
 
   @media (max-width: 480px) {
     width: 100%;
     margin-left: 0;
-    padding: 0 12px 8px 12px;
+    padding: 0 0 8px 0;
     box-sizing: border-box;
-    order: 1;
+    order: 2;
   }
 `;
 
