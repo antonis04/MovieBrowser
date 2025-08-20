@@ -10,7 +10,7 @@ export const Cast = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    padding: 0 16px;
+    padding: 0 12px;
     gap: 24px;
     margin: 24px auto;
   }
