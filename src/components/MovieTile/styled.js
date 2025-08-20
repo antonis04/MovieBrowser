@@ -32,25 +32,26 @@ export const MovieCard = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    max-width: 380px;
-    height: 200px;
+    max-width: 420px;
+    height: auto; /* allow content to define height to avoid clipping */
     padding: 16px;
     display: grid;
-    grid-template-columns: auto 1fr;
+    /* make poster take half of the tile */
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr;
     align-items: flex-start;
-    gap: 16px;
+    gap: 12px;
     margin: 0 auto;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
     width: 100%;
-    max-width: 300px;
-    height: 160px;
+    max-width: 360px;
+    height: auto; /* allow content to expand */
     padding: 12px;
-    gap: 12px;
+    gap: 10px;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr;
     align-items: flex-start;
   }
@@ -58,8 +59,8 @@ export const MovieCard = styled.div`
   ${({ isCompact }) =>
     isCompact &&
     css`
-      width: 208px;
-      height: 339px;
+      width: 100%;
+      height: auto;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -81,20 +82,21 @@ export const MovieCard = styled.div`
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
         width: 100%;
-        max-width: 130px;
-        height: 300px;
-        padding: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
+        height: auto;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        column-gap: 12px;
+        row-gap: 6px;
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
         width: 100%;
-        max-width: 103px;
-        height: 250px;
-        padding: 6px;
-        gap: 4px;
+        height: auto;
+        padding: 10px;
+        column-gap: 10px;
+        row-gap: 4px;
       }
     `}
 `;
@@ -120,18 +122,22 @@ export const MoviePoster = styled.img`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: 114px;
-    aspect-ratio: 292 / 434;
-    min-width: 114px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    min-width: 0;
     margin-bottom: 0;
-    grid-column: 1 / 2;
+    grid-column: 1 / 2; /* half of tile */
     grid-row: 1 / -1;
+    object-fit: cover;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
-    width: 90px;
-    aspect-ratio: 292 / 434;
-    min-width: 90px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    min-width: 0;
+    object-fit: cover;
   }
 `;
 
@@ -145,7 +151,7 @@ export const MovieInfo = styled.div`
     justify-content: space-between;
     align-items: flex-start;
     height: 100%;
-    grid-column: 2 / 3;
+    grid-column: 2 / 3; /* right half */
     grid-row: 1 / -1;
   }
 
@@ -179,7 +185,7 @@ export const MovieTitle = styled.h3`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 16px;
-    margin-bottom: 4px;
+    margin-bottom: 2px; /* tighter spacing */
     max-height: 42px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -228,7 +234,7 @@ export const MovieYear = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 13px;
-    margin-bottom: 4px;
+    margin-bottom: 2px; /* tighter spacing */
     color: ${({ theme }) => theme.color.stormgrey};
   }
 
@@ -262,11 +268,11 @@ export const GenreTags = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
-    margin-bottom: 4px;
-    max-height: 30px;
+    margin-bottom: 2px; /* tighter spacing */
+    max-height: none;
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-    overflow: hidden;
+    overflow: visible;
   }
 
   ${({ isCompact }) =>
@@ -297,7 +303,7 @@ export const GenreTag = styled.span`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 4px 8px;
+    padding: 3px 8px;
     font-size: 10px;
   }
 
@@ -324,7 +330,7 @@ export const RatingSection = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
     flex-wrap: wrap;
-    margin-top: 0;
+    margin-top: 0; /* no extra top margin */
     height: auto;
     grid-column: 2 / 3;
     grid-row: 4 / 5;
