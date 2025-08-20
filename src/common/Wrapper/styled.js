@@ -21,7 +21,7 @@ export const Wrapper = styled.article`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    grid-template-columns: 40% 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "poster content"
       "description description";
@@ -31,7 +31,7 @@ export const Wrapper = styled.article`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 40% 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding: 12px;
   }
@@ -209,11 +209,7 @@ export const Note = styled.div`
   vertical-align: middle;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    width: auto;
-    height: auto;
-    top: auto;
-    left: auto;
-    font-size: 13px;
+    display: none;
   }
 
   @media (max-width: 480px) {
@@ -264,15 +260,15 @@ export const MoviePoster = styled.img`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
-    height: auto;
-    aspect-ratio: 312 / 464;
-    min-width: 114px;
+    height: 100%;
+    aspect-ratio: auto;
+    min-width: 0;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
     width: 100%;
-    height: auto;
-    aspect-ratio: 312 / 464;
-    min-width: 90px;
+    height: 100%;
+    aspect-ratio: auto;
+    min-width: 0;
   }
 `;
