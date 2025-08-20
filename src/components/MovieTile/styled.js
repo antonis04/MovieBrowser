@@ -33,10 +33,10 @@ export const MovieCard = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     width: 100%;
     max-width: 420px;
-    height: auto; /* allow content to define height to avoid clipping */
+    height: auto; 
     padding: 16px;
     display: grid;
-    /* make poster take half of the tile */
+
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr;
     align-items: flex-start;
@@ -47,7 +47,7 @@ export const MovieCard = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMin}px) {
     width: 100%;
     max-width: 360px;
-    height: auto; /* allow content to expand */
+    height: auto; 
     padding: 12px;
     gap: 10px;
     display: grid;
@@ -127,7 +127,7 @@ export const MoviePoster = styled.img`
     aspect-ratio: auto;
     min-width: 0;
     margin-bottom: 0;
-    grid-column: 1 / 2; /* half of tile */
+    grid-column: 1 / 2; 
     grid-row: 1 / -1;
     object-fit: cover;
   }
@@ -151,7 +151,7 @@ export const MovieInfo = styled.div`
     justify-content: space-between;
     align-items: flex-start;
     height: 100%;
-    grid-column: 2 / 3; /* right half */
+    grid-column: 2 / 3;
     grid-row: 1 / -1;
   }
 
@@ -185,7 +185,7 @@ export const MovieTitle = styled.h3`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 16px;
-    margin-bottom: 2px; /* tighter spacing */
+    margin-bottom: 2px;
     max-height: 42px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -234,7 +234,7 @@ export const MovieYear = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 13px;
-    margin-bottom: 2px; /* tighter spacing */
+    margin-bottom: 2px;
     color: ${({ theme }) => theme.color.stormgrey};
   }
 
@@ -268,7 +268,7 @@ export const GenreTags = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
-    margin-bottom: 2px; /* tighter spacing */
+    margin-bottom: 2px;
     max-height: none;
     grid-column: 2 / 3;
     grid-row: 3 / 4;
@@ -330,7 +330,7 @@ export const RatingSection = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     gap: 6px;
     flex-wrap: wrap;
-    margin-top: 0; /* no extra top margin */
+    margin-top: 0;
     height: auto;
     grid-column: 2 / 3;
     grid-row: 4 / 5;
