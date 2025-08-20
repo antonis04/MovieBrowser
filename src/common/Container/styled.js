@@ -7,7 +7,8 @@ export const Container = styled.div`
   margin-top: 56px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-    padding: 0 16px;
+    padding: 0 12px;
+    margin-top: 0; 
   }
 `;
 
@@ -131,7 +132,10 @@ export const HeaderDetails = styled.div`
   margin-top: 20px;
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
     margin-top: 16px;
   }
 `;
@@ -160,6 +164,7 @@ export const HeaderSummary = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
     font-size: 18px;
+    white-space: nowrap;
     svg {
       width: 24px;
       height: 24px;
@@ -170,6 +175,10 @@ export const HeaderSummary = styled.div`
 export const HeaderNote = styled.div`
   font-weight: 400;
   font-size: 16px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+    display: none;
+  }
 `;
 
 export const HeaderVotes = styled.div`
