@@ -97,9 +97,10 @@ export const ImagePlaceholderWrapper = styled.div`
       }
 
       @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        width: 114px;
-        aspect-ratio: 292 / 434;
-        min-width: 114px;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        min-width: 0;
         margin-bottom: 0;
 
         svg {
@@ -109,8 +110,9 @@ export const ImagePlaceholderWrapper = styled.div`
       }
 
       @media (max-width: 480px) {
-        width: 90px;
-        min-width: 90px;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
         svg {
           max-width: 50px;
           max-height: 50px;
@@ -123,7 +125,6 @@ export const ImagePlaceholderWrapper = styled.div`
     css`
       width: 312px;
       height: 464px;
-      // aspect-ratio: 312 / 464;
       border-radius: 5px;
       background-color: ${({ theme }) => theme.color.postergrey};
       margin-bottom: 0;
